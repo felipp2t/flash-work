@@ -43,13 +43,13 @@ const schema = z
 export const Register = (props: Partial<PatternFormatProps>) => {
   const form = useForm<z.infer<typeof schema>>({
     defaultValues: {
-      name: "Felipe Rossetto",
-      cpf: "125.176.129-19",
-      phone: "(48) 99901-0353",
-      dateOfBirth: "12/04/2006",
-      email: "felipe@gmail.com",
-      password: "123456",
-      confirmPassword: "123456",
+      name: "",
+      cpf: "",
+      phone: "",
+      dateOfBirth: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
       profilePicture: undefined,
     },
     resolver: zodResolver(schema),

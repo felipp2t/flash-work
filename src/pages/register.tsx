@@ -30,8 +30,28 @@ import "dayjs/locale/pt-br"
 import { cpf } from "cpf-cnpj-validator"
 import { Progress } from "@/components/ui/progress"
 import validator from "validator"
+import isLeapYear from "dayjs/plugin/isLeapYear"
 
-dayjs().locale("pt-br").format("DD/MM/YYYY")
+dayjs.extend(isLeapYear)
+
+function verifyLeepYear(value: string) {
+  if (value.includes("02-29")) {
+    if (dayjs(value).isLeapYear()) return true
+    else return false
+  }
+
+  return true
+}
+
+function transformDateToISO(value: string) {
+  const [day, month, year] = value.split("/")
+  console.log(`${year}-${month}-${day}`)
+  return `${year}-${month}-${day}`
+}
+
+function isAtLeast18YearsOld(date: string) {
+  return dayjs().diff(dayjs(date), "year") >= 18
+}
 
 const schema = z
   .object({
@@ -47,19 +67,16 @@ const schema = z
     birthDate: z
       .string()
       .length(10)
-      .refine((value) => {
-        return dayjs(value, "DD/MM/YYYY", true).isValid()
+      .transform((value) => transformDateToISO(value))
+      .refine((value) => dayjs(value).isValid(), {
+        message: "Invalid date",
       })
-      .refine(
-        (value) => {
-          const data = dayjs(value).format("DD/MM/YYYY")
-          return dayjs().diff(data, "years") >= 18
-        },
-        {
-          message: "You must be at least 18 years old to register",
-        },
-      )
-      .transform((value) => dayjs(value).format("YYYY-MM-DD")),
+      .refine((value) => verifyLeepYear(value), {
+        message: "Invalid date",
+      })
+      .refine((value) => isAtLeast18YearsOld(value), {
+        message: "Must be at least 18 years old",
+      }),
     phone: z.string().length(15),
     email: z.string().email(),
     password: z.string().min(6),

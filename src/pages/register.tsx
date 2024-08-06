@@ -1,34 +1,33 @@
 import { Button } from "@/components/ui/button"
 import {
+  Form,
+  FormControl,
   FormField,
   FormItem,
   FormLabel,
-  FormControl,
-  Form,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { Progress } from "@/components/ui/progress"
+import { registerData, registerSchema } from "@/types/register-schema"
+import { postData } from "@/utils/api"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Controller, ControllerRenderProps, useForm } from "react-hook-form"
-import GoogleImage from "/google-icon.png"
-import { PatternFormat, PatternFormatProps } from "react-number-format"
 import {
   Calendar,
+  CircleUser,
+  Eye,
+  EyeOff,
   IdCard,
   Lock,
   Mail,
   Phone,
   Shield,
-  CircleUser,
   UserPen,
-  Eye,
-  EyeOff,
 } from "lucide-react"
 import { ChangeEvent, useState } from "react"
-import "dayjs/locale/pt-br"
-import { Progress } from "@/components/ui/progress"
+import { Controller, ControllerRenderProps, useForm } from "react-hook-form"
+import { PatternFormat, PatternFormatProps } from "react-number-format"
 import validator from "validator"
-import { registerData, registerSchema } from "@/types/register-schema"
-import { postData } from "@/utils/api"
+import GoogleImage from "/google-icon.png"
 
 export const Register = (props: Partial<PatternFormatProps>) => {
   const [isEyeOpen, setIsEyeOpen] = useState("password")
@@ -97,19 +96,19 @@ export const Register = (props: Partial<PatternFormatProps>) => {
       <div className="flex h-full flex-col items-center justify-center gap-8 sm:mx-auto sm:w-full sm:max-w-[800px]">
         <div className="w-full space-y-8 px-20">
           <h1 className="text-start text-3xl font-semibold sm:text-center">
-            Create account
+            Criar conta
           </h1>
 
           <Button className="flex h-12 w-full gap-4 bg-slate-100 text-base text-black ring-1 ring-gray-300 hover:bg-slate-200 sm:mx-auto sm:w-full sm:max-w-[300px]">
             <img src={GoogleImage} alt="img_google" />
-            Sign in with Google
+            Entre com o google
           </Button>
         </div>
 
         <div className="w-full space-y-4 px-20 sm:max-w-[800px]">
           <div className="flex items-center gap-2">
             <div className="h-px w-full bg-gray-300"></div>
-            <div className="whitespace-nowrap text-sm text-gray-500">OR</div>
+            <div className="whitespace-nowrap text-sm text-gray-500">OU</div>
             <div className="h-px w-full bg-gray-300"></div>
           </div>
 
@@ -161,7 +160,7 @@ export const Register = (props: Partial<PatternFormatProps>) => {
                         <Input
                           {...field}
                           id="name"
-                          placeholder="Full name"
+                          placeholder="Nome completo"
                           className="border-none shadow-none focus-visible:ring-0"
                         />
                       </div>
@@ -226,7 +225,7 @@ export const Register = (props: Partial<PatternFormatProps>) => {
                           value={field.value}
                           format="(##) #####-####"
                           customInput={Input}
-                          placeholder="Phone"
+                          placeholder="telefone"
                           className="border-none shadow-none focus-visible:ring-0"
                           onValueChange={(values) => {
                             field.onChange(values.value)
@@ -260,7 +259,7 @@ export const Register = (props: Partial<PatternFormatProps>) => {
                           value={field.value}
                           format="##/##/####"
                           customInput={Input}
-                          placeholder="date of birth"
+                          placeholder="data de nascimento"
                           className="border-none shadow-none focus-visible:ring-0"
                           onValueChange={(values) => {
                             field.onChange(values.value)
@@ -290,7 +289,7 @@ export const Register = (props: Partial<PatternFormatProps>) => {
                         <Input
                           {...field}
                           id="email"
-                          placeholder="example@example.com"
+                          placeholder="exemplo@exemplo.com"
                           className="border-none shadow-none focus-visible:ring-0"
                         />
                       </FormControl>
@@ -315,7 +314,7 @@ export const Register = (props: Partial<PatternFormatProps>) => {
                         <Input
                           {...field}
                           type={isEyeOpen}
-                          placeholder="password"
+                          placeholder="senha"
                           className="border-none shadow-none focus-visible:ring-0"
                           onChange={(event) => {
                             field.onChange(event.target.value)
@@ -367,7 +366,7 @@ export const Register = (props: Partial<PatternFormatProps>) => {
                           {...field}
                           id="confirmPassword"
                           type={isEyeOpen}
-                          placeholder="confirm your password"
+                          placeholder="confirme sua senha"
                           className="border-none shadow-none focus-visible:ring-0"
                         />
                       </FormControl>
@@ -391,17 +390,17 @@ export const Register = (props: Partial<PatternFormatProps>) => {
                 type="submit"
                 className="h-12 bg-green-600 text-base hover:bg-green-500 sm:col-span-2 sm:mx-auto sm:w-full sm:max-w-[300px]"
               >
-                Sign Up
+                Cadastrar-se
               </Button>
             </form>
           </Form>
         </div>
 
         <div className="space-x-2 text-sm sm:text-base">
-          <span>Already have an account?</span>
+          <span>Já possui uma conta?</span>
           <a href="/login">
             <span className="cursor-pointer font-semibold text-green-600 hover:underline">
-              Sign In
+              Entre
             </span>
           </a>
         </div>

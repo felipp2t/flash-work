@@ -1,8 +1,9 @@
 import { cpf } from "cpf-cnpj-validator"
 import dayjs from "dayjs"
-dayjs.extend(isLeapYear)
 import isLeapYear from "dayjs/plugin/isLeapYear"
 import { z } from "zod"
+
+dayjs.extend(isLeapYear)
 
 function transformDateToISO(value: string) {
   const [day, month, year] = value.split("/")

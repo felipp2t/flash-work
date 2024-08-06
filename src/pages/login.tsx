@@ -1,5 +1,4 @@
-import GoogleImage from "/google-icon.png"
-import { useForm } from "react-hook-form"
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -8,12 +7,13 @@ import {
   FormLabel,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Button } from "@/components/ui/button"
-import { useState } from "react"
-import { Eye, EyeOff, Lock, Mail } from "lucide-react"
 import { loginData, loginSchema } from "@/types/login-schema"
 import { postData } from "@/utils/api"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Eye, EyeOff, Lock, Mail } from "lucide-react"
+import { useState } from "react"
+import { useForm } from "react-hook-form"
+import GoogleImage from "/google-icon.png"
 
 export const Login = () => {
   const [isEyeOpen, setIsEyeOpen] = useState("password")
@@ -40,9 +40,9 @@ export const Login = () => {
     console.log(data)
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL + "/api/auth/login";
-      const response = await postData<loginData, LoginResponse>(apiUrl, data);
-      console.log('Token:', response.token);
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL + "/api/auth/login"
+      const response = await postData<loginData, LoginResponse>(apiUrl, data)
+      console.log("Token:", response.token)
       form.reset()
     } catch (error) {
       console.log(error)
@@ -53,9 +53,12 @@ export const Login = () => {
     <div className="h-screen bg-slate-100 text-black">
       <div className="flex h-full flex-col items-center justify-center gap-8">
         <div className="space-y-2">
-          <h1 className="text-center text-3xl font-semibold">Welcome back</h1>
+          <h1 className="text-center text-3xl font-semibold">
+            Bem vindo de Volta
+          </h1>
           <span className="block text-gray-500">
-            Welcome back! Please enter your details
+            Bem vindo de Volta! Por favor, insira suas credenciais para acessar
+            sua conta.
           </span>
         </div>
 
@@ -79,7 +82,7 @@ export const Login = () => {
                           {...field}
                           {...form.register("email")}
                           id="email"
-                          placeholder="example@example.com"
+                          placeholder="exemplo@exemplo.com"
                           className="border-none shadow-none focus-visible:ring-0"
                         />
                       </FormControl>
@@ -102,7 +105,7 @@ export const Login = () => {
                           {...field}
                           {...form.register("password")}
                           type={isEyeOpen}
-                          placeholder="password"
+                          placeholder="senha"
                           className="border-none shadow-none focus-visible:ring-0"
                         />
                       </FormControl>
@@ -123,35 +126,35 @@ export const Login = () => {
               />
 
               <div className="cursor-pointer text-end font-semibold text-green-600 hover:underline">
-                <a href="#">Forgot password</a>
+                <a href="#">Esqueceu a senha?</a>
               </div>
 
               <Button
                 type="submit"
                 className="h-12 bg-green-600 text-base hover:bg-green-500"
               >
-                Sign in
+                Entrar
               </Button>
             </form>
           </Form>
 
           <div className="flex items-center gap-2">
             <div className="h-px w-full bg-gray-300"></div>
-            <div className="whitespace-nowrap text-sm text-gray-500">OR</div>
+            <div className="whitespace-nowrap text-sm text-gray-500">OU</div>
             <div className="h-px w-full bg-gray-300"></div>
           </div>
 
           <Button className="flex h-12 w-full gap-4 bg-slate-100 text-base text-black ring-1 ring-gray-300 hover:bg-slate-200">
             <img src={GoogleImage} alt="img_google" />
-            Sign in with Google
+            Entre com o google
           </Button>
         </div>
 
         <div className="space-x-2 text-sm">
-          <span>Don't have an account?</span>
+          <span>Não possui uma conta?</span>
           <a href="/register">
             <span className="cursor-pointer font-semibold text-green-600 hover:underline">
-              Sign Up
+              Cadastre-se
             </span>
           </a>
         </div>

@@ -1,6 +1,5 @@
 import GoogleImage from "/google-icon.png"
 import { useForm } from "react-hook-form"
-import { z } from "zod"
 import {
   Form,
   FormControl,
@@ -13,11 +12,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import { Eye, EyeOff, Lock, Mail } from "lucide-react"
-
-const schema = z.object({
-  email: z.string().email(),
-  password: z.string().min(6),
-})
+import { loginData, loginSchema } from "@/types/login-schema"
+import { postData } from "@/utils/api"
 
 export const Login = () => {
   const [isEyeOpen, setIsEyeOpen] = useState("password")
@@ -28,16 +24,29 @@ export const Login = () => {
     )
   }
 
-  const form = useForm<z.infer<typeof schema>>({
+  const form = useForm<loginData>({
     defaultValues: {
       email: "",
       password: "",
     },
-    resolver: zodResolver(schema),
+    resolver: zodResolver(loginSchema),
   })
 
-  function onSubmit(data: z.infer<typeof schema>) {
+  interface LoginResponse {
+    token: string
+  }
+
+  async function onSubmit(data: loginData) {
     console.log(data)
+
+    try {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL + "/api/auth/login";
+      const response = await postData<loginData, LoginResponse>(apiUrl, data);
+      console.log('Token:', response.token);
+      form.reset()
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (

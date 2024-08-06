@@ -9,7 +9,6 @@ import {
 import { Input } from "@/components/ui/input"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Controller, ControllerRenderProps, useForm } from "react-hook-form"
-import { z } from "zod"
 import GoogleImage from "/google-icon.png"
 import { PatternFormat, PatternFormatProps } from "react-number-format"
 import {
@@ -25,68 +24,11 @@ import {
   EyeOff,
 } from "lucide-react"
 import { ChangeEvent, useState } from "react"
-import dayjs from "dayjs"
 import "dayjs/locale/pt-br"
-import { cpf } from "cpf-cnpj-validator"
 import { Progress } from "@/components/ui/progress"
 import validator from "validator"
-import isLeapYear from "dayjs/plugin/isLeapYear"
-
-dayjs.extend(isLeapYear)
-
-function verifyLeepYear(value: string) {
-  if (value.includes("02-29")) {
-    if (dayjs(value).isLeapYear()) return true
-    else return false
-  }
-
-  return true
-}
-
-function transformDateToISO(value: string) {
-  const [day, month, year] = value.split("/")
-  console.log(`${year}-${month}-${day}`)
-  return `${year}-${month}-${day}`
-}
-
-function isAtLeast18YearsOld(date: string) {
-  return dayjs().diff(dayjs(date), "year") >= 18
-}
-
-const schema = z
-  .object({
-    name: z
-      .string({ required_error: "Full name is required" })
-      .min(10, { message: "Full name must have at least 10 characters" }),
-    cpf: z
-      .string()
-      .length(14)
-      .refine((value) => cpf.isValid(value), {
-        message: "Invalid CPF",
-      }),
-    birthDate: z
-      .string()
-      .length(10)
-      .transform((value) => transformDateToISO(value))
-      .refine((value) => dayjs(value).isValid(), {
-        message: "Invalid date",
-      })
-      .refine((value) => verifyLeepYear(value), {
-        message: "Invalid date",
-      })
-      .refine((value) => isAtLeast18YearsOld(value), {
-        message: "Must be at least 18 years old",
-      }),
-    phone: z.string().length(15),
-    email: z.string().email(),
-    password: z.string().min(6),
-    confirmPassword: z.string().min(6),
-    profilePicture: z.any().optional(),
-  })
-  .refine((fields) => fields.password === fields.confirmPassword, {
-    path: ["confirmPassword"],
-    message: "Passwords do not match",
-  })
+import { registerData, registerSchema } from "@/types/register-schema"
+import { postData } from "@/utils/api"
 
 export const Register = (props: Partial<PatternFormatProps>) => {
   const [isEyeOpen, setIsEyeOpen] = useState("password")
@@ -98,7 +40,7 @@ export const Register = (props: Partial<PatternFormatProps>) => {
     )
   }
 
-  const form = useForm<z.infer<typeof schema>>({
+  const form = useForm<registerData>({
     defaultValues: {
       name: "Felipe Rossetto",
       cpf: "125.176.129-19",
@@ -109,13 +51,13 @@ export const Register = (props: Partial<PatternFormatProps>) => {
       confirmPassword: "#RafaelGostosinho12",
       profilePicture: undefined,
     },
-    resolver: zodResolver(schema),
+    resolver: zodResolver(registerSchema),
     mode: "onSubmit",
   })
 
   function handleChangeFile(
     event: ChangeEvent<HTMLInputElement>,
-    field: ControllerRenderProps<z.infer<typeof schema>, "profilePicture">,
+    field: ControllerRenderProps<registerData, "profilePicture">,
   ) {
     const files = event.target.files
 
@@ -136,17 +78,18 @@ export const Register = (props: Partial<PatternFormatProps>) => {
     }
   }
 
-  async function onSubmit(data: z.infer<typeof schema>) {
+  async function onSubmit(data: registerData) {
     console.log(data)
 
-    await fetch("https://7a98-170-81-50-186.ngrok-free.app/api/auth/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-    form.reset()
+    try {
+      await postData(
+        process.env.NEXT_PUBLIC_API_URL + "/api/auth/register",
+        data,
+      )
+      form.reset()
+    } catch (error) {
+      console.error("Error during registration:", error)
+    }
   }
 
   return (

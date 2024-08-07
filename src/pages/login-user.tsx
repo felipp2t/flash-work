@@ -140,10 +140,15 @@ export const Login = () => {
             <div className="h-px w-full bg-gray-300"></div>
           </div>
 
-          <Button className="flex h-12 w-full gap-4 bg-slate-100 text-base text-black ring-1 ring-gray-300 hover:bg-slate-200">
-            <img src={GoogleImage} alt="img_google" />
-            Entre com o google
-          </Button>
+          <a
+            href="https://365d-179-125-116-3.ngrok-free.app/oauth2/authorization/google"
+            className="block"
+          >
+            <Button className="flex h-12 w-full gap-4 bg-slate-100 text-base text-black ring-1 ring-gray-300 hover:bg-slate-200">
+              <img src={GoogleImage} alt="img_google" />
+              Entre com o google
+            </Button>
+          </a>
         </div>
 
         <div className="space-x-2 text-sm">

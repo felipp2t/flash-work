@@ -33,12 +33,6 @@ export const Register = (props: Partial<PatternFormatProps>) => {
   const [isEyeOpen, setIsEyeOpen] = useState("password")
   const [progress, setProgress] = useState(0)
 
-  function changeTypeInputPassword() {
-    setIsEyeOpen((isEyeOpen) =>
-      isEyeOpen === "password" ? "text" : "password",
-    )
-  }
-
   const form = useForm<registerData>({
     defaultValues: {
       name: "Felipe Rossetto",
@@ -373,12 +367,16 @@ export const Register = (props: Partial<PatternFormatProps>) => {
                       {isEyeOpen === "password" ? (
                         <Eye
                           className="size-5 cursor-pointer text-gray-600"
-                          onClick={changeTypeInputPassword}
+                          onMouseDown={() => setIsEyeOpen("text")}
+                          onMouseUp={() => setIsEyeOpen("password")}
+                          onMouseLeave={() => setIsEyeOpen("password")}
                         />
                       ) : (
                         <EyeOff
                           className="size-5 cursor-pointer text-gray-600"
-                          onClick={changeTypeInputPassword}
+                          onMouseDown={() => setIsEyeOpen("text")}
+                          onMouseUp={() => setIsEyeOpen("password")}
+                          onMouseLeave={() => setIsEyeOpen("password")}
                         />
                       )}
                     </div>

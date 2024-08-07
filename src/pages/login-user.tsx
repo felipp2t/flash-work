@@ -15,14 +15,12 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import GoogleImage from "/google-icon.png"
 
+interface LoginResponse {
+  token: string
+}
+
 export const Login = () => {
   const [isEyeOpen, setIsEyeOpen] = useState("password")
-
-  function changeTypeInputPassword() {
-    setIsEyeOpen((isEyeOpen) =>
-      isEyeOpen === "password" ? "text" : "password",
-    )
-  }
 
   const form = useForm<loginData>({
     defaultValues: {
@@ -32,18 +30,16 @@ export const Login = () => {
     resolver: zodResolver(loginSchema),
   })
 
-  interface LoginResponse {
-    token: string
+  function changeTypeInputPassword() {
+    setIsEyeOpen((isEyeOpen) =>
+      isEyeOpen === "password" ? "text" : "password",
+    )
   }
 
   async function onSubmit(data: loginData) {
-    console.log(data)
-
     try {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL + "/api/auth/login"
-      const response = await postData<loginData, LoginResponse>(apiUrl, data)
-      console.log("Token:", response.token)
-      form.reset()
+      await postData<loginData, LoginResponse>(apiUrl, data)
     } catch (error) {
       console.log(error)
     }
@@ -56,9 +52,9 @@ export const Login = () => {
           <h1 className="text-center text-3xl font-semibold">
             Bem vindo de Volta
           </h1>
-          <span className="block text-gray-500">
-            Bem vindo de Volta! Por favor, insira suas credenciais para acessar
-            sua conta.
+          <span className="block text-center text-gray-500">
+            Bem vindo de Volta! Por favor, insira suas credenciais <br /> para
+            acessar sua conta.
           </span>
         </div>
 
@@ -126,7 +122,7 @@ export const Login = () => {
               />
 
               <div className="cursor-pointer text-end font-semibold text-green-600 hover:underline">
-                <a href="#">Esqueceu a senha?</a>
+                <a href="/recovery-password/confirm-email">Esqueceu a senha?</a>
               </div>
 
               <Button

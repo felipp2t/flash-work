@@ -1,6 +1,9 @@
 import { createBrowserRouter } from "react-router-dom"
-import { Login } from "./pages/login"
-import { Register } from "./pages/register"
+import { ConfirmEmailToRecoverPassword } from "./pages/confirm-email-to-recover-password"
+import { ConfirmOTP } from "./pages/confirm-otp"
+import { Login } from "./pages/login-user"
+import { Register } from "./pages/register-user"
+import { UpdatePassword } from "./pages/update-password"
 
 export const router = createBrowserRouter([
   {
@@ -10,5 +13,17 @@ export const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+  },
+  {
+    path: "/recovery-password/confirm-email",
+    element: <ConfirmEmailToRecoverPassword />,
+  },
+  {
+    path: "/confirm-otp",
+    element: <ConfirmOTP />,
+  },
+  {
+    path: "/update-password",
+    element: <UpdatePassword />,
   },
 ])

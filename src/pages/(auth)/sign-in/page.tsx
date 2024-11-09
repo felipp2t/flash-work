@@ -1,11 +1,12 @@
 import { Webhook } from "lucide-react";
 import { Link } from "react-router-dom";
 import { SignInForm } from "./_components/sign-in-form";
+import AuthImage from "/auth-image.png";
 
 export const SignInPage = () => {
   return (
-    <div className="grid h-full grid-cols-2">
-      <div className="grid place-content-center gap-6">
+    <div className="mt-20 flex h-full items-center justify-center p-6 xl:mt-0 xl:grid xl:grid-cols-[1fr,1fr] xl:p-0">
+      <div className="grid w-full place-content-center gap-6 xl:p-6">
         <div className="flex items-center gap-3">
           <Webhook className="text-primary" size={40} />
           <h1 className="text-4xl font-bold">FlashWork</h1>
@@ -21,14 +22,16 @@ export const SignInPage = () => {
         <SignInForm />
 
         <p className="text-center">
-          não possui uma conta?{" "}
-          <Link to="/register" className="text-primary hover:underline">
+          Não possui uma conta?{" "}
+          <Link to="/sign-up" className="text-primary hover:underline">
             Cadastre-se
           </Link>
         </p>
-
       </div>
-      <div className="bg-white bg-opacity-5"></div>
+
+      <div className="hidden h-full items-center justify-center bg-gradient-to-r from-background to-primary/10 xl:flex">
+        <img src={AuthImage} alt="Auth Image" className="max-w-md rounded-lg" />
+      </div>
     </div>
   );
 };

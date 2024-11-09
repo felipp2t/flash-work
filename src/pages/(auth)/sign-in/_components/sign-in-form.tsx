@@ -77,7 +77,7 @@ export const SignInForm = () => {
           )}
         />
 
-        <div className="space-y-2">
+        <div className="space-y-4">
           <Button
             className="flex w-full items-center"
             disabled={form.formState.isSubmitting || form.formState.isSubmitted}

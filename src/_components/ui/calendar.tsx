@@ -80,7 +80,11 @@ function Calendar({
                 </SelectTrigger>
                 <SelectContent>
                   {selectItems.map((item) => (
-                    <SelectItem value={item.value} className="capitalize">
+                    <SelectItem
+                      value={item.value}
+                      key={item.value}
+                      className="capitalize"
+                    >
                       {item.label}
                     </SelectItem>
                   ))}
@@ -118,7 +122,9 @@ function Calendar({
                 <SelectTrigger>{currentMonth.getFullYear()}</SelectTrigger>
                 <SelectContent>
                   {selectItems.map((item) => (
-                    <SelectItem value={item.value}>{item.label}</SelectItem>
+                    <SelectItem key={item.value} value={item.value}>
+                      {item.label}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>

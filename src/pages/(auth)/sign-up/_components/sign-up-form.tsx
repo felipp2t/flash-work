@@ -10,7 +10,9 @@ import {
 import { Input } from "@/_components/ui/input";
 import { Label } from "@/_components/ui/label";
 import { ScrollArea } from "@/_components/ui/scroll-area";
+import { signUp } from "@/_http/auth/sign-up";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { format } from "date-fns";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -49,8 +51,8 @@ const formSchema = z
 export type FormSchema = z.infer<typeof formSchema>;
 
 export const SignUpForm = () => {
-  const [profilePhoto, setProfilePhoto] = useState<File | null>(null);
   const navigate = useNavigate();
+  const [profilePhoto, setProfilePhoto] = useState<File | null>(null);
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -69,11 +71,18 @@ export const SignUpForm = () => {
 
   const onSubmit = async (data: FormSchema) => {
     try {
-      console.log(data);
+      await signUp({
+        ...data,
+        dateBirth: format(new Date(data.dateBirth), "yyyy-MM-dd"),
+        profilePhoto,
+      });
+
       toast.success("Cadastro realizado com sucesso", {
         duration: 5000,
         description: "Agora você já pode fazer login",
       });
+
+      navigate("/sign-in");
 
       navigate("/sign-in");
     } catch {
@@ -91,7 +100,7 @@ export const SignUpForm = () => {
           onSubmit={form.handleSubmit(onSubmit)}
           className="mx-auto flex w-full max-w-[700px] flex-col items-center gap-6"
         >
-          <div className="flex flex-col gap-6 sm:grid sm:grid-cols-2">
+          <div className="flex flex-col gap-6 p-1 sm:grid sm:grid-cols-2">
             <div className="mt-2.5 flex flex-col gap-2">
               <Label htmlFor="photo" className="flex-shrink-0">
                 Foto de Perfil
@@ -103,13 +112,6 @@ export const SignUpForm = () => {
                 onChange={handlePhotoChange}
                 className="w-full"
               />
-              {profilePhoto && (
-                <img
-                  src={URL.createObjectURL(profilePhoto)}
-                  alt="Profile Preview"
-                  className="h-10 w-10 rounded-full object-cover"
-                />
-              )}
             </div>
 
             <FormField
@@ -241,13 +243,13 @@ export const SignUpForm = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel htmlFor="confirmPassword">
-                    Senha <span className="text-red-800">*</span>
+                    Confirmar Senha <span className="text-red-800">*</span>
                   </FormLabel>
                   <FormControl>
                     <ConfirmInputPassword
                       field={field}
                       id="confirmPassword"
-                      placeholder="Adicione sua senha"
+                      placeholder="Confirme sua senha"
                       className="text-sm placeholder:text-sm"
                     />
                   </FormControl>

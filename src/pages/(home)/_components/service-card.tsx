@@ -8,6 +8,7 @@ import {
   CardFooter,
   CardHeader,
 } from "@/_components/ui/card";
+import { CATEGORIES } from "@/_constants/categories";
 import { format } from "date-fns";
 import { pt } from "date-fns/locale";
 
@@ -50,7 +51,7 @@ export const ServiceCard = ({ service }: ServiceCardProps) => {
         <div className="space-x-2">
           {service.categories.map((category) => (
             <Badge key={category.id} variant="outline">
-              {category.name}
+              {CATEGORIES[category.name as keyof typeof CATEGORIES]}
             </Badge>
           ))}
         </div>

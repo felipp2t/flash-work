@@ -51,6 +51,10 @@ const data = {
       isActive: true,
       items: [
         {
+          title: "Gerais",
+          url: "/services",
+        },
+        {
           title: "Região",
           url: "/services/region",
         },
@@ -61,10 +65,6 @@ const data = {
         {
           title: "Presenciais",
           url: "/services/on-site",
-        },
-        {
-          title: "Categorias",
-          url: "#",
         },
       ],
     },

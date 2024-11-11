@@ -8,14 +8,15 @@ import {
   FormMessage,
 } from "@/_components/ui/form";
 import { Input } from "@/_components/ui/input";
-import { signIn } from "@/_http/auth/sign-in/sign-in";
+import { signIn } from "@/_http/auth/sign-in";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { z } from "zod";
-import GoogleIcon from "/google-icon.png";
 import { InputPassword } from "./input-password";
+import GoogleIcon from "/google-icon.png";
 
 const formSchema = z.object({
   email: z
@@ -27,13 +28,17 @@ const formSchema = z.object({
 export type FormSchema = z.infer<typeof formSchema>;
 
 export const SignInForm = () => {
+  const navigate = useNavigate();
+
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
   });
 
   const onSubmit = async (data: FormSchema) => {
     try {
-      await signIn(data);
+      const { token } = await signIn(data);
+      localStorage.setItem("token", token);
+      navigate("/services/region");
     } catch {
       toast.error("Erro ao fazer login", {
         duration: 5000,

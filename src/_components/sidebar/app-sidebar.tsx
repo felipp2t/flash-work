@@ -2,12 +2,12 @@
 
 import {
   AudioWaveform,
-  BookOpen,
-  Bot,
+  BriefcaseBusiness,
   Command,
   GalleryVerticalEnd,
+  Map,
+  Search,
   Settings2,
-  SquareTerminal,
 } from "lucide-react";
 import * as React from "react";
 
@@ -47,7 +47,7 @@ const data = {
     {
       title: "Procurar Serviços",
       url: "/",
-      icon: SquareTerminal,
+      icon: Search,
       isActive: true,
       items: [
         {
@@ -71,7 +71,7 @@ const data = {
     {
       title: "Meus Serviços",
       url: "#",
-      icon: Bot,
+      icon: BriefcaseBusiness,
       items: [
         {
           title: "Meus Serviços",
@@ -86,7 +86,7 @@ const data = {
     {
       title: "Endereços",
       url: "#",
-      icon: BookOpen,
+      icon: Map,
     },
     {
       title: "Configurações",

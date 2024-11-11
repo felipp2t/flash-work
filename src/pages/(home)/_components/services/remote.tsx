@@ -1,3 +1,4 @@
+import { SkeletonCardService } from "@/_components/skeleton-card-service";
 import { getServicesByWorkType } from "@/_http/services/get-services-by-work-type";
 import { useQuery } from "@tanstack/react-query";
 import { ServiceCard } from "../service-card";
@@ -11,13 +12,15 @@ export const Remotes = () => {
 
   console.log(data);
 
-  if (!data) return;
-
   return (
     <>
-      {data.services.map((service) => (
-        <ServiceCard key={service.id} service={service} />
-      ))}
+      {!data
+        ? Array.from({ length: 20 }).map((_, i) => (
+            <SkeletonCardService key={i} />
+          ))
+        : data.services.map((service) => (
+            <ServiceCard key={service.id} service={service} />
+          ))}
     </>
   );
 };

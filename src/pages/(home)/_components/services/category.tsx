@@ -1,3 +1,4 @@
+import { SkeletonCardService } from "@/_components/skeleton-card-service";
 import { getServiceByCategory } from "@/_http/services/get-services-by-cateogory";
 import { useQuery } from "@tanstack/react-query";
 import { ServiceCard } from "../service-card";
@@ -12,13 +13,15 @@ export const Category = ({ categoryId }: CategoryProps) => {
     queryFn: async () => await getServiceByCategory({ categoryId }),
   });
 
-  if (!data) return;
-
   return (
     <>
-      {data.services.map((service) => (
-        <ServiceCard key={service.id} service={service} />
-      ))}
+      {!data
+        ? Array.from({ length: 20 }).map((_, i) => (
+            <SkeletonCardService key={i} />
+          ))
+        : data.services.map((service) => (
+            <ServiceCard key={service.id} service={service} />
+          ))}
     </>
   );
 };

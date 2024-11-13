@@ -6,6 +6,9 @@ import { OnSiteServicesPage } from "./pages/(home)/services/on-site/page";
 import { RegionsServicePage } from "./pages/(home)/services/regions/page";
 import { RemotesServicePage } from "./pages/(home)/services/remotes/page";
 import { RootLayout } from "./pages/layout";
+import { DepositMethodPage } from "./pages/me/deposit/method/page";
+import { DepositPage } from "./pages/me/deposit/page";
+import { MyServicesPage } from "./pages/me/services/page";
 
 export const router = createBrowserRouter([
   {
@@ -16,14 +19,11 @@ export const router = createBrowserRouter([
       { path: "/services/region", element: <RegionsServicePage /> },
       { path: "/services/remotes", element: <RemotesServicePage /> },
       { path: "/services/on-site", element: <OnSiteServicesPage /> },
+      { path: "/me/services", element: <MyServicesPage /> },
+      { path: "/me/deposit", element: <DepositPage /> },
+      { path: "/me/deposit/:method", element: <DepositMethodPage /> },
     ],
   },
-  {
-    path: "/sign-in",
-    element: <SignInPage />,
-  },
-  {
-    path: "/sign-up",
-    element: <SignUpPage />,
-  },
+  { path: "/sign-in", element: <SignInPage /> },
+  { path: "/sign-up", element: <SignUpPage /> },
 ]);

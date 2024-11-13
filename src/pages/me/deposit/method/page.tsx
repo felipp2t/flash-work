@@ -7,23 +7,32 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/_components/ui/dialog";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/_components/ui/tooltip";
 import { METHODS_PAYMENT } from "@/_constants/payment";
 import { getUserByToken } from "@/_http/get-user-by-token";
 import { useQuery } from "@tanstack/react-query";
 import {
   ArrowUpDown,
+  Check,
   CheckCircle,
   ChevronLeft,
   Clock,
+  Copy,
   Info,
   QrCode,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { DepositForm } from "./_components/deposit-form";
 
 export const DepositMethodPage = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState<"pending" | "completed">(
     "pending",
   );
@@ -41,6 +50,13 @@ export const DepositMethodPage = () => {
     queryFn: async () => await getUserByToken(),
   });
 
+  useEffect(() => {
+    if (isCopied) {
+      const timer = setTimeout(() => setIsCopied(false), 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [isCopied]);
+
   if (!data) return;
 
   const method = METHODS_PAYMENT.find(
@@ -55,6 +71,12 @@ export const DepositMethodPage = () => {
     setTimeout(() => {
       setIsDialogOpen(false);
     }, 6000);
+  };
+
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text).then(() => {
+      setIsCopied(true);
+    });
   };
 
   if (!method) return;
@@ -119,12 +141,33 @@ export const DepositMethodPage = () => {
           </DialogHeader>
           <Card className="bg-white bg-opacity-5">
             <CardContent className="p-6">
-              <div className="mb-4 flex items-center justify-center rounded-lg bg-white">
+              <div className="relative mb-4 flex items-center justify-center rounded-lg bg-white">
                 <img
                   src={`data:image/png;base64,${QRCode.qrCodeBase64}`}
                   alt=""
                   className="size-52"
                 />
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        className="absolute right-2 top-2"
+                        onClick={() => copyToClipboard(QRCode.qrCode)}
+                      >
+                        {isCopied ? (
+                          <Check className="size-4 text-primary" />
+                        ) : (
+                          <Copy className="size-4" />
+                        )}
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>{isCopied ? "Copied!" : "Copy QR Code"}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </div>
               <div className="space-y-2 text-center">
                 <p className="font-semibold">

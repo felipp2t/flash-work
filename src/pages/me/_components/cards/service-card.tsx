@@ -1,16 +1,20 @@
 import { ServiceResponse } from "@/@types/service/service-response";
-import { Avatar, AvatarFallback, AvatarImage } from "@/_components/ui/avatar";
 import { Badge } from "@/_components/ui/badge";
 import { Button } from "@/_components/ui/button";
 import {
   Card,
   CardContent,
+  CardDescription,
   CardFooter,
   CardHeader,
+  CardTitle,
 } from "@/_components/ui/card";
 import { CATEGORIES } from "@/_constants/categories";
+import { hanldeSplitBudget } from "@/_utils/split-budget";
 import { format } from "date-fns";
 import { pt } from "date-fns/locale";
+import { DeletionAlertDialog } from "../deletion-alert-dialog";
+import { EditServiceModal } from "../edit-service-modal";
 
 interface ServiceCardProps {
   service: ServiceResponse;
@@ -18,36 +22,12 @@ interface ServiceCardProps {
 
 export const ServiceCard = ({ service }: ServiceCardProps) => {
   return (
-    <Card
-      key={service.id}
-      className="flex h-full flex-col gap-6 rounded-lg border bg-white bg-opacity-5 p-6"
-    >
-      <CardHeader className="w-full flex-row items-center justify-around gap-6 p-0">
-        <Avatar className="size-24 shadow-md">
-          <AvatarFallback className="text-xl">FR</AvatarFallback>
-          <AvatarImage src={service.client.profilePicture} />
-        </Avatar>
-
-        <div>
-          <h2 className="text-2xl">{service.client.name}</h2>
-          {service.client.description && (
-            <p className="text-muted-foreground">
-              {service.client.description}
-            </p>
-          )}
-        </div>
+    <Card className="flex h-full flex-col gap-6 rounded-lg border bg-white bg-opacity-5 p-6">
+      <CardHeader className="p-0">
+        <CardTitle className="text-2xl font-bold">{service.title}</CardTitle>
+        <CardDescription>{service.description}</CardDescription>
       </CardHeader>
-
       <CardContent className="flex flex-col gap-4 p-0">
-        <h2 className="text-xl font-semibold text-primary">{service.title}</h2>
-
-        <div className="space-y-1">
-          <h2 className="text-sm text-muted-foreground">
-            Detalhes do serviço:
-          </h2>
-          <p className="line-clamp-2 text-sm">{service.description}</p>
-        </div>
-
         <div className="space-x-2">
           {service.categories.map((category) => (
             <Badge key={category.id} variant="outline">
@@ -60,11 +40,16 @@ export const ServiceCard = ({ service }: ServiceCardProps) => {
           <div>
             <h2 className="text-sm text-muted-foreground">Valor do cliente:</h2>
             <p className="text-sm font-semibold text-primary">
+              {service.budget.split("-")[0] !== "0" &&
+                Intl.NumberFormat("pt-BR", {
+                  currency: "BRL",
+                  style: "currency",
+                }).format(Number(hanldeSplitBudget(service.budget).min))}{" "}
               até{" "}
               {Intl.NumberFormat("pt-BR", {
                 currency: "BRL",
                 style: "currency",
-              }).format(Number(service.budget))}
+              }).format(Number(hanldeSplitBudget(service.budget).max))}
             </p>
           </div>
           <div>
@@ -77,14 +62,18 @@ export const ServiceCard = ({ service }: ServiceCardProps) => {
           <h2 className="text-sm text-muted-foreground">
             Prazo para candidatura:
           </h2>
-          <p className="text-sm font-semibold text-primary">
+          <p className="text-sm font-semibold">
             até {format(service.deadline, "PPP", { locale: pt })}
           </p>
         </div>
       </CardContent>
 
-      <CardFooter className="mt-auto p-0">
-        <Button className="w-full">Mais detalhes</Button>
+      <CardFooter className="mt-auto flex flex-col gap-2 p-0">
+        <div className="flex w-full gap-2">
+          <EditServiceModal service={service} />
+          <DeletionAlertDialog serviceId={service.id} />
+        </div>
+        <Button className="w-full">Ver Cadidatos (03)</Button>
       </CardFooter>
     </Card>
   );

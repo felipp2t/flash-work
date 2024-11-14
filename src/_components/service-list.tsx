@@ -6,6 +6,6 @@ interface ServiceListProps {
 
 export const ServiceList = ({ children }: ServiceListProps) => {
   return (
-    <div className="grid grid-cols-1 gap-6 xl:grid-cols-4">{children}</div>
+    <div className="grid grid-cols-1 gap-y-20 gap-x-6  xl:grid-cols-4">{children}</div>
   );
 };

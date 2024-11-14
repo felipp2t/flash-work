@@ -75,11 +75,11 @@ const data = {
       items: [
         {
           title: "Meus Serviços",
-          url: "#",
+          url: "/me/services",
         },
         {
           title: "Minhas Propostas",
-          url: "#",
+          url: "/me/proposals",
         },
       ],
     },

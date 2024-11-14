@@ -6,7 +6,7 @@ export interface ServiceResponse {
   title: string;
   description: string;
   budget: string;
-  workType: "REMOTO" | "PRESENCIAL";
+  workType: "REMOTE" | "ONSITE";
   deadline: string;
   location: string;
   createdAt: string;

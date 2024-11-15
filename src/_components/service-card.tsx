@@ -12,6 +12,7 @@ import { CATEGORIES } from "@/_constants/categories";
 import { hanldeSplitBudget } from "@/_utils/split-budget";
 import { format } from "date-fns";
 import { pt } from "date-fns/locale";
+import { Link } from "react-router-dom";
 
 interface ServiceCardProps {
   service: ServiceResponse;
@@ -92,7 +93,9 @@ export const ServiceCard = ({ service }: ServiceCardProps) => {
       </CardContent>
 
       <CardFooter className="mt-auto p-0">
-        <Button className="w-full font-semibold">Mais detalhes</Button>
+        <Button className="w-full font-semibold" asChild>
+          <Link to={`/services/${service.id}`}>Mais detalhes</Link>
+        </Button>
       </CardFooter>
     </Card>
   );

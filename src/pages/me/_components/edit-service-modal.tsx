@@ -42,7 +42,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { ChangeCategoryModal } from "./change-category-modal";
-import { MoneyInput } from "./money-input";
+import { MoneyInput } from "../../../_components/money-input";
 import { ChangeLocationModal } from "./change-location-modal";
 
 const formSchema = z.object({

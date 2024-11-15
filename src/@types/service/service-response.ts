@@ -7,9 +7,9 @@ export interface ServiceResponse {
   description: string;
   budget: string;
   workType: "REMOTE" | "ONSITE";
-  deadline: string;
+  deadline: Date;
   location: string;
-  createdAt: string;
+  createdAt: Date;
   client: UserMin;
   categories: Category[];
 }

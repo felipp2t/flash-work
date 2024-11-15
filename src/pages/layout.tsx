@@ -35,7 +35,7 @@ export const RootLayout = () => {
           </div>
         </header>
 
-        <div className="p-8">
+        <div className="p-8 h-full">
           <Outlet />
         </div>
       </SidebarInset>

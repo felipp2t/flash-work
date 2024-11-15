@@ -5,6 +5,7 @@ import { ServicesPage } from "./pages/(home)/page";
 import { OnSiteServicesPage } from "./pages/(home)/services/on-site/page";
 import { RegionsServicePage } from "./pages/(home)/services/regions/page";
 import { RemotesServicePage } from "./pages/(home)/services/remotes/page";
+import { ServiceDetails } from "./pages/(home)/services/service-details/page";
 import { RootLayout } from "./pages/layout";
 import { DepositMethodPage } from "./pages/me/deposit/method/page";
 import { DepositPage } from "./pages/me/deposit/page";
@@ -16,6 +17,7 @@ export const router = createBrowserRouter([
     element: <RootLayout />,
     children: [
       { path: "/services", element: <ServicesPage /> },
+      { path: "/services/:id", element: <ServiceDetails /> },
       { path: "/services/region", element: <RegionsServicePage /> },
       { path: "/services/remotes", element: <RemotesServicePage /> },
       { path: "/services/on-site", element: <OnSiteServicesPage /> },

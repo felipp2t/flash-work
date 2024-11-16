@@ -13,7 +13,7 @@ import { getCategories } from "@/_http/categories/get-categories";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { ServiceList } from "./_components/service-list";
+import { ServiceList } from "../../_components/service-list";
 import { Category } from "./_components/services/category";
 
 export const ServicesPage = () => {

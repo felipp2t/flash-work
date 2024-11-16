@@ -1,17 +1,17 @@
 import { PageTitle } from "@/_components/page-title";
 import { ServiceList } from "@/_components/service-list";
-import { MyServices } from "../_components/services/my-services";
+import { MyProposals } from "../_components/proposals/my-proposals";
 
-export const MyServicesPage = () => {
+export const MyProposalsPage = () => {
   return (
     <div className="flex flex-1 flex-col gap-16 p-4">
       <div className="flex w-full justify-between">
-        <PageTitle title="Meus Serviços" />
+        <PageTitle title="Minhas Propostas" />
       </div>
 
       <div className="flex flex-col gap-16">
         <ServiceList>
-          <MyServices />
+          <MyProposals />
         </ServiceList>
       </div>
     </div>

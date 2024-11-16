@@ -27,6 +27,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { z } from "zod";
+import { CreationAlertDialog } from "./creation-alert-dialog";
 
 interface FormProposalData {
   amount: {
@@ -50,7 +51,7 @@ const formSchema = ({ amount }: FormProposalData) =>
     estimatedCompletionTime: z.date(),
   });
 
-type FormSchema = z.infer<ReturnType<typeof formSchema>>;
+export type FormSchema = z.infer<ReturnType<typeof formSchema>>;
 
 interface ProposalFormProps {
   service: ServiceResponse;
@@ -94,6 +95,13 @@ export const ProposalForm = ({ service, toggleFlip }: ProposalFormProps) => {
         duration: 5000,
       });
     }
+  };
+
+  const handleAlertSubmit = async () => {
+    await form.trigger(); // Valida os campos do formulário
+    if (!form.formState.isValid) return; // Não continua se o formulário não for válido
+
+    onSubmit(form.getValues()); // Envia os dados do formulário
   };
 
   return (
@@ -213,9 +221,7 @@ export const ProposalForm = ({ service, toggleFlip }: ProposalFormProps) => {
               Visualizar Serviço
             </Button>
 
-            <Button type="submit" className="w-1/2">
-              Enviar Proposta
-            </Button>
+            <CreationAlertDialog onSubmit={handleAlertSubmit} />
           </div>
         </form>
       </Form>

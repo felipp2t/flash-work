@@ -6,6 +6,7 @@ import {
   Command,
   GalleryVerticalEnd,
   Map,
+  MessageCircleMore,
   Search,
   Settings2,
 } from "lucide-react";
@@ -46,9 +47,8 @@ const data = {
   navMain: [
     {
       title: "Procurar Serviços",
-      url: "/",
+      url: "#",
       icon: Search,
-      isActive: true,
       items: [
         {
           title: "Gerais",
@@ -70,8 +70,8 @@ const data = {
     },
     {
       title: "Meus Serviços",
-      url: "#",
       icon: BriefcaseBusiness,
+      url: "#",
       items: [
         {
           title: "Meus Serviços",
@@ -87,6 +87,23 @@ const data = {
       title: "Endereços",
       url: "#",
       icon: Map,
+      items: [
+        {
+          title: "Meus Endereços",
+          url: "/me/addresses",
+        },
+      ],
+    },
+    {
+      title: "Conversas",
+      url: "#",
+      icon: MessageCircleMore,
+      items: [
+        {
+          title: "Minhas Conversas",
+          url: "/me/chats",
+        },
+      ],
     },
     {
       title: "Configurações",
@@ -95,7 +112,7 @@ const data = {
       items: [
         {
           title: "Temas",
-          url: "#",
+          url: "/me/settings/themes",
         },
       ],
     },

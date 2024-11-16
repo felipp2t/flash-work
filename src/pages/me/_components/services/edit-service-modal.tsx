@@ -41,8 +41,8 @@ import { CalendarIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { MoneyInput } from "../../../../_components/money-input";
 import { ChangeCategoryModal } from "./change-category-modal";
-import { MoneyInput } from "../../../_components/money-input";
 import { ChangeLocationModal } from "./change-location-modal";
 
 const formSchema = z.object({
@@ -209,7 +209,7 @@ export const EditServiceModal = ({ service }: EditServiceModalProps) => {
                   <FormItem className="col-span-4">
                     <FormLabel htmlFor="location">Localização</FormLabel>
 
-                     <ChangeLocationModal field={field} /> 
+                    <ChangeLocationModal field={field} />
 
                     <FormMessage />
                   </FormItem>

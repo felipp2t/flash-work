@@ -1,7 +1,7 @@
 import { SkeletonCardService } from "@/_components/skeleton-card-service";
 import { getServiceByCategory } from "@/_http/services/get-services-by-cateogory";
 import { useQuery } from "@tanstack/react-query";
-import { ServiceCard } from "../service-card";
+import { ServiceCard } from "../../../../_components/service-card";
 
 interface CategoryProps {
   categoryId: string;

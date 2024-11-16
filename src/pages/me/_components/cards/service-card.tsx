@@ -13,8 +13,8 @@ import { CATEGORIES } from "@/_constants/categories";
 import { hanldeSplitBudget } from "@/_utils/split-budget";
 import { format } from "date-fns";
 import { pt } from "date-fns/locale";
-import { DeletionAlertDialog } from "../deletion-alert-dialog";
-import { EditServiceModal } from "../edit-service-modal";
+import { DeletionAlertDialog } from "../services/deletion-alert-dialog";
+import { EditServiceModal } from "../services/edit-service-modal";
 
 interface ServiceCardProps {
   service: ServiceResponse;

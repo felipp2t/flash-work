@@ -1,7 +1,7 @@
 import { SkeletonCardService } from "@/_components/skeleton-card-service";
 import { getServicesByUser } from "@/_http/services/get-services-by-user";
 import { useQuery } from "@tanstack/react-query";
-import { ServiceCard } from "./cards/service-card";
+import { ServiceCard } from "../cards/service-card";
 
 export const MyServices = () => {
   const { data } = useQuery({

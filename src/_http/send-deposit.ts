@@ -26,7 +26,10 @@ export const sendDeposit = async (
   const token = localStorage.getItem("token");
   const { data: payment }: { data: QRCode } = await axios.post(
     `${env.BACKEND_ENDPOINT}/process_payment/pix`,
-    params,
+    {
+      ...params,
+      description: params.description || "Deposit",
+    },
     {
       headers: {
         Authorization: `Bearer ${token}`,

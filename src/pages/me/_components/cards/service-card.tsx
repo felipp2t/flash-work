@@ -13,6 +13,8 @@ import { CATEGORIES } from "@/_constants/categories";
 import { hanldeSplitBudget } from "@/_utils/split-budget";
 import { format } from "date-fns";
 import { pt } from "date-fns/locale";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 import { DeletionAlertDialog } from "../services/deletion-alert-dialog";
 import { EditServiceModal } from "../services/edit-service-modal";
 
@@ -21,6 +23,18 @@ interface ServiceCardProps {
 }
 
 export const ServiceCard = ({ service }: ServiceCardProps) => {
+  const navigate = useNavigate();
+
+  const handleVerifyIfExistProposal = () => {
+    if (service.proposalQuantity === 0) {
+      return toast(
+        `O serviço "${service.title}" não possui propostas enviadas`,
+      );
+    }
+
+    navigate(`/me/services/${service.id}`);
+  };
+
   return (
     <Card className="flex h-full flex-col gap-6 rounded-lg border bg-white bg-opacity-5 p-6">
       <CardHeader className="p-0">
@@ -73,7 +87,12 @@ export const ServiceCard = ({ service }: ServiceCardProps) => {
           <EditServiceModal service={service} />
           <DeletionAlertDialog serviceId={service.id} />
         </div>
-        <Button className="w-full">Ver Cadidatos (03)</Button>
+        <Button className="w-full" onClick={handleVerifyIfExistProposal}>
+          {service.proposalQuantity === 0
+            ? 0
+            : String(service.proposalQuantity).padStart(2, "0")}{" "}
+          propostas enviadas
+        </Button>
       </CardFooter>
     </Card>
   );

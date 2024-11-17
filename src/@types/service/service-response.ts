@@ -12,4 +12,5 @@ export interface ServiceResponse {
   createdAt: Date;
   client: UserMin;
   categories: Category[];
+  proposalQuantity: number
 }

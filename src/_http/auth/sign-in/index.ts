@@ -22,7 +22,6 @@ export const signIn = async (
     `${env.BACKEND_ENDPOINT}/auth/login`,
     params,
   );
-  console.log(token)
-
+  
   return { token };
 };

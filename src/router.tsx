@@ -12,6 +12,7 @@ import { DepositMethodPage } from "./pages/me/deposit/method/page";
 import { DepositPage } from "./pages/me/deposit/page";
 import { MyProposalsPage } from "./pages/me/proposals/page";
 import { MyServicesPage } from "./pages/me/services/page";
+import { ServiceProposalsPage } from "./pages/me/services/proposals/page";
 
 export const router = createBrowserRouter([
   {
@@ -25,6 +26,7 @@ export const router = createBrowserRouter([
       { path: "/services/on-site", element: <OnSiteServicesPage /> },
       { path: "/me/chats", element: <ChatsPage /> },
       { path: "/me/services", element: <MyServicesPage /> },
+      { path: "/me/services/:id", element: <ServiceProposalsPage /> },
       { path: "/me/proposals", element: <MyProposalsPage /> },
       { path: "/me/deposit", element: <DepositPage /> },
       { path: "/me/deposit/:method", element: <DepositMethodPage /> },

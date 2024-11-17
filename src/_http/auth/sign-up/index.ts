@@ -16,8 +16,6 @@ interface signUpRequest {
 export const signUp = async (params: signUpRequest): Promise<void> => {
   signUpSchema.parse(params);
 
-  console.log(params)
-
   await axios.post(`${env.BACKEND_ENDPOINT}/auth/register`, {
     ...params,
     birthDate: params.dateBirth

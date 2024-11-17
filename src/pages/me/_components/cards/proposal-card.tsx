@@ -31,7 +31,7 @@ export const ProposalCard = ({ proposal }: ProposalCardProps) => {
   if (!data) return;
 
   return (
-    <Card className="flex h-full w-full flex-col">
+    <Card className="flex h-full w-full flex-col bg-white/5">
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle className="line-clamp-2 text-xl font-bold">
@@ -50,7 +50,7 @@ export const ProposalCard = ({ proposal }: ProposalCardProps) => {
         </div>
         <div className="flex items-center justify-between">
           <div className="flex items-center">
-            <DollarSign className="mr-2 size-5 text-green-600" />
+            <DollarSign className="mr-2 size-5 text-primary" />
             <span className="font-semibold">Valor da Oferta</span>
           </div>
           <span className="text-lg font-bold">

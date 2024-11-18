@@ -8,7 +8,6 @@ import {
   Map,
   MessageCircleMore,
   Search,
-  Settings2,
 } from "lucide-react";
 import * as React from "react";
 
@@ -102,17 +101,6 @@ const data = {
         {
           title: "Minhas Conversas",
           url: "/me/chats",
-        },
-      ],
-    },
-    {
-      title: "Configurações",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "Temas",
-          url: "/me/settings/themes",
         },
       ],
     },

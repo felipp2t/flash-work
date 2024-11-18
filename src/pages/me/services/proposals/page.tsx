@@ -1,6 +1,6 @@
-import { PageTitle } from "@/_components/page-title";
-import { ServiceList } from "@/_components/service-list";
-import { ServiceProposals } from "../../_components/services/proposals/service-proposals";
+import { PageTitle } from "@/components/page-title";
+import { ServiceList } from "@/components/service-list";
+import { ServiceProposals } from "../../components/services/proposals/service-proposals";
 
 export const ServiceProposalsPage = () => {
   return (

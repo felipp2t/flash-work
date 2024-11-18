@@ -1,11 +1,12 @@
-import { AppSidebar } from "@/_components/sidebar/app-sidebar";
-import { Button } from "@/_components/ui/button";
-import { Separator } from "@/_components/ui/separator";
+import { ModeToggle } from "@/components/mode-toggle";
+import { AppSidebar } from "@/components/sidebar/app-sidebar";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
-} from "@/_components/ui/sidebar";
+} from "@/components/ui/sidebar";
 import { Wallet, Webhook } from "lucide-react";
 import { Link, Outlet } from "react-router-dom";
 
@@ -26,16 +27,18 @@ export const RootLayout = () => {
             </Link>
           </div>
 
-          <div className="mr-12">
+          <div className="mr-12 flex items-center gap-4">
             <Button asChild variant="outline" className="aspect-square p-0">
               <Link to="/me/deposit">
                 <Wallet className="size-4" />
               </Link>
             </Button>
+
+            <ModeToggle />
           </div>
         </header>
 
-        <div className="p-8 h-full">
+        <div className="h-full p-8">
           <Outlet />
         </div>
       </SidebarInset>

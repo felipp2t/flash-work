@@ -1,7 +1,7 @@
 import { ServiceResponse } from "@/@types/service/service-response";
-import { MoneyInput } from "@/_components/money-input";
-import { Button } from "@/_components/ui/button";
-import { CalendarEditService } from "@/_components/ui/calendar-edit-service";
+import { MoneyInput } from "@/components/money-input";
+import { Button } from "@/components/ui/button";
+import { CalendarEditService } from "@/components/ui/calendar-edit-service";
 import {
   Form,
   FormControl,
@@ -9,17 +9,17 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/_components/ui/form";
-import { Input } from "@/_components/ui/input";
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/_components/ui/popover";
-import { Textarea } from "@/_components/ui/textarea";
-import { sendProposal } from "@/_http/proposals/send-proposal";
-import { cn } from "@/_lib/utils";
-import { hanldeSplitBudget } from "@/_utils/split-budget";
+} from "@/components/ui/popover";
+import { Textarea } from "@/components/ui/textarea";
+import { sendProposal } from "@/http/proposals/send-proposal";
+import { cn } from "@/lib/utils";
+import { hanldeSplitBudget } from "@/utils/split-budget";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ptBR } from "date-fns/locale";
 import { CalendarIcon } from "lucide-react";

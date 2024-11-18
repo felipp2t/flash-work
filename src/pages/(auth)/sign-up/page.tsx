@@ -1,6 +1,6 @@
 import { Webhook } from "lucide-react";
 import { Link } from "react-router-dom";
-import { SignUpForm } from "./_components/sign-up-form";
+import { SignUpForm } from "./components/sign-up-form";
 import AuthImage from "/auth-image-2.png";
 
 export const SignUpPage = () => {

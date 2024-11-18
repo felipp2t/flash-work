@@ -11,14 +11,14 @@ import {
 } from "lucide-react";
 import * as React from "react";
 
-import { NavMain } from "@/_components/sidebar/nav-main";
-import { NavUser } from "@/_components/sidebar/nav-user";
+import { NavMain } from "@/components/sidebar/nav-main";
+import { NavUser } from "@/components/sidebar/nav-user";
 import {
   Sidebar,
   SidebarContent,
   SidebarHeader,
   SidebarRail,
-} from "@/_components/ui/sidebar";
+} from "@/components/ui/sidebar";
 
 const data = {
   user: {

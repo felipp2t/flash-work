@@ -1,15 +1,15 @@
 import { ServiceResponse } from "@/@types/service/service-response";
-import { Avatar, AvatarFallback, AvatarImage } from "@/_components/ui/avatar";
-import { Badge } from "@/_components/ui/badge";
-import { Button } from "@/_components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
-} from "@/_components/ui/card";
-import { CATEGORIES } from "@/_constants/categories";
-import { hanldeSplitBudget } from "@/_utils/split-budget";
+} from "@/components/ui/card";
+import { CATEGORIES } from "@/constants/categories";
+import { hanldeSplitBudget } from "@/utils/split-budget";
 import { format } from "date-fns";
 import { pt } from "date-fns/locale";
 import { Link } from "react-router-dom";

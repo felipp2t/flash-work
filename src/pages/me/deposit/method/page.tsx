@@ -1,20 +1,20 @@
 import { QRCode } from "@/@types/qr-code";
-import { Button } from "@/_components/ui/button";
-import { Card, CardContent } from "@/_components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@/_components/ui/dialog";
+} from "@/components/ui/dialog";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/_components/ui/tooltip";
-import { METHODS_PAYMENT } from "@/_constants/payment";
-import { getUserByToken } from "@/_http/get-user-by-token";
+} from "@/components/ui/tooltip";
+import { METHODS_PAYMENT } from "@/constants/payment";
+import { getUserByToken } from "@/http/user/get-user-by-token";
 import { useQuery } from "@tanstack/react-query";
 import {
   ArrowUpDown,
@@ -28,7 +28,7 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { DepositForm } from "./_components/deposit-form";
+import { DepositForm } from "./components/deposit-form";
 
 export const DepositMethodPage = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);

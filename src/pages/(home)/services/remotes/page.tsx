@@ -1,6 +1,6 @@
-import { PageTitle } from "@/_components/page-title";
-import { ServiceList } from "../../_components/service-list";
-import { Remotes } from "../../_components/services/remote";
+import { PageTitle } from "@/components/page-title";
+import { ServiceList } from "../../../../components/service-list";
+import { Remotes } from "../../components/services/remote";
 
 export const RemotesServicePage = () => {
   return (

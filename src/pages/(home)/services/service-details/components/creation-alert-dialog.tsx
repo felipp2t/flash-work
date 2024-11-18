@@ -8,8 +8,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/_components/ui/alert-dialog";
-import { Button } from "@/_components/ui/button";
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
 
 interface CreationAlertDialogProps {
   onSubmit: () => Promise<void>;
@@ -33,10 +33,7 @@ export const CreationAlertDialog = ({ onSubmit }: CreationAlertDialogProps) => {
         <AlertDialogFooter>
           <AlertDialogCancel>Cancelar</AlertDialogCancel>
           <AlertDialogAction asChild>
-            <Button
-              type="button"
-              onClick={onSubmit}
-            >
+            <Button type="button" onClick={onSubmit}>
               Enviar Proposta
             </Button>
           </AlertDialogAction>

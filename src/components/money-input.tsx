@@ -1,4 +1,4 @@
-import { Input, InputProps } from "@/_components/ui/input";
+import { Input, InputProps } from "@/components/ui/input";
 import React, { forwardRef } from "react";
 import { NumericFormat, NumericFormatProps } from "react-number-format";
 

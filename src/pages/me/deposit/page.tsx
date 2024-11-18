@@ -1,6 +1,6 @@
-import { Button } from "@/_components/ui/button";
-import { Card, CardContent } from "@/_components/ui/card";
-import { METHODS_PAYMENT } from "@/_constants/payment";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { METHODS_PAYMENT } from "@/constants/payment";
 import { ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 

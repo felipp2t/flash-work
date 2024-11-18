@@ -1,6 +1,6 @@
-import { PageTitle } from "@/_components/page-title";
-import { ServiceList } from "@/_components/service-list";
-import { MyServices } from "../_components/services/my-services";
+import { PageTitle } from "@/components/page-title";
+import { ServiceList } from "@/components/service-list";
+import { MyServices } from "../components/services/my-services";
 
 export const MyServicesPage = () => {
   return (

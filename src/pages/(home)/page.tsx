@@ -1,4 +1,4 @@
-import { PageTitle } from "@/_components/page-title";
+import { PageTitle } from "@/components/page-title";
 import {
   Select,
   SelectContent,
@@ -7,14 +7,14 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/_components/ui/select";
-import { CATEGORIES } from "@/_constants/categories";
-import { getCategories } from "@/_http/categories/get-categories";
+} from "@/components/ui/select";
+import { CATEGORIES } from "@/constants/categories";
+import { getCategories } from "@/http/categories/get-categories";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { ServiceList } from "../../_components/service-list";
-import { Category } from "./_components/services/category";
+import { ServiceList } from "../../components/service-list";
+import { Category } from "./components/services/category";
 
 export const ServicesPage = () => {
   const [categoryId, setCategoryId] = useState("");

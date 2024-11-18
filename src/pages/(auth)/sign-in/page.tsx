@@ -1,6 +1,6 @@
 import { Webhook } from "lucide-react";
 import { Link } from "react-router-dom";
-import { SignInForm } from "./_components/sign-in-form";
+import { SignInForm } from "./components/sign-in-form";
 import AuthImage from "/auth-image.png";
 
 export const SignInPage = () => {

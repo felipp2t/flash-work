@@ -1,6 +1,6 @@
-import { PageTitle } from "@/_components/page-title";
-import { ServiceList } from "../../_components/service-list";
-import { OnSite } from "../../_components/services/onsite";
+import { PageTitle } from "@/components/page-title";
+import { ServiceList } from "../../../../components/service-list";
+import { OnSite } from "../../components/services/onsite";
 
 export const OnSiteServicesPage = () => {
   return (

@@ -1,4 +1,4 @@
-import { CATEGORIES } from "@/_constants/categories";
+import { CATEGORIES } from "@/constants/categories";
 
 export interface Category {
   id: string;

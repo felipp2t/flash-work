@@ -5,10 +5,8 @@ import { ComponentProps, useState } from "react";
 import { ControllerRenderProps } from "react-hook-form";
 import { FormSchema } from "./sign-in-form";
 
-type Value = FormSchema;
-
 interface InputPasswordProps extends ComponentProps<"input"> {
-  field: ControllerRenderProps<Value, "password">;
+  field: ControllerRenderProps<FormSchema, "password">;
 }
 
 export const InputPassword = ({ field, ...props }: InputPasswordProps) => {

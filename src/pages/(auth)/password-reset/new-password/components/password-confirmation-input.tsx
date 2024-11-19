@@ -1,19 +1,18 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
 import { Eye, EyeOff } from "lucide-react";
 import { ComponentProps, useState } from "react";
 import { ControllerRenderProps } from "react-hook-form";
-import { FormSchema } from "./sign-up-form";
+import { FormSchema } from "./form";
 
-interface InputPasswordProps extends ComponentProps<"input"> {
-  field: ControllerRenderProps<FormSchema, "confirmPassword">;
+interface PasswordConfirmatioProps extends ComponentProps<"input"> {
+  field: ControllerRenderProps<FormSchema, "passwordConfirmation">;
 }
 
-export const ConfirmInputPassword = ({
+export const PasswordConfirmationInput = ({
   field,
   ...props
-}: InputPasswordProps) => {
+}: PasswordConfirmatioProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -22,7 +21,7 @@ export const ConfirmInputPassword = ({
         {...field}
         {...props}
         type={showPassword ? "text" : "password"}
-        className={cn("pr-10", props.className)}
+        className="pr-10"
       />
       <Button
         type="button"

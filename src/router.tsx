@@ -1,4 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
+import { PasswordResetEmailPage } from "./pages/(auth)/password-reset/email/page";
+import { NewPasswordPage } from "./pages/(auth)/password-reset/new-password/page";
+import { PasswordResetOTPPage } from "./pages/(auth)/password-reset/otp/page";
 import { SignInPage } from "./pages/(auth)/sign-in/page";
 import { SignUpPage } from "./pages/(auth)/sign-up/page";
 import { ServicesPage } from "./pages/(home)/page";
@@ -34,4 +37,7 @@ export const router = createBrowserRouter([
   },
   { path: "/sign-in", element: <SignInPage /> },
   { path: "/sign-up", element: <SignUpPage /> },
+  { path: "/password-reset/email", element: <PasswordResetEmailPage /> },
+  { path: "/password-reset/otp", element: <PasswordResetOTPPage /> },
+  { path: "/password-reset/new-password", element: <NewPasswordPage /> },
 ]);

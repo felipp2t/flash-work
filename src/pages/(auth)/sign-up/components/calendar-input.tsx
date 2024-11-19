@@ -13,10 +13,8 @@ import { CalendarIcon } from "lucide-react";
 import { ControllerRenderProps } from "react-hook-form";
 import { FormSchema } from "./sign-up-form";
 
-type Value = FormSchema;
-
 interface CalendarInputProps {
-  field: ControllerRenderProps<Value, "dateBirth">;
+  field: ControllerRenderProps<FormSchema, "dateBirth">;
 }
 
 export const CalendarInput = ({ field }: CalendarInputProps) => {

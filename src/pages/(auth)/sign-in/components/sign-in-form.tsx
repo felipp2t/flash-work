@@ -12,7 +12,7 @@ import { signIn } from "@/http/auth/sign-in";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { z } from "zod";
 import { InputPassword } from "./input-password";
@@ -73,7 +73,15 @@ export const SignInForm = () => {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel htmlFor="password">Senha</FormLabel>
+              <div className="flex items-center justify-between">
+                <FormLabel htmlFor="password">Senha</FormLabel>
+                <Link
+                  to="/password-reset/email"
+                  className="text-sm text-muted-foreground hover:underline"
+                >
+                  Esqueceu a senha?
+                </Link>
+              </div>
               <FormControl>
                 <InputPassword field={field} placeholder="Adicione sua senha" />
               </FormControl>
@@ -85,9 +93,9 @@ export const SignInForm = () => {
         <div className="space-y-4">
           <Button
             className="flex w-full items-center"
-            disabled={form.formState.isSubmitting || form.formState.isSubmitted}
+            disabled={form.formState.isSubmitting}
           >
-            {form.formState.isSubmitting || form.formState.isSubmitted ? (
+            {form.formState.isSubmitting ? (
               <>
                 <Loader2 className="animate-spin" />
                 <p>Entrando...</p>

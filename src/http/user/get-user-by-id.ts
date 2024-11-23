@@ -1,6 +1,5 @@
-import { User } from "@/@types/user";
-import { env } from "@/env";
-import axios from "axios";
+import { User } from "@/@types/user/user";
+import { api } from "@/lib/api";
 
 interface GetUserByIdRequest {
   userId: string;
@@ -13,8 +12,8 @@ interface GetUserByIdResponse {
 export const getUserById = async ({
   userId,
 }: GetUserByIdRequest): Promise<GetUserByIdResponse> => {
-  const { data: user }: { data: User } = await axios.get(
-    `${env.BACKEND_ENDPOINT}/users/${userId}/profile`,
+  const { data: user }: { data: User } = await api.get(
+    `/users/${userId}/profile`,
   );
 
   return { user };

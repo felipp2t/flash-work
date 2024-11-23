@@ -11,21 +11,19 @@ import {
 import { FormControl } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { ADDRESS_TYPE } from "@/constants/address";
-import { getAddressesByUser } from "@/http/get-addresses-by-user";
+import { getAddressesByUser } from "@/http/addresses/get-addresses-by-user";
 import { useQuery } from "@tanstack/react-query";
 import { Building2, House, MapPinned } from "lucide-react";
 import { ControllerRenderProps } from "react-hook-form";
 import { FormSchema } from "./edit-service-modal";
 
-type Value = FormSchema;
-
 interface ChangeLocationModalProps {
-  field: ControllerRenderProps<Value, "location">;
+  field: ControllerRenderProps<FormSchema, "location">;
 }
 
 export const ChangeLocationModal = ({ field }: ChangeLocationModalProps) => {
   const { data } = useQuery({
-    queryKey: ["get-user-by-token"],
+    queryKey: ["get-address-by-user"],
     queryFn: async () => await getAddressesByUser(),
     staleTime: 1000 * 60 * 15,
   });
@@ -60,11 +58,11 @@ export const ChangeLocationModal = ({ field }: ChangeLocationModalProps) => {
                 <p className="text-xl font-bold uppercase text-primary">
                   {ADDRESS_TYPE[address.type]}
                 </p>
-                <div>
+                <p>
                   {address.state}, {address.neighborhood} - {address.street},{" "}
                   {address.houseNumber || address.apartmentNumber},{" "}
                   {address.postalCode}
-                </div>
+                </p>
               </div>
             </CardContent>
           </Card>

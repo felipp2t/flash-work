@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { createChat } from "@/http/chat/create-chat";
 import { useMutation } from "@tanstack/react-query";
-import { MessageSquare } from "lucide-react";
+import { Loader2, MessageSquare } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
@@ -11,7 +11,7 @@ interface CreateChatButtonProps {
 
 export const CreateChatButton = ({ userId }: CreateChatButtonProps) => {
   const navigate = useNavigate();
-  const { mutateAsync } = useMutation({
+  const { mutateAsync, isPending } = useMutation({
     mutationKey: ["create-chat", userId],
     mutationFn: async ({ userId }: { userId: string }) =>
       await createChat({ userId }),
@@ -38,8 +38,17 @@ export const CreateChatButton = ({ userId }: CreateChatButtonProps) => {
       className="flex-1"
       onClick={() => handleCreateChat(userId)}
     >
-      <MessageSquare className="mr-2 size-4" />
-      Chat com o cliente
+      {isPending ? (
+        <>
+          <Loader2 className="animate-spin" />
+          Criando...
+        </>
+      ) : (
+        <>
+          <MessageSquare className="mr-2 size-4" />
+          Chat com o cliente
+        </>
+      )}
     </Button>
   );
 };

@@ -1,5 +1,5 @@
 import { QRCode } from "@/@types/qr-code";
-import { User } from "@/@types/user";
+import { User } from "@/@types/user/user";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";

@@ -1,9 +1,7 @@
-import { Message } from "./message";
-import { User } from "./user";
+import { UserMin } from "./user-min";
 
 export interface Chat {
   chatId: string;
   createdAt: Date;
-  users: User[];
-  messages: Message[];
+  users: UserMin[];
 }

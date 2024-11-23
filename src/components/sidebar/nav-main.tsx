@@ -2,6 +2,7 @@
 
 import { ChevronRight, type LucideIcon } from "lucide-react";
 
+import { UserRole } from "@/@types/user/user-role";
 import {
   Collapsible,
   CollapsibleContent,
@@ -20,6 +21,7 @@ import {
 
 export function NavMain({
   items,
+  userRole = "CUSTOMER",
 }: {
   items: {
     title: string;
@@ -31,10 +33,11 @@ export function NavMain({
       url: string;
     }[];
   }[];
+  userRole?: UserRole;
 }) {
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Platform</SidebarGroupLabel>
+      <SidebarGroupLabel>Navegação</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
           <Collapsible
@@ -45,14 +48,26 @@ export function NavMain({
           >
             <SidebarMenuItem>
               <CollapsibleTrigger asChild>
-                <SidebarMenuButton tooltip={item.title}>
-                  {item.icon && <item.icon />}
-                  <span>{item.title}</span>
-                  {item.items && item.items?.length > 0 && (
-                    <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-                  )}
-                </SidebarMenuButton>
+                {!item.items && userRole === "ADMIN" ? (
+                  <SidebarMenuButton asChild tooltip={item.title}>
+                    <a href={item.url}>
+                      {item.icon && <item.icon />}
+                      <span>{item.title}</span>
+                    </a>
+                  </SidebarMenuButton>
+                ) : (
+                  <SidebarMenuButton tooltip={item.title}>
+                    {item.items && item.items?.length > 0 && (
+                      <>
+                        {item.icon && <item.icon />}
+                        <span>{item.title}</span>
+                        <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                      </>
+                    )}
+                  </SidebarMenuButton>
+                )}
               </CollapsibleTrigger>
+
               {item.items && item.items?.length > 0 && (
                 <CollapsibleContent>
                   <SidebarMenuSub>

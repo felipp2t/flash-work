@@ -2,6 +2,7 @@
 
 import {
   AudioWaveform,
+  Book,
   BriefcaseBusiness,
   Command,
   GalleryVerticalEnd,
@@ -19,6 +20,8 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import { getUserByToken } from "@/http/user/get-user-by-token";
+import { useQuery } from "@tanstack/react-query";
 
 const data = {
   user: {
@@ -84,37 +87,35 @@ const data = {
     },
     {
       title: "Endereços",
-      url: "#",
+      url: "/me/addresses",
       icon: Map,
-      items: [
-        {
-          title: "Meus Endereços",
-          url: "/me/addresses",
-        },
-      ],
     },
     {
       title: "Conversas",
-      url: "#",
+      url: "/me/chats",
       icon: MessageCircleMore,
-      items: [
-        {
-          title: "Minhas Conversas",
-          url: "/me/chats",
-        },
-      ],
+    },
+    {
+      title: "Categorias",
+      url: "/admin/categories",
+      icon: Book,
     },
   ],
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { data: user } = useQuery({
+    queryKey: ["get-user-by-token"],
+    queryFn: async () => await getUserByToken(),
+  });
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
         <NavUser user={data.user} />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
+        <NavMain items={data.navMain} userRole={user?.user.role} />
       </SidebarContent>
       <SidebarRail />
     </Sidebar>

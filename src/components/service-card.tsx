@@ -1,4 +1,4 @@
-import { ServiceResponse } from "@/@types/service/service-response";
+import { Service } from "@/@types/service/service";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -9,16 +9,25 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import { CATEGORIES } from "@/constants/categories";
+import { getAddressById } from "@/http/addresses/get-address-by-id";
 import { hanldeSplitBudget } from "@/utils/split-budget";
+import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { pt } from "date-fns/locale";
 import { Link } from "react-router-dom";
 
 interface ServiceCardProps {
-  service: ServiceResponse;
+  service: Service;
 }
 
 export const ServiceCard = ({ service }: ServiceCardProps) => {
+  const { data } = useQuery({
+    queryKey: ["get-address-by-id", service.addressId],
+    queryFn: async () => await getAddressById({ addressId: service.addressId }),
+  });
+
+  if (!data) return;
+
   return (
     <Card className="flex h-full flex-col gap-6 rounded-lg border bg-white bg-opacity-5 p-6">
       <CardHeader className="w-full flex-row items-center justify-around gap-6 p-0">
@@ -78,7 +87,9 @@ export const ServiceCard = ({ service }: ServiceCardProps) => {
           </div>
           <div>
             <h2 className="text-sm text-muted-foreground">Localização:</h2>
-            <p>{service.location}</p>
+            <p>
+              {data.address.city}, {data.address.state}
+            </p>
           </div>
         </div>
 

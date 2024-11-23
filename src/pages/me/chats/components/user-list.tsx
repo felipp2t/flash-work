@@ -1,20 +1,26 @@
 import { Chat } from "@/@types/chat";
-import { User } from "@/@types/user";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { getChatUsersByUser } from "@/http/chat/get-chat-users-by-user";
 import { cn } from "@/lib/utils";
+import { useQuery } from "@tanstack/react-query";
+import { useParams } from "react-router-dom";
+import { UserAvatar } from "./user-avatar";
 
 interface UserListProps {
-  chats: Chat[];
-  selectedUser: User;
-  setSelectedUser: (user: User) => void;
+  setChatSelected: (chat: Chat) => void;
 }
 
-export const UserList = ({
-  selectedUser,
-  setSelectedUser,
-  chats,
-}: UserListProps) => {
+export const UserList = ({ setChatSelected }: UserListProps) => {
+  const { id } = useParams();
+
+  const { data } = useQuery({
+    queryKey: ["get-chat-users-by-user"],
+    queryFn: async () => await getChatUsersByUser(),
+    staleTime: 1000 * 60 * 15,
+  });
+
+  if (!data) return;
+
   return (
     <div className="flex h-full w-1/4 flex-col rounded-lg border bg-white/5">
       <div className="flex h-20 items-center border-b border-border p-4">
@@ -22,22 +28,16 @@ export const UserList = ({
       </div>
 
       <ScrollArea className="h-full max-h-[782px]">
-        {chats.map((chat) => (
+        {data.chats.map((chat, i) => (
           <div
             key={chat.chatId}
             className={cn(
               "flex cursor-pointer items-center p-4 hover:bg-white/10",
-              selectedUser.id === chat.users && "bg-white/10",
+              id && id === chat.users[i].id && "bg-white/10",
             )}
-            onClick={() => setSelectedUser(user)}
+            onClick={() => setChatSelected(chat)}
           >
-            <Avatar className="h-10 w-10">
-              <AvatarImage src={user.profilePicture} alt={user.name} />
-              <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
-            </Avatar>
-            <div className="ml-4 flex-1 overflow-hidden">
-              <p className="font-medium">{user.name}</p>
-            </div>
+            <UserAvatar userId={chat.users[0].id} />
           </div>
         ))}
       </ScrollArea>

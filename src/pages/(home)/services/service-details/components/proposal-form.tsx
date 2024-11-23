@@ -1,4 +1,4 @@
-import { ServiceResponse } from "@/@types/service/service-response";
+import { Service } from "@/@types/service/service";
 import { MoneyInput } from "@/components/money-input";
 import { Button } from "@/components/ui/button";
 import { CalendarEditService } from "@/components/ui/calendar-edit-service";
@@ -54,7 +54,7 @@ const formSchema = ({ amount }: FormProposalData) =>
 export type FormSchema = z.infer<ReturnType<typeof formSchema>>;
 
 interface ProposalFormProps {
-  service: ServiceResponse;
+  service: Service;
   toggleFlip: () => void;
 }
 

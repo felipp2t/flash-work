@@ -4,12 +4,12 @@ import { ServiceProposals } from "../../components/services/proposals/service-pr
 
 export const ServiceProposalsPage = () => {
   return (
-    <div className="flex flex-1 flex-col gap-16 p-4">
+    <div className="flex h-full flex-1 flex-col gap-16 p-4">
       <div className="flex w-full justify-between">
         <PageTitle title="Propostas do meu Serviço" />
       </div>
 
-      <div className="flex flex-col gap-16">
+      <div className="flex h-full flex-col gap-16">
         <ServiceList>
           <ServiceProposals />
         </ServiceList>

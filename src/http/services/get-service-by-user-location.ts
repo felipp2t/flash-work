@@ -1,23 +1,35 @@
 import { ServiceResponse } from "@/@types/service/service-response";
-import { env } from "@/env";
-import axios from "axios";
+import { api } from "@/lib/api";
 
-interface GetServiceByUserLocationResponse {
-  services: ServiceResponse[];
+interface GetServiceByUserLocationRequest {
+  page: number;
+  size: number;
 }
 
-export const getServiceByUserLocation =
-  async (): Promise<GetServiceByUserLocationResponse> => {
-    const token = localStorage.getItem("token");
+interface GetServiceByUserLocationResponse {
+  services: ServiceResponse;
+}
 
-    const { data: services }: { data: ServiceResponse[] } = await axios.get(
-      `${env.BACKEND_ENDPOINT}/services/location`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
-    );
+export const getServiceByUserLocation = async ({
+  page,
+  size,
+}: GetServiceByUserLocationRequest): Promise<GetServiceByUserLocationResponse> => {
+  const token = localStorage.getItem("token");
 
-    return { services };
+  const params = {
+    page: page - 1,
+    size,
   };
+
+  const { data: services }: { data: ServiceResponse } = await api.get(
+    "/services/location",
+    {
+      params,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+
+  return { services };
+};

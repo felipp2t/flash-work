@@ -1,16 +1,4 @@
-import { Category } from "../category";
-import { UserMin } from "./user-min";
+import { Pagination } from "../paginatin";
+import { Service } from "./service";
 
-export interface ServiceResponse {
-  id: string;
-  title: string;
-  description: string;
-  budget: string;
-  workType: "REMOTE" | "ONSITE";
-  deadline: Date;
-  location: string;
-  createdAt: Date;
-  client: UserMin;
-  categories: Category[];
-  proposalQuantity: number
-}
+export type ServiceResponse = Pagination<Service>

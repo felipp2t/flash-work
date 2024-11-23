@@ -1,42 +1,24 @@
-import { getChatByUser } from "@/http/chat/get-chat-by-user";
-import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
-
-type User = {
-  id: string;
-  name: string;
-  avatar: string;
-  status: "online" | "offline";
-  lastMessage: string;
-};
-
-type Message = {
-  id: string;
-  senderId: string;
-  receiverId: string;
-  content: string;
-  timestamp: Date;
-};
+import { Chat } from "@/@types/chat";
+import { MessageCircle } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import { UserChat } from "./components/user-chat";
+import { UserChatHeader } from "./components/user-chat-header";
+import { UserList } from "./components/user-list";
 
 export function ChatsPage() {
-  const [users, setUsers] = useState<User[]>([
-    {
-      id: "2",
-      avatar: "/placeholder.svg?height=40&width=40",
-      lastMessage: "",
-      name: "Bob",
-      status: "online",
-    },
-  ]);
-  const [selectedUser, setSelectedUser] = useState<User>(users[0]);
+  const [, setSearchParams] = useSearchParams();
 
-  const { data } = useQuery({
-    queryKey: ["get-chats"],
-    queryFn: async () => await getChatByUser(),
-    staleTime: 1000 * 60 * 15,
-  });
+  const [chatSelected, setChatSelected] = useState<Chat | undefined>();
 
-  if (!data) return;
+  useEffect(() => {
+    if (chatSelected?.chatId) {
+      setSearchParams((params) => {
+        params.set("userId", chatSelected?.chatId);
+        return params;
+      });
+    }
+  }, [chatSelected, setSearchParams]);
 
   // const handleSendMessage = () => {
   //   if (newMessage.trim()) {
@@ -70,26 +52,32 @@ export function ChatsPage() {
 
   return (
     <div className="flex size-full max-h-screen max-w-full gap-6 overflow-x-auto overflow-y-hidden">
-      {/* Sidebar para Usuários */}
-      {/* <UserList users={data.chats} /> */}
+      <UserList setChatSelected={setChatSelected} />
 
-      {/* Janela de Chat */}
-
-      {/* <div className="flex flex-1 flex-col overflow-hidden rounded-lg border bg-white/5">
-        <div className="flex h-20 items-center border-b p-4">
-          <Avatar className="h-10 w-10">
-            <AvatarImage src={selectedUser.avatar} alt={selectedUser.name} />
-            <AvatarFallback>{selectedUser.name.charAt(0)}</AvatarFallback>
-          </Avatar>
-          <div className="ml-4">
-            <h2 className="text-xl font-semibold">{selectedUser.name}</h2>
-            <p
-              className={`text-sm ${selectedUser.status === "online" ? "text-primary" : "text-muted-foreground"}`}
-            >
-              {selectedUser.status}
+      {!chatSelected && (
+        <div className="flex flex-1 flex-col items-center justify-center gap-4 overflow-hidden rounded-lg border bg-white/5 text-muted-foreground">
+          <MessageCircle className="size-12" />
+          <div className="flex flex-col items-center">
+            <h2 className="text-lg font-bold">
+              Chat com um usuário para ver as mensagens
+            </h2>
+            <p className="text-sm">
+              Selecione um dos usuário para começar uma conversa
             </p>
           </div>
         </div>
+      )}
+
+      {chatSelected && (
+        <div className="flex flex-1 flex-col overflow-hidden rounded-lg border bg-white/5">
+          <UserChatHeader userId={chatSelected.users[0].id} />
+
+          <UserChat  />
+        </div>
+      )}
+
+      {/* <div className="flex flex-1 flex-col overflow-hidden rounded-lg border bg-white/5">
+       
         <ScrollArea className="h-full max-h-[709px] px-6">
           {filteredMessages.map((message) => {
             const isCurrentUser = message.senderId === currentUser.id;

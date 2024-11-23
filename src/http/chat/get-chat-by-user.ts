@@ -1,21 +1,16 @@
-import { Chat } from "@/@types/chat";
-import { env } from "@/env";
-import axios from "axios";
+import { api } from "@/lib/api";
 
-interface GetChatByUserResonse {
-  chats: Chat[];
+interface GetChatByUserRequest {
+  chatId: string;
 }
 
-export const getChatByUser = async (): Promise<GetChatByUserResonse> => {
-  const token = localStorage.getItem("token");
-  const { data: chats }: { data: Chat[] } = await axios.get(
-    `${env.BACKEND_ENDPOINT}/chats`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    },
-  );
+interface GetChatByUserResponse {}
 
-  return { chats };
+export const getChatByUser = async ({
+  chatId,
+}: GetChatByUserRequest): Promise<GetChatByUserResponse> => {
+    const { data } = await api.get(`/chats/${chatId}`);
+
+    console.log(data)
+
 };

@@ -1,4 +1,4 @@
-import { User } from "@/@types/user";
+import { User } from "@/@types/user/user";
 import { env } from "@/env";
 import axios from "axios";
 

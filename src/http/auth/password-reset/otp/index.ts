@@ -7,7 +7,6 @@ interface VerifyOTPRequest {
 }
 
 export const verifyOTP = async (params: VerifyOTPRequest) => {
-  console.log(params.otp);
   await axios.post(
     `${env.BACKEND_ENDPOINT}/forgot-password/verify-otp?email=${params.email}`,
     {

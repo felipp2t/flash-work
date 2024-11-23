@@ -19,6 +19,7 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { CreateChatButton } from "./components/create-chat-button";
 import { ProposalForm } from "./components/proposal-form";
+import { LocationBadge } from "./components/location-badge";
 
 export const ServiceDetails = () => {
   const { id } = useParams();
@@ -80,6 +81,7 @@ export const ServiceDetails = () => {
                   </p>
                 </div>
               </CardHeader>
+
               <CardContent className="space-y-4">
                 <div className="flex flex-wrap gap-2">
                   <Badge variant="secondary" className="text-sm">
@@ -103,10 +105,10 @@ export const ServiceDetails = () => {
                   </Badge>
                   <Badge variant="outline" className="text-sm">
                     <MapPin className="mr-1 size-4" />
-                    {data.service.location.split(", ")[0]},{" "}
-                    {data.service.location.split(", ")[1]}
+                   <LocationBadge addressId={data.service.addressId} />
                   </Badge>
                 </div>
+
                 <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
                   <div className="flex items-center">
                     <Calendar className="mr-1 size-4" />
@@ -117,6 +119,7 @@ export const ServiceDetails = () => {
                     Postado em: {transformDate(data.service.createdAt)}
                   </div>
                 </div>
+                
                 <div className="space-y-2">
                   <h2 className="text-2xl font-bold text-primary">
                     {data.service.title}

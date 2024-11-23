@@ -1,4 +1,5 @@
 import { ModeToggle } from "@/components/mode-toggle";
+import { NotificationDropdown } from "@/components/notification-dropdown";
 import { AppSidebar } from "@/components/sidebar/app-sidebar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -28,6 +29,8 @@ export const RootLayout = () => {
           </div>
 
           <div className="mr-12 flex items-center gap-4">
+            <NotificationDropdown />
+            
             <Button asChild variant="outline" className="aspect-square p-0">
               <Link to="/me/deposit">
                 <Wallet className="size-4" />

@@ -1,9 +1,9 @@
 import { Pagination } from "@/components/pagination";
 import { ServiceList } from "@/components/service-list";
 import { SkeletonCardService } from "@/components/skeleton-card-service";
-import { usePagination } from "@/hooks/use-pagination";
 import { getServiceByCategory } from "@/http/services/get-services-by-cateogory";
 import { useQuery } from "@tanstack/react-query";
+import { useSearchParams } from "react-router-dom";
 import { ServiceCard } from "../../../../components/service-card";
 
 interface CategoryProps {
@@ -11,10 +11,15 @@ interface CategoryProps {
 }
 
 export const Category = ({ categoryId }: CategoryProps) => {
-  const { page, perPage } = usePagination();
+  const [searchParams] = useSearchParams();
+
+  const page = searchParams.get("page") ? Number(searchParams.get("page")) : 1;
+  const perPage = searchParams.get("per_page")
+    ? Number(searchParams.get("per_page"))
+    : 10;
 
   const { data } = useQuery({
-    queryKey: ["get-category-services", { categoryId }],
+    queryKey: ["get-category-services", categoryId, page, perPage],
     queryFn: async () =>
       await getServiceByCategory({ categoryId, page, size: perPage }),
   });

@@ -1,4 +1,4 @@
-import { BadgeCheck, Bell, ChevronsUpDown, LogOut } from "lucide-react";
+import { BadgeCheck, Bell, ChevronsUpDown, LogIn, LogOut } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -22,9 +22,9 @@ export function NavUser({
   user,
 }: {
   user: {
-    name: string;
-    email: string;
-    avatar: string;
+    name: string | undefined;
+    email: string | undefined;
+    avatar: string | undefined;
   };
 }) {
   const navigate = useNavigate();
@@ -35,7 +35,17 @@ export function NavUser({
     navigate("/sign-in");
   };
 
-  return (
+  return !user.name ? (
+    <SidebarMenu>
+      <SidebarMenuItem
+        className="mt-2 flex cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 hover:bg-muted"
+        onClick={() => navigate("/sign-in")}
+      >
+        <LogIn className="size-4" />
+        <p className="text-sm">Entrar</p>
+      </SidebarMenuItem>
+    </SidebarMenu>
+  ) : (
     <SidebarMenu>
       <SidebarMenuItem>
         <DropdownMenu>
@@ -46,7 +56,7 @@ export function NavUser({
             >
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                <AvatarFallback className="rounded-lg">{user.name[0]}</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">{user.name}</span>

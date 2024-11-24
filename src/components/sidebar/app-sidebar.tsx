@@ -1,107 +1,24 @@
 "use client";
 
-import {
-  AudioWaveform,
-  Book,
-  BriefcaseBusiness,
-  Command,
-  GalleryVerticalEnd,
-  Map,
-  MessageCircleMore,
-  Search,
-} from "lucide-react";
 import * as React from "react";
 
-import { NavMain } from "@/components/sidebar/nav-main";
 import { NavUser } from "@/components/sidebar/nav-user";
 import {
   Sidebar,
   SidebarContent,
+  SidebarGroup,
   SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
 import { getUserByToken } from "@/http/user/get-user-by-token";
+import { cn } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
-
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  teams: [
-    {
-      name: "Acme Inc",
-      logo: GalleryVerticalEnd,
-      plan: "Enterprise",
-    },
-    {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
-    },
-    {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Free",
-    },
-  ],
-  navMain: [
-    {
-      title: "Procurar Serviços",
-      url: "#",
-      icon: Search,
-      items: [
-        {
-          title: "Gerais",
-          url: "/services",
-        },
-        {
-          title: "Região",
-          url: "/services/region",
-        },
-        {
-          title: "Remotos",
-          url: "/services/remotes",
-        },
-        {
-          title: "Presenciais",
-          url: "/services/on-site",
-        },
-      ],
-    },
-    {
-      title: "Meus Serviços",
-      icon: BriefcaseBusiness,
-      url: "#",
-      items: [
-        {
-          title: "Meus Serviços",
-          url: "/me/services",
-        },
-        {
-          title: "Minhas Propostas",
-          url: "/me/proposals",
-        },
-      ],
-    },
-    {
-      title: "Endereços",
-      url: "/me/addresses",
-      icon: Map,
-    },
-    {
-      title: "Conversas",
-      url: "/me/chats",
-      icon: MessageCircleMore,
-    },
-    {
-      title: "Categorias",
-      url: "/admin/categories",
-      icon: Book,
-    },
-  ],
-};
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { data: user } = useQuery({
@@ -109,13 +26,105 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     queryFn: async () => await getUserByToken(),
   });
 
+  const data = {
+    user: {
+      name: user?.user.name,
+      email: user?.user.email,
+      avatar: user?.user.profilePicture,
+    },
+    navMain: [
+      {
+        title: "Serviços",
+        url: "#",
+        items: [
+          {
+            title: "Por Categoria",
+            url: "/services",
+          },
+          {
+            title: "Por Região",
+            url: "/services/region",
+          },
+          {
+            title: "Por Remotos",
+            url: "/services/remotes",
+          },
+          {
+            title: "Por Presenciais",
+            url: "/services/on-site",
+          },
+        ],
+      },
+      {
+        title: "Meus/Minhas",
+        items: [
+          {
+            title: "Serviços",
+            url: "/me/services",
+          },
+          {
+            title: "Propostas",
+            url: "/me/proposals",
+          },
+          {
+            title: "Conversas",
+            url: "/me/proposals",
+          },
+        ],
+      },
+      {
+        title: "Administrar",
+        url: "#",
+        items: [
+          {
+            title: "Categorias",
+            url: "/admin/categories",
+          },
+        ],
+      },
+    ],
+  };
+
   return (
-    <Sidebar collapsible="icon" {...props}>
+    <Sidebar {...props}>
       <SidebarHeader>
         <NavUser user={data.user} />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} userRole={user?.user.role} />
+        <SidebarGroup>
+          <SidebarMenu>
+            {data.navMain.map((item) => {
+              return (
+                <SidebarMenuItem
+                  key={item.title}
+                  className={cn(
+                    "block",
+                    item.title === "Administrar" &&
+                      user?.user.role === "CUSTOMER" &&
+                      "hidden",
+                  )}
+                >
+                  <SidebarMenuButton asChild>
+                    <a href={item.url} className="font-medium">
+                      {item.title}
+                    </a>
+                  </SidebarMenuButton>
+                  {item.items?.length ? (
+                    <SidebarMenuSub>
+                      {item.items.map((item) => (
+                        <SidebarMenuSubItem key={item.title}>
+                          <SidebarMenuSubButton asChild>
+                            <a href={item.url}>{item.title}</a>
+                          </SidebarMenuSubButton>
+                        </SidebarMenuSubItem>
+                      ))}
+                    </SidebarMenuSub>
+                  ) : null}
+                </SidebarMenuItem>
+              );
+            })}
+          </SidebarMenu>
+        </SidebarGroup>
       </SidebarContent>
       <SidebarRail />
     </Sidebar>

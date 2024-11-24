@@ -30,6 +30,11 @@ export function NavUser({
   const navigate = useNavigate();
   const { isMobile } = useSidebar();
 
+  const logout = () => {
+    localStorage.removeItem("token");
+    navigate("/sign-in");
+  };
+
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -82,7 +87,7 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={logout} className="cursor-pointer">
               <LogOut />
               Sair
             </DropdownMenuItem>

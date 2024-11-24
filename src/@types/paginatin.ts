@@ -4,5 +4,6 @@ export interface Pagination<T> {
   number: number;
   totalElements: number;
   numberOfElements: number;
-  content: T[]
+  content: T[];
+  empty: boolean;
 }

@@ -16,6 +16,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { useNavigate } from "react-router-dom";
 
 export function NavUser({
   user,
@@ -26,6 +27,7 @@ export function NavUser({
     avatar: string;
   };
 }) {
+  const navigate = useNavigate();
   const { isMobile } = useSidebar();
 
   return (
@@ -74,7 +76,7 @@ export function NavUser({
                 Conta
               </DropdownMenuItem>
 
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigate("/me/notifications")}>
                 <Bell />
                 Notificações
               </DropdownMenuItem>

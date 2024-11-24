@@ -1,14 +1,19 @@
 import { Pagination } from "@/components/pagination";
 import { ServiceList } from "@/components/service-list";
 import { SkeletonCardService } from "@/components/skeleton-card-service";
-import { usePagination } from "@/hooks/use-pagination";
 import { getServiceByUserLocation } from "@/http/services/get-service-by-user-location";
 import { useQuery } from "@tanstack/react-query";
+import { useSearchParams } from "react-router-dom";
 import { ServiceCard } from "../../../../components/service-card";
 
 export const Region = () => {
-  const { page, perPage } = usePagination();
-  
+  const [searchParams] = useSearchParams();
+
+  const page = searchParams.get("page") ? Number(searchParams.get("page")) : 1;
+  const perPage = searchParams.get("per_page")
+    ? Number(searchParams.get("per_page"))
+    : 10;
+
   const { data } = useQuery({
     queryKey: ["get-region-services", page, perPage],
     queryFn: async () =>

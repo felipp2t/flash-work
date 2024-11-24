@@ -71,9 +71,9 @@ export const Pagination = ({ items, pages, page }: PaginationProps) => {
 
   return (
     <div className="mt-auto flex items-center justify-between text-sm text-muted-foreground">
-      <span>
-        Mostrando {perPage > items ? items : perPage} of {items}
-      </span>
+      <p className="hidden lg:block">
+        Mostrando {perPage > items ? items : perPage} de {items}
+      </p>
       <div className="flex items-center gap-8">
         <div className="flex w-fit items-center gap-2">
           <span>Serviços por página</span>

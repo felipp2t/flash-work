@@ -1,4 +1,4 @@
-import { Category } from "@/@types/category";
+import { Category } from "@/@types/categories/category";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -38,14 +38,17 @@ export const ChangeCategoryModal = ({ field }: ChangeCategoryModalProps) => {
 
   if (!data) return;
 
-  const categorySlides = data.categories?.reduce((acc, category, index) => {
-    const slideIndex = Math.floor(index / 4);
-    if (!acc[slideIndex]) {
-      acc[slideIndex] = [];
-    }
-    acc[slideIndex].push(category);
-    return acc;
-  }, [] as Category[][]);
+  const categorySlides = data.categories.content.reduce(
+    (acc, category, index) => {
+      const slideIndex = Math.floor(index / 4);
+      if (!acc[slideIndex]) {
+        acc[slideIndex] = [];
+      }
+      acc[slideIndex].push(category);
+      return acc;
+    },
+    [] as Category[][],
+  );
 
   const verifyIfCategoryIsSelected = (categoryId: string) =>
     field.value.some((c) => c.id === categoryId);
@@ -57,7 +60,7 @@ export const ChangeCategoryModal = ({ field }: ChangeCategoryModalProps) => {
       const categoryFilter = field.value.filter((c) => c.id !== categoryId);
       field.onChange([...categoryFilter]);
     } else if (verifyQuantityOfCategories()) {
-      const category = data.categories.find((c) => c.id === categoryId);
+      const category = data.categories.content.find((c) => c.id === categoryId);
 
       if (category) field.onChange([...field.value, category]);
     }
@@ -74,7 +77,7 @@ export const ChangeCategoryModal = ({ field }: ChangeCategoryModalProps) => {
               className="flex h-10 w-full items-center justify-center gap-2 rounded-md border bg-card px-2 text-sm font-medium capitalize text-muted-foreground"
             >
               <IconComponent className="mr-1 size-4" />
-              {CATEGORIES[category.name]}
+              {CATEGORIES[category.name as keyof typeof CATEGORIES]}
             </div>
           );
         })}
@@ -133,7 +136,7 @@ export const ChangeCategoryModal = ({ field }: ChangeCategoryModalProps) => {
                                   <div className="flex items-center space-x-2">
                                     <IconComponent className="size-5" />
                                     <p className="capitalize">
-                                      {CATEGORIES[category.name]}
+                                      {CATEGORIES[category.name as keyof typeof CATEGORIES]}
                                     </p>
                                   </div>
                                   {isSelected && (

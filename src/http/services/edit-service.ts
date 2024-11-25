@@ -1,24 +1,21 @@
 import { ServiceRequest } from "@/@types/service/service-request";
-import { env } from "@/env";
-import axios from "axios";
+import { api } from "@/lib/api";
 
 interface EditServiceRequest {
   service: ServiceRequest;
 }
 
-export const editService = async ({ service }: EditServiceRequest) => {
+export const editService = async (params: EditServiceRequest) => {
   const token = localStorage.getItem("token");
 
-  await axios.put(
-    `${env.BACKEND_ENDPOINT}/services/${service.id}`,
+  await api.put(
+    `/services/${params.service.id}`,
     {
-      title: service.title,
-      description: service.description,
-      budget: `${service.budget.min}-${service.budget.max}`,
-      deadline: service.deadline,
-      workType: service.workType,
-      location: service.location,
-      categories: service.categories,
+      ...params.service,
+      budget: `${params.service.budget.min}-${params.service.budget.max}`,
+      addressId: params.service.location.id,
+      deadline: params.service.deadline,
+      categories: params.service.categories.map((category) => category.id),
     },
     {
       headers: {

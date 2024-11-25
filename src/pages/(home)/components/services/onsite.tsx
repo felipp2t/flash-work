@@ -28,7 +28,7 @@ export const OnSite = () => {
           <SkeletonCardService key={i} />
         ))
       ) : (
-        <div className="space-y-6">
+        <>
           <ServiceList>
             {data.services.content.map((service) => (
               <ServiceCard key={service.id} service={service} />
@@ -40,7 +40,7 @@ export const OnSite = () => {
             page={page}
             pages={data.services.totalPages}
           />
-        </div>
+        </>
       )}
     </>
   );

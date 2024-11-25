@@ -28,7 +28,7 @@ export const Region = () => {
           <SkeletonCardService key={i} />
         ))
       ) : (
-        <div className="flex flex-col gap-6">
+        <>
           <ServiceList>
             {data.services.content.map((service) => (
               <ServiceCard key={service.id} service={service} />
@@ -40,7 +40,7 @@ export const Region = () => {
             page={page}
             pages={data.services.totalPages}
           />
-        </div>
+        </>
       )}
     </>
   );

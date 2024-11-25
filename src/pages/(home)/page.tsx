@@ -13,7 +13,6 @@ import { getCategories } from "@/http/categories/get-categories";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { ServiceList } from "../../components/service-list";
 import { Category } from "./components/services/category";
 
 export const ServicesPage = () => {
@@ -29,7 +28,9 @@ export const ServicesPage = () => {
   if (!data) return;
 
   const handleSelectCategory = (category: string) => {
-    const categoryId = data.categories.find((c) => c.name === category)?.id;
+    const categoryId = data.categories.content.find(
+      (c) => c.name === category,
+    )?.id;
 
     if (categoryId) {
       setCategoryId(categoryId);
@@ -38,7 +39,7 @@ export const ServicesPage = () => {
   };
 
   return (
-    <div className="flex flex-1 flex-col gap-16 p-4">
+    <div className="flex size-full flex-1 flex-col gap-16 p-4">
       <div className="flex w-full justify-between">
         <PageTitle title="Comece por aqui" />
 
@@ -49,7 +50,7 @@ export const ServicesPage = () => {
           <SelectContent>
             <SelectGroup>
               <SelectLabel>Categorias</SelectLabel>
-              {data.categories.map((category) => (
+              {data.categories.content.map((category) => (
                 <SelectItem key={category.id} value={category.name}>
                   {CATEGORIES[category.name as keyof typeof CATEGORIES]}
                 </SelectItem>
@@ -59,11 +60,7 @@ export const ServicesPage = () => {
         </Select>
       </div>
 
-      <div className="flex flex-col gap-16">
-        <ServiceList>
-          <Category categoryId={categoryId} />
-        </ServiceList>
-      </div>
+      <Category categoryId={categoryId} />
     </div>
   );
 };

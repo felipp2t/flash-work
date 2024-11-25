@@ -3,26 +3,42 @@ import { NotificationSkeleton } from "@/components/skeletons/notification-skelet
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { getNotifications } from "@/http/notifications/get-notification";
-import { useQuery } from "@tanstack/react-query";
-import { Bell, RefreshCw } from "lucide-react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Bell, Loader2, RefreshCw } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
+import { toast } from "sonner";
 import { NotificationCard } from "./notification-card";
 
 export const NotificationList = () => {
   const [searchParams] = useSearchParams();
+  const queryClient = useQueryClient();
 
   const page = searchParams.get("page") ? Number(searchParams.get("page")) : 1;
   const perPage = searchParams.get("per_page")
     ? Number(searchParams.get("per_page"))
     : 10;
 
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["get-notifications"],
     queryFn: async () => await getNotifications({ page, perPage }),
     staleTime: 1000 * 60 * 15,
   });
 
-  console.log(data);
+  const { mutateAsync: getNewNotificationsMutate } = useMutation({
+    mutationFn: async () => await getNotifications({ page, perPage }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["get-notifications"] });
+    },
+  });
+
+  const handleGetNewNotifications = async () => {
+    try {
+      await getNewNotificationsMutate();
+      toast.success("Carregando novas notificações");
+    } catch {
+      toast.error("Erro ao carregar novas notificações");
+    }
+  };
 
   return (
     <>
@@ -44,9 +60,22 @@ export const NotificationList = () => {
                 Você não tem nenhuma notificação no momento. As novas
                 notificações aparecerão aqui quando chegarem.
               </p>
-              <Button variant="outline" className="gap-2">
-                <RefreshCw className="size-4" />
-                Atualizar
+              <Button
+                variant="outline"
+                className="gap-2"
+                onClick={handleGetNewNotifications}
+              >
+                {isLoading ? (
+                  <>
+                    <Loader2 className="size-4 animate-spin" />
+                    Carregando
+                  </>
+                ) : (
+                  <>
+                    <RefreshCw className="size-4" />
+                    Atualizar
+                  </>
+                )}
               </Button>
             </CardContent>
           </Card>

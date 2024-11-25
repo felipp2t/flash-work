@@ -1,13 +1,19 @@
+import { Category } from "../categories/category";
+
 export interface ServiceRequest {
-  id: string;
+  id?: string;
   title: string;
   description: string;
   budget: {
     min: number;
     max: number;
   };
-  location: string;
-  workType: "REMOTE" | "ONSITE";
+  location: {
+    id: string;
+    city: string;
+    state: string;
+  };
   deadline: Date;
-  categories: string[];
+  workType: "REMOTE" | "ONSITE";
+  categories: Category[];
 }

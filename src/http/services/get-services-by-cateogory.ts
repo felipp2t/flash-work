@@ -16,6 +16,8 @@ export const getServiceByCategory = async ({
   page,
   size,
 }: GetServiceByCategoryRequest): Promise<GetServicesByCategoryResponse> => {
+  console.log("categoryId", categoryId);
+
   const params = {
     page: page - 1,
     size,

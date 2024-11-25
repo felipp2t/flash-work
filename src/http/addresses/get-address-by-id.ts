@@ -1,4 +1,4 @@
-import { Address } from "@/@types/address";
+import { Address } from "@/@types/address/address";
 import { api } from "@/lib/api";
 
 interface GetAddressByIdRequest {

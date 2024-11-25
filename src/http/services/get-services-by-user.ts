@@ -1,17 +1,16 @@
 import { ServiceResponse } from "@/@types/service/service-response";
-import { env } from "@/env";
-import axios from "axios";
+import { api } from "@/lib/api";
 
 interface GetServicesByUserResponse {
-  services: ServiceResponse[];
+  services: ServiceResponse;
 }
 
 export const getServicesByUser =
   async (): Promise<GetServicesByUserResponse> => {
     const token = localStorage.getItem("token");
 
-    const { data: services }: { data: ServiceResponse[] } = await axios.get(
-      `${env.BACKEND_ENDPOINT}/services/user`,
+    const { data: services }: { data: ServiceResponse } = await api.get(
+      `/services/user`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

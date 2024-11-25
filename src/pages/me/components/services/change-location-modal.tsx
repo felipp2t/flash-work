@@ -1,24 +1,16 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { FormControl } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { ADDRESS_TYPE } from "@/constants/address";
 import { getAddressesByUser } from "@/http/addresses/get-addresses-by-user";
 import { useQuery } from "@tanstack/react-query";
-import { Building2, House, MapPinned } from "lucide-react";
+import { MapPinned } from "lucide-react";
 import { ControllerRenderProps } from "react-hook-form";
+import { AddressDialogContent } from "./address-dialog-content";
 import { FormSchema } from "./edit-service-modal";
 
 interface ChangeLocationModalProps {
-  field: ControllerRenderProps<FormSchema, "location">;
+  field: ControllerRenderProps<FormSchema, "address">;
 }
 
 export const ChangeLocationModal = ({ field }: ChangeLocationModalProps) => {
@@ -30,11 +22,20 @@ export const ChangeLocationModal = ({ field }: ChangeLocationModalProps) => {
 
   if (!data) return;
 
+  const selectAddress = (addressId: string) => {
+    field.onChange(data.addresses.content.find((a) => a.id === addressId));
+  };
+
   return (
     <Dialog>
-      <div className="flex gap-2">
+      <div className="flex items-center gap-2">
         <FormControl>
-          <Input {...field} value={field.value} id="location" readOnly />
+          <Input
+            {...field}
+            value={`${field.value.city}, ${field.value.state}`}
+            id="location"
+            readOnly
+          />
         </FormControl>
         <DialogTrigger asChild>
           <Button className="aspect-square p-0">
@@ -43,31 +44,11 @@ export const ChangeLocationModal = ({ field }: ChangeLocationModalProps) => {
         </DialogTrigger>
       </div>
 
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Selecione um Endereço</DialogTitle>
-          <DialogDescription>
-            Selecione um endereço para alterar a localização
-          </DialogDescription>
-        </DialogHeader>
-        {data.addresses.map((address) => (
-          <Card key={address.id}>
-            <CardContent className="flex h-full items-center gap-6 px-6 py-3">
-              {address.type === "HOUSE" ? <House /> : <Building2 />}
-              <div className="flex flex-1 flex-col">
-                <p className="text-xl font-bold uppercase text-primary">
-                  {ADDRESS_TYPE[address.type]}
-                </p>
-                <p>
-                  {address.state}, {address.neighborhood} - {address.street},{" "}
-                  {address.houseNumber || address.apartmentNumber},{" "}
-                  {address.postalCode}
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </DialogContent>
+      <AddressDialogContent
+        addresses={data.addresses.content}
+        addressId={field.value.id}
+        selectAddress={selectAddress}
+      />
     </Dialog>
   );
 };

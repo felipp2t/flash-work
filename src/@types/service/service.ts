@@ -1,4 +1,4 @@
-import { Category } from "../category";
+import { Category } from "../categories/category";
 import { UserMin } from "../user-min";
 
 export interface Service {

@@ -1,6 +1,6 @@
 export const ADDRESS_TYPE = {
   HOUSE: "casa",
-  APARTMENT: "apartamento",
+  APARTMENT: "apto.",
 };
 
 export const ADDRESS_STATES: Record<string, string> = {

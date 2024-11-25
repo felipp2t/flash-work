@@ -1,4 +1,4 @@
-import { ServiceResponse } from "@/@types/service/service-response";
+import { Service } from "@/@types/service/service";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,7 +10,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { CATEGORIES } from "@/constants/categories";
+import { getAddressById } from "@/http/addresses/get-address-by-id";
 import { hanldeSplitBudget } from "@/utils/split-budget";
+import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { pt } from "date-fns/locale";
 import { useNavigate } from "react-router-dom";
@@ -19,11 +21,16 @@ import { DeletionAlertDialog } from "../services/deletion-alert-dialog";
 import { EditServiceModal } from "../services/edit-service-modal";
 
 interface ServiceCardProps {
-  service: ServiceResponse;
+  service: Service;
 }
 
 export const ServiceCard = ({ service }: ServiceCardProps) => {
   const navigate = useNavigate();
+
+  const { data } = useQuery({
+    queryKey: ["get-address-by-id", service.addressId],
+    queryFn: async () => await getAddressById({ addressId: service.addressId }),
+  });
 
   const handleVerifyIfExistProposal = () => {
     if (service.proposalQuantity === 0) {
@@ -66,10 +73,14 @@ export const ServiceCard = ({ service }: ServiceCardProps) => {
               }).format(Number(hanldeSplitBudget(service.budget).max))}
             </p>
           </div>
-          <div>
-            <h2 className="text-sm text-muted-foreground">Localização:</h2>
-            <p>{service.location}</p>
-          </div>
+          {data && (
+            <div>
+              <h2 className="text-sm text-muted-foreground">Localização:</h2>
+              <p>
+                {data.address.city}, {data.address.state}
+              </p>
+            </div>
+          )}
         </div>
 
         <div>

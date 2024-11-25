@@ -1,4 +1,4 @@
-import { Category } from "@/@types/category";
+import { Category } from "@/@types/categories/category";
 import { env } from "@/env";
 import axios from "axios";
 

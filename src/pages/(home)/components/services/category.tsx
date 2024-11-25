@@ -28,6 +28,7 @@ export const Category = ({ categoryId }: CategoryProps) => {
     queryKey: ["get-category-services", categoryId, page, perPage],
     queryFn: async () =>
       await getServiceByCategory({ categoryId, page, size: perPage }),
+    enabled: !!categoryId,
   });
 
   const { mutateAsync: getNewNotificationsMutate } = useMutation({

@@ -11,19 +11,32 @@ import {
 import { CATEGORIES } from "@/constants/categories";
 import { getCategories } from "@/http/categories/get-categories";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Category } from "./components/services/category";
 
 export const ServicesPage = () => {
   const [categoryId, setCategoryId] = useState("");
-  const [, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const { data } = useQuery({
     queryKey: ["get-categories"],
     queryFn: async () => await getCategories(),
     staleTime: 1000 * 60 * 15,
   });
+
+  useEffect(() => {
+    const category = searchParams.get("category");
+
+    if (!category && data && data.categories.content.length > 0) {
+      const firstCategory = data.categories.content[0];
+      setCategoryId(firstCategory.id);
+      setSearchParams((params) => {
+        params.set("category", firstCategory.name);
+        return params;
+      });
+    }
+  }, [data, searchParams, setSearchParams]);
 
   if (!data) return;
 
@@ -32,9 +45,14 @@ export const ServicesPage = () => {
       (c) => c.name === category,
     )?.id;
 
+    console.log(categoryId);
+
     if (categoryId) {
       setCategoryId(categoryId);
-      setSearchParams({ category });
+      setSearchParams((params) => {
+        params.set("category", category);
+        return params;
+      });
     }
   };
 
@@ -43,18 +61,23 @@ export const ServicesPage = () => {
       <div className="flex w-full justify-between">
         <PageTitle title="Comece por aqui" />
 
-        <Select onValueChange={(category) => handleSelectCategory(category)}>
+        <Select
+          onValueChange={(category) => handleSelectCategory(category)}
+          defaultValue={data?.categories.content[0]?.name}
+        >
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="Categorias" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
               <SelectLabel>Categorias</SelectLabel>
-              {data.categories.content.map((category) => (
-                <SelectItem key={category.id} value={category.name}>
-                  {CATEGORIES[category.name as keyof typeof CATEGORIES]}
-                </SelectItem>
-              ))}
+              {data.categories.content.map((category) => {
+                return (
+                  <SelectItem key={category.id} value={category.name}>
+                    {CATEGORIES[category.name as keyof typeof CATEGORIES]}
+                  </SelectItem>
+                );
+              })}
             </SelectGroup>
           </SelectContent>
         </Select>

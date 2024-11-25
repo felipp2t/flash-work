@@ -11,7 +11,5 @@ export const getCategories = async (): Promise<GetCategoriesResponse> => {
     `${env.BACKEND_ENDPOINT}/categories`,
   );
 
-  console.log(categories);
-
   return { categories };
 };

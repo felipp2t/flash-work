@@ -19,12 +19,19 @@ import {
 import { getUserByToken } from "@/http/user/get-user-by-token";
 import { cn } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { data: user } = useQuery({
     queryKey: ["get-user-by-token"],
     queryFn: async () => await getUserByToken(),
   });
+
+  if (!user?.user.name) {
+    toast("Faça login para ter acesso completo ao sistema", {
+      duration: 1000 * 60 * 5,
+    });
+  }
 
   const data = {
     user: {

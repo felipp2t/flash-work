@@ -16,7 +16,7 @@ export const UserChatHeader = ({ userId }: UserChatProps) => {
   if (!data) return;
 
   return (
-    <div className="flex h-20 items-center border-b p-4">
+    <div className="flex h-20 bg-[#181616] items-center border-b p-4">
       <Avatar className="size-10">
         <AvatarImage src={data.user.profilePicture} alt={data.user.name} />
         <AvatarFallback>{data.user.name[0]}</AvatarFallback>

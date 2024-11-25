@@ -1,16 +1,15 @@
-import { Proposal } from "@/@types/proposal";
-import { env } from "@/env";
-import axios from "axios";
+import { ProposalResponse } from "@/@types/proposal/proposal-response";
+import { api } from "@/lib/api";
 
 interface GetProposalsByUserResponse {
-  proposals: Proposal[];
+  proposals: ProposalResponse;
 }
 
 export const getProposalsByUser =
   async (): Promise<GetProposalsByUserResponse> => {
     const token = localStorage.getItem("token");
-    const { data: proposals }: { data: Proposal[] } = await axios.get(
-      `${env.BACKEND_ENDPOINT}/proposals/user`,
+    const { data: proposals }: { data: ProposalResponse } = await api.get(
+      `/proposals/user`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

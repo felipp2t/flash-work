@@ -24,9 +24,11 @@ export const OnSite = () => {
   return (
     <>
       {!data ? (
-        Array.from({ length: 20 }).map((_, i) => (
-          <SkeletonCardService key={i} />
-        ))
+        <div className="grid grid-cols-4 gap-4">
+          {Array.from({ length: 20 }).map((_, i) => (
+            <SkeletonCardService key={i} />
+          ))}
+        </div>
       ) : (
         <>
           <ServiceList>

@@ -1,54 +1,78 @@
 import { Chat } from "@/@types/chat";
-import { MessageCircle } from "lucide-react";
+import { Message } from "@/@types/message";
+import { User } from "@/@types/user/user";
+import { Input } from "@/components/ui/input";
+import { getUserByToken } from "@/http/user/get-user-by-token";
+import { useQuery } from "@tanstack/react-query";
+import { MessageCircle, Send } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { UserChat } from "./components/user-chat";
 import { UserChatHeader } from "./components/user-chat-header";
 import { UserList } from "./components/user-list";
 
+import { Button } from "@/components/ui/button";
+import { Form, FormField, FormItem } from "@/components/ui/form";
+import { sendMessage } from "@/http/chat/send-message";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Client } from "@stomp/stompjs";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
+const formSchema = z.object({
+  text: z.string({ required_error: "Digite algo para enviar" }).trim().min(1),
+});
+
+type FormSchema = z.infer<typeof formSchema>;
+
 export function ChatsPage() {
   const [, setSearchParams] = useSearchParams();
-
+  const [stompClient, setStompClient] = useState<Client | null>(null);
+  const [currentUser, setCurrentUser] = useState<User>();
   const [chatSelected, setChatSelected] = useState<Chat | undefined>();
+  const [messages, setMessages] = useState<Message[]>([]);
+
+  const { data } = useQuery({
+    queryKey: ["get-user-by-token"],
+    queryFn: async () => await getUserByToken(),
+  });
+
+  const form = useForm<FormSchema>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      text: "",
+    },
+  });
+
+  useEffect(() => {
+    if (data) {
+      setCurrentUser(data.user);
+    }
+  }, [data, setCurrentUser]);
 
   useEffect(() => {
     if (chatSelected?.chatId) {
       setSearchParams((params) => {
-        params.set("userId", chatSelected?.chatId);
+        params.set("chatId", chatSelected?.chatId);
         return params;
       });
     }
   }, [chatSelected, setSearchParams]);
 
-  // const handleSendMessage = () => {
-  //   if (newMessage.trim()) {
-  //     const message: Message = {
-  //       id: Date.now().toString(),
-  //       senderId: currentUser.id,
-  //       receiverId: selectedUser.id,
-  //       content: newMessage,
-  //       timestamp: new Date(),
-  //     };
-  //     setMessages([...messages, message]);
-  //     setNewMessage("");
+  const onSubmit = async (dataForm: FormSchema) => {
+    if (!chatSelected || !stompClient || !data?.user.id) {
+      return;
+    }
 
-  //     setUsers(
-  //       users.map((user) =>
-  //         user.id === selectedUser.id
-  //           ? { ...user, lastMessage: newMessage }
-  //           : user,
-  //       ),
-  //     );
-  //   }
-  // };
+    sendMessage({
+      chatId: chatSelected.chatId,
+      text: dataForm.text,
+      stompClient,
+      userId: data?.user.id,
+    });
 
-  // const filteredMessages = messages.filter(
-  //   (message) =>
-  //     (message.senderId === currentUser.id &&
-  //       message.receiverId === selectedUser.id) ||
-  //     (message.senderId === selectedUser.id &&
-  //       message.receiverId === currentUser.id),
-  // );
+    form.reset();
+  };
 
   return (
     <div className="flex size-full max-h-screen max-w-full gap-6 overflow-x-auto overflow-y-hidden">
@@ -69,63 +93,40 @@ export function ChatsPage() {
       )}
 
       {chatSelected && (
-        <div className="flex flex-1 flex-col overflow-hidden rounded-lg border bg-white/5">
+        <div className="flex flex-1 flex-col overflow-hidden rounded-lg border bg-[url('/bg-chat.png')]">
           <UserChatHeader userId={chatSelected.users[0].id} />
 
-          <UserChat  />
+          <UserChat
+            setMessages={setMessages}
+            messages={messages}
+            chatSelected={chatSelected}
+            currentUser={currentUser}
+            setStompClient={setStompClient}
+          />
+
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="flex w-full gap-4 bg-white/5 p-4"
+            >
+              <FormField
+                control={form.control}
+                name="text"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <Input {...field} id="text" className="w-full" />
+                  </FormItem>
+                )}
+              />
+
+              <Button type="submit">
+                <Send className="mr-2 size-4" />
+                Enviar
+              </Button>
+            </form>
+          </Form>
         </div>
       )}
-
-      {/* <div className="flex flex-1 flex-col overflow-hidden rounded-lg border bg-white/5">
-       
-        <ScrollArea className="h-full max-h-[709px] px-6">
-          {filteredMessages.map((message) => {
-            const isCurrentUser = message.senderId === currentUser.id;
-            return (
-              <div
-                key={message.id}
-                className={`mb-4 flex items-end ${isCurrentUser ? "justify-end" : ""}`}
-              >
-                {!isCurrentUser && (
-                  <Avatar className="mr-2 h-8 w-8">
-                    <AvatarImage
-                      src={selectedUser.avatar}
-                      alt={selectedUser.name}
-                    />
-                    <AvatarFallback>
-                      {selectedUser.name.charAt(0)}
-                    </AvatarFallback>
-                  </Avatar>
-                )}
-                <div
-                  className={`max-w-xs ${isCurrentUser ? "bg-blue-600 text-white" : "bg-white/5"} rounded-lg p-3 shadow`}
-                >
-                  <p>{message.content}</p>
-                  <p
-                    className={`mt-1 text-xs ${isCurrentUser ? "text-blue-100" : "text-muted-foreground"}`}
-                  >
-                    {message.timestamp.toLocaleTimeString()}
-                  </p>
-                </div>
-              </div>
-            );
-          })}
-        </ScrollArea>
-        <div className="flex border-t bg-white/5 p-4">
-          <Input
-            type="text"
-            placeholder="Digite sua mensagem..."
-            value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
-            onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
-            className="mr-2 flex-1"
-          />
-          <Button onClick={handleSendMessage}>
-            <Send className="mr-2 h-4 w-4" />
-            Enviar
-          </Button>
-        </div>
-      </div> */}
     </div>
   );
 }

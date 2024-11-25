@@ -38,7 +38,7 @@ export const SignInForm = () => {
     try {
       const { token } = await signIn(data);
       localStorage.setItem("token", token);
-      navigate("/services/region");
+      navigate("/services");
     } catch {
       toast.error("Erro ao fazer login", {
         duration: 5000,

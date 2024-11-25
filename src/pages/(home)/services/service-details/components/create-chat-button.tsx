@@ -19,11 +19,11 @@ export const CreateChatButton = ({ userId }: CreateChatButtonProps) => {
 
   const handleCreateChat = async (userId: string) => {
     try {
-      await mutateAsync({ userId });
+      const { chat } = await mutateAsync({ userId });
       toast.success("Chat criado com sucesso", {
         duration: 5000,
       });
-      navigate("/me/chats");
+      navigate(`/me/chat?chatId=${chat.chatId}`);
     } catch {
       toast.error("Erro ao criar chat", {
         duration: 5000,

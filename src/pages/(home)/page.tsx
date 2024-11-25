@@ -59,7 +59,7 @@ export const ServicesPage = () => {
   return (
     <div className="flex size-full flex-1 flex-col gap-16 p-4">
       <div className="flex w-full justify-between">
-        <PageTitle title="Comece por aqui" />
+        <PageTitle title="Serviços - Categorias" />
 
         <Select
           onValueChange={(category) => handleSelectCategory(category)}

@@ -64,6 +64,7 @@ export const Pagination = ({ items, pages, page }: PaginationProps) => {
 
   const setPerPage = (value: string) => {
     setSearchParams((params) => {
+      params.set("page", "1");
       params.set("per_page", value);
       return params;
     });

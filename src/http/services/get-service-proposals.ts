@@ -1,4 +1,4 @@
-import { Proposal } from "@/@types/proposal";
+import { Proposal } from "@/@types/proposal/proposal";
 import { env } from "@/env";
 import axios from "axios";
 

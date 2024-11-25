@@ -3,7 +3,7 @@ export const ADDRESS_TYPE = {
   APARTMENT: "apto.",
 };
 
-export const ADDRESS_STATES: Record<string, string> = {
+export const SHORT_DATE_ADDRESS: Record<string, string> = {
   AC: "Acre",
   AL: "Alagoas",
   AP: "Amapá",

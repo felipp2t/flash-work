@@ -75,7 +75,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           },
           {
             title: "Conversas",
-            url: "/me/proposals",
+            url: "/me/chats",
           },
         ],
       },

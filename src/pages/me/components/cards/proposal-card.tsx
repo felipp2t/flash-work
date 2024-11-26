@@ -1,4 +1,4 @@
-import { Proposal } from "@/@types/proposal";
+import { Proposal } from "@/@types/proposal/proposal";
 import { Badge } from "@/components/ui/badge";
 import {
   Card,

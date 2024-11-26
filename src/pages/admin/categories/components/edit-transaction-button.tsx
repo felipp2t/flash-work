@@ -1,4 +1,4 @@
-import { Category } from "@/@types/category";
+import { Category } from "@/@types/categories/category";
 import { Button } from "@/components/ui/button";
 import { Pencil } from "lucide-react";
 import { useState } from "react";

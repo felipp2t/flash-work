@@ -41,11 +41,6 @@ export const UserChat = ({
   });
 
   useEffect(() => {
-    if (data?.chat && data.chat.chatId === chatId) {
-      setMessages(data.chat.messages);
-      setLocalMessages(data.chat.messages);
-    }
-
     const connectToWebSocket = () => {
       const stompClient = new Client({
         webSocketFactory: () => new SockJS("http://localhost:80/ws"),
@@ -64,11 +59,9 @@ export const UserChat = ({
           console.error("STOMP error", frame);
         },
       });
-
       stompClient.activate();
       setStompClient(stompClient);
     };
-
     connectToWebSocket();
   }, [data, chatId, setMessages, setStompClient]);
 
@@ -106,7 +99,6 @@ export const UserChat = ({
     <ScrollArea className="h-full max-h-[709px] px-6 py-4">
       {localMessages.map((message) => {
         const isCurrentUser = message.userId === currentUser?.id;
-        console.log(message);
         return (
           <div
             key={message.id}

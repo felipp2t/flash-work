@@ -1,4 +1,4 @@
-import { Proposal } from "@/@types/proposal";
+import { Proposal } from "@/@types/proposal/proposal";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {

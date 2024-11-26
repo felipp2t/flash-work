@@ -1,4 +1,11 @@
-import { BadgeCheck, Bell, ChevronsUpDown, LogIn, LogOut } from "lucide-react";
+import {
+  BadgeCheck,
+  Bell,
+  ChevronsUpDown,
+  Locate,
+  LogIn,
+  LogOut,
+} from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -56,7 +63,9 @@ export function NavUser({
             >
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="rounded-lg">{user.name[0]}</AvatarFallback>
+                <AvatarFallback className="rounded-lg">
+                  {user.name[0]}
+                </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">{user.name}</span>
@@ -86,7 +95,7 @@ export function NavUser({
 
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigate("/me/profile")}>
                 <BadgeCheck />
                 Conta
               </DropdownMenuItem>
@@ -94,6 +103,11 @@ export function NavUser({
               <DropdownMenuItem onClick={() => navigate("/me/notifications")}>
                 <Bell />
                 Notificações
+              </DropdownMenuItem>
+
+              <DropdownMenuItem onClick={() => navigate("/me/addresses")}>
+                <Locate />
+                Endereços
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />

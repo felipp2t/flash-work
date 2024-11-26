@@ -99,7 +99,7 @@ export type FormSchema = z.infer<typeof formSchema>;
 
 export const CreateServiceForm = () => {
   const { data } = useQuery({
-    queryKey: ["get-address-by-user"],
+    queryKey: ["get-addresses-by-user"],
     queryFn: async () => await getAddressesByUser(),
     staleTime: 1000 * 60 * 15,
   });

@@ -1,8 +1,7 @@
-import { getUserById } from "@/http/user/get-user-by-id";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { getUserById } from "@/http/user/get-user-by-id";
 import { useQuery } from "@tanstack/react-query";
-import { School } from "lucide-react";
 import { useParams } from "react-router-dom";
 
 export const UserPage = () => {
@@ -38,7 +37,8 @@ export const UserPage = () => {
         <div className="space-y-4">
           <h3 className="text-lg font-semibold">Formação Acadêmica</h3>
           <ul className="space-y-3">
-            {data.user..map((institution, index) => (
+            {/* <Educations />
+            {data.user. map((institution, index) => (
               <li key={index} className="flex items-start space-x-3">
                 <School className="mt-0.5 h-5 w-5 text-muted-foreground" />
                 <div>
@@ -48,7 +48,7 @@ export const UserPage = () => {
                   </p>
                 </div>
               </li>
-            ))}
+            ))} */}
           </ul>
         </div>
       </CardContent>

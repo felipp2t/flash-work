@@ -1,4 +1,4 @@
-import { ServiceResponse } from "@/@types/service/service-response";
+import { Service } from "@/@types/service/service";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -11,15 +11,23 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { WORK_TYPE } from "@/constants/work-type";
+import { getAddressById } from "@/http/addresses/get-address-by-id";
 import { hanldeSplitBudget } from "@/utils/split-budget";
+import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
-import { DollarSign, MapPin } from "lucide-react";
+import { MapPin } from "lucide-react";
 
 interface ViewServiceDialogProps {
-  service: ServiceResponse;
+  service: Service;
 }
 
 export const ViewServiceDialog = ({ service }: ViewServiceDialogProps) => {
+  const { data, isLoading } = useQuery({
+    queryKey: ["get-address-by-id"],
+    queryFn: async () => await getAddressById({ addressId: service.id }),
+    staleTime: 1000 * 60 * 15,
+  });
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -64,24 +72,31 @@ export const ViewServiceDialog = ({ service }: ViewServiceDialogProps) => {
                 {WORK_TYPE[service.workType]}
               </Badge>
             </div>
-            <div className="flex items-center gap-2">
-              <DollarSign className="size-4 text-primary" />
-              <span className="text-sm">
-                {service.budget.split("-")[0] !== "0" &&
-                  Intl.NumberFormat("pt-BR", {
-                    currency: "BRL",
-                    style: "currency",
-                  }).format(Number(hanldeSplitBudget(service.budget).min))}{" "}
-                até{" "}
-                {Intl.NumberFormat("pt-BR", {
+
+            <div className="text-sm">
+              {service.budget.split("-")[0] !== "0" &&
+                Intl.NumberFormat("pt-BR", {
                   currency: "BRL",
                   style: "currency",
-                }).format(Number(hanldeSplitBudget(service.budget).max))}
-              </span>
+                }).format(Number(hanldeSplitBudget(service.budget).min))}{" "}
+              até{" "}
+              {Intl.NumberFormat("pt-BR", {
+                currency: "BRL",
+                style: "currency",
+              }).format(Number(hanldeSplitBudget(service.budget).max))}
             </div>
+
             <div className="flex items-center gap-2">
-              <MapPin className="h-4 w-4" />
-              <span>{service.location}</span>
+              <MapPin className="size-4" />
+              <span>
+                {isLoading ? (
+                  <span className="text-muted-foreground">Carregando...</span>
+                ) : (
+                  <span>
+                    {data?.address.city}, {data?.address.state}
+                  </span>
+                )}
+              </span>
             </div>
           </div>
           <div>

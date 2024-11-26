@@ -23,7 +23,7 @@ export const CreateServiceButton = () => {
   });
 
   const { data: addressResponse } = useQuery({
-    queryKey: ["get-address-by-user"],
+    queryKey: ["get-addresses-by-user"],
     queryFn: async () => await getAddressesByUser(),
     staleTime: 1000 * 60 * 15,
   });

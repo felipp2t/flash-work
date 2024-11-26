@@ -15,7 +15,7 @@ interface ChangeLocationModalProps {
 
 export const ChangeLocationModal = ({ field }: ChangeLocationModalProps) => {
   const { data } = useQuery({
-    queryKey: ["get-address-by-user"],
+    queryKey: ["get-addresses-by-user"],
     queryFn: async () => await getAddressesByUser(),
     staleTime: 1000 * 60 * 15,
   });

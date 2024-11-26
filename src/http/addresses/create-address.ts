@@ -4,8 +4,8 @@ interface CreateAddressRequest {
   address: {
     type: string;
     houseNumber: number;
-    apartmentName?: string;
-    apartmentNumber?: number;
+    apartmentName: string | null;
+    apartmentNumber: number | null;
     street: string;
     neighborhood: string;
     city: string;
@@ -17,9 +17,16 @@ interface CreateAddressRequest {
 export const createAddress = async (params: CreateAddressRequest) => {
   const token = localStorage.getItem("token");
 
-  await api.post(`/address`, params.address, {
-    headers: {
-      Authorization: `Bearer ${token}`,
+  await api.post(
+    `/address`,
+    {
+      ...params.address,
+      apartmentNumber: params.address.apartmentNumber || null,
     },
-  });
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
 };

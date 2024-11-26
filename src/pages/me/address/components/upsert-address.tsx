@@ -39,8 +39,8 @@ import { z } from "zod";
 const formSchema = z.object({
   type: z.enum(["HOUSE", "APARTMENT"]),
   houseNumber: z.number().positive(),
-  apartmentName: z.string().optional(),
-  apartmentNumber: z.number().optional(),
+  apartmentName: z.string().nullable(),
+  apartmentNumber: z.number().nullable(),
   street: z.string({ required_error: "Rua é obrigatório" }),
   neighborhood: z.string({ required_error: "Bairro é obrigatório" }),
   city: z.string({ required_error: "Cidade é obrigatório" }),
@@ -98,7 +98,7 @@ export const UpsertAddress = ({
   }, [postalCodeValue, form]);
 
   useEffect(() => {
-    if (selectedType === "HOUSE") {
+    if (selectedType !== "APARTMENT") {
       form.setValue("apartmentName", "");
       form.setValue("apartmentNumber", 0);
     }
@@ -310,7 +310,7 @@ export const UpsertAddress = ({
               control={form.control}
               name="houseNumber"
               render={({ field }) => (
-                <FormItem className="col-span-2 col-start-7">
+                <FormItem className="col-span-3 col-start-6">
                   <FormLabel htmlFor="houseNumber">Nº</FormLabel>
                   <FormControl>
                     <NumericFormat
@@ -338,6 +338,7 @@ export const UpsertAddress = ({
                   <FormControl>
                     <Input
                       {...field}
+                      value={field.value ?? ""}
                       id="apartmentName"
                       placeholder="adicione o nome do apartamento"
                       disabled={selectedType !== "APARTMENT"}
@@ -361,6 +362,7 @@ export const UpsertAddress = ({
                       onValueChange={({ floatValue }) =>
                         field.onChange(floatValue)
                       }
+                      value={field.value}
                       onBlur={field.onBlur}
                       customInput={Input}
                       placeholder="nº do apartamento"

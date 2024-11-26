@@ -5,8 +5,8 @@ interface UpdateAddressRequest {
   address: {
     type: string;
     houseNumber: number;
-    apartmentName?: string;
-    apartmentNumber?: number;
+    apartmentName: string | null;
+    apartmentNumber: number | null;
     street: string;
     neighborhood: string;
     city: string;
@@ -20,9 +20,16 @@ export const updateAddress = async ({
   addressId,
 }: UpdateAddressRequest) => {
   const token = localStorage.getItem("token");
-  await api.put(`/address/${addressId}`, address, {
-    headers: {
-      Authorization: `Bearer ${token}`,
+  await api.put(
+    `/address/${addressId}`,
+    {
+      ...address,
+      apartmentNumber: address.apartmentNumber || null,
     },
-  });
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
 };

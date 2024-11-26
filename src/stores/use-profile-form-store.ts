@@ -1,12 +1,12 @@
-import { Education } from "@/@types/education";
 import { create } from "zustand";
 interface ProfileFormState {
   formData: {
     name: string;
     description: string;
     phone: string;
+    cpf: string;
+    email: string;
     profilePicture: File | null;
-    education: Education[];
   };
 }
 
@@ -21,6 +21,8 @@ export const useProfileFormStore = create<ProfileFormStore>((set) => ({
     name: "",
     description: "",
     phone: "",
+    cpf: "",
+    email: "",
     profilePicture: null,
     education: [],
   },
@@ -32,7 +34,8 @@ export const useProfileFormStore = create<ProfileFormStore>((set) => ({
         name: data.formData?.name || "",
         phone: data.formData?.phone || "",
         profilePicture: data.formData?.profilePicture || null,
-        education: data.formData?.education || [],
+        cpf: data.formData?.cpf || "",
+        email: data.formData?.email || "",
       },
     })),
 }));

@@ -16,6 +16,7 @@ import { ChatsPage } from "./pages/me/chats/page";
 import { DepositMethodPage } from "./pages/me/deposit/method/page";
 import { DepositPage } from "./pages/me/deposit/page";
 import { NotificationsPage } from "./pages/me/notifications/page";
+import { ContactDetailsPage } from "./pages/me/profile/contact-details/page";
 import { ProfilePage } from "./pages/me/profile/page";
 import { PersonalInformationPage } from "./pages/me/profile/personal-information/page";
 import { MyProposalsPage } from "./pages/me/proposals/page";
@@ -45,6 +46,7 @@ export const router = createBrowserRouter([
         path: "/me/profile/personal-infomation",
         element: <PersonalInformationPage />,
       },
+      { path: "/me/profile/contact-details", element: <ContactDetailsPage /> },
       { path: "/admin/categories", element: <AdminCategoryPage /> },
     ],
   },

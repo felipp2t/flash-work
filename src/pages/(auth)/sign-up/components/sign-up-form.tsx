@@ -22,7 +22,7 @@ import { z } from "zod";
 import { CalendarInput } from "./calendar-input";
 import { ConfirmInputPassword } from "./confirm-password-input";
 import { InputPassword } from "./password-input";
-import { MaskInput } from "./phone-input";
+import { MaskInput } from "../../../../components/phone-input";
 
 const formSchema = z
   .object({

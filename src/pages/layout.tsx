@@ -8,10 +8,25 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import { getUserByToken } from "@/http/user/get-user-by-token";
+import { useQuery } from "@tanstack/react-query";
 import { Wallet, Webhook } from "lucide-react";
+import { useEffect } from "react";
 import { Link, Outlet } from "react-router-dom";
+import { toast } from "sonner";
 
 export const RootLayout = () => {
+  const { data, isLoading } = useQuery({
+    queryKey: ["get-user-by-token"],
+    queryFn: async () => await getUserByToken(),
+  });
+
+  useEffect(() => {
+    if (!data && !isLoading) {
+      toast("Faça login para acessar o sistema");
+    }
+  }, [data, isLoading]);
+
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -30,7 +45,7 @@ export const RootLayout = () => {
 
           <div className="mr-12 flex items-center gap-4">
             <NotificationDropdown />
-            
+
             <Button asChild variant="outline" className="aspect-square p-0">
               <Link to="/me/deposit">
                 <Wallet className="size-4" />

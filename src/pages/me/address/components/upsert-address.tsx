@@ -111,7 +111,7 @@ export const UpsertAddress = ({
     mutationFn: async ({ address }: { address: FormSchema }) =>
       createAddress({ address }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["get-address-by-user"] });
+      queryClient.invalidateQueries({ queryKey: ["get-addresses-by-user"] });
     },
   });
 
@@ -125,7 +125,7 @@ export const UpsertAddress = ({
       addressId: string;
     }) => updateAddress({ address, addressId }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["get-address-by-user"] });
+      queryClient.invalidateQueries({ queryKey: ["get-addresses-by-user"] });
     },
   });
 

@@ -8,7 +8,6 @@ interface GetUserByTokenResponse {
 
 export const getUserByToken = async (): Promise<GetUserByTokenResponse> => {
   const token = localStorage.getItem("token");
-
   const { data: user }: { data: User } = await axios.get(
     `${env.BACKEND_ENDPOINT}/users/me`,
     {

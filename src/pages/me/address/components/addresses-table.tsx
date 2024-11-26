@@ -18,7 +18,7 @@ import { EditAddressButton } from "./edit-address-button";
 
 export const AddressesTable = () => {
   const { data } = useQuery({
-    queryKey: ["get-address-by-user"],
+    queryKey: ["get-addresses-by-user"],
     queryFn: async () => await getAddressesByUser(),
     staleTime: 1000 * 60 * 15,
   });
@@ -30,7 +30,7 @@ export const AddressesTable = () => {
     mutationFn: async ({ addressId }: { addressId: string }) =>
       deleteAddress({ addressId }),
     onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: ["get-address-by-user"] }),
+      queryClient.invalidateQueries({ queryKey: ["get-addresses-by-user"] }),
   });
 
   const handleDeleteAddress = async (addressId: string) => {

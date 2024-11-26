@@ -6,7 +6,11 @@ import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "react-router-dom";
 import { ServiceCard } from "../../../../components/service-card";
 
-export const Region = () => {
+interface RegionProps {
+  addressId: string;
+}
+
+export const Region = ({ addressId }: RegionProps) => {
   const [searchParams] = useSearchParams();
 
   const page = searchParams.get("page") ? Number(searchParams.get("page")) : 1;
@@ -15,10 +19,11 @@ export const Region = () => {
     : 10;
 
   const { data } = useQuery({
-    queryKey: ["get-region-services", page, perPage],
+    queryKey: ["get-region-services", addressId, page, perPage],
     queryFn: async () =>
-      await getServiceByUserLocation({ page, size: perPage }),
+      await getServiceByUserLocation({ page, size: perPage, addressId }),
     staleTime: 1000 * 60 * 15,
+    enabled: !!addressId,
   });
 
   return (

@@ -45,10 +45,12 @@ export const ServicesPage = () => {
       (c) => c.name === category,
     )?.id;
 
-    console.log(categoryId);
-
     if (categoryId) {
       setCategoryId(categoryId);
+      setSearchParams((params) => {
+        params.set("page", "1");
+        return params;
+      });
       setSearchParams((params) => {
         params.set("category", category);
         return params;

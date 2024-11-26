@@ -4,6 +4,7 @@ import { api } from "@/lib/api";
 interface GetServiceByUserLocationRequest {
   page: number;
   size: number;
+  addressId: string;
 }
 
 interface GetServiceByUserLocationResponse {
@@ -13,6 +14,7 @@ interface GetServiceByUserLocationResponse {
 export const getServiceByUserLocation = async ({
   page,
   size,
+  addressId,
 }: GetServiceByUserLocationRequest): Promise<GetServiceByUserLocationResponse> => {
   const token = localStorage.getItem("token");
 
@@ -22,7 +24,7 @@ export const getServiceByUserLocation = async ({
   };
 
   const { data: services }: { data: ServiceResponse } = await api.get(
-    "/services/location",
+    `/services/city/${addressId}`,
     {
       params,
       headers: {

@@ -7,7 +7,7 @@ export interface Address {
   street: string;
   city: string;
   postalCode: string;
-  houseNumber: string;
+  houseNumber: number;
   type: "HOUSE" | "APARTMENT";
   apartmentNumber: number;
   apartmentName: string;

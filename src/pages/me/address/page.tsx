@@ -1,6 +1,6 @@
 import { PageTitle } from "@/components/page-title";
+import { AddAddressButton } from "./components/add-address-button";
 import { AddressesTable } from "./components/addresses-table";
-import { CreateAddressButton } from "./components/create-address-button";
 
 export const AddressPage = () => {
   return (
@@ -8,7 +8,7 @@ export const AddressPage = () => {
       <div className="flex items-center justify-between">
         <PageTitle title="Seus Endereços Cadastrados" />
 
-        <CreateAddressButton />
+        <AddAddressButton />
       </div>
 
       <AddressesTable />

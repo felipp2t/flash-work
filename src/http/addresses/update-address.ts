@@ -1,6 +1,7 @@
 import { api } from "@/lib/api";
 
-interface CreateAddressRequest {
+interface UpdateAddressRequest {
+  addressId: string;
   address: {
     type: string;
     houseNumber: number;
@@ -14,10 +15,12 @@ interface CreateAddressRequest {
   };
 }
 
-export const createAddress = async (params: CreateAddressRequest) => {
+export const updateAddress = async ({
+  address,
+  addressId,
+}: UpdateAddressRequest) => {
   const token = localStorage.getItem("token");
-
-  await api.post(`/address`, params.address, {
+  await api.put(`/address/${addressId}`, address, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

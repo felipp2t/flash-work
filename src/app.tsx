@@ -8,7 +8,12 @@ import { router } from "./router";
 export function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <Toaster richColors={true} closeButton className="select-none" />
+      <Toaster
+        richColors={true}
+        duration={5000}
+        closeButton
+        className="select-none"
+      />
       <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
         <RouterProvider router={router} />
       </ThemeProvider>

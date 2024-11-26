@@ -9,14 +9,15 @@ import { OnSiteServicesPage } from "./pages/(home)/services/on-site/page";
 import { RegionsServicePage } from "./pages/(home)/services/regions/page";
 import { RemotesServicePage } from "./pages/(home)/services/remotes/page";
 import { ServiceDetails } from "./pages/(home)/services/service-details/page";
-import { AddressPage } from "./pages/me/address/page";
 import { AdminCategoryPage } from "./pages/admin/categories/page";
 import { RootLayout } from "./pages/layout";
+import { AddressPage } from "./pages/me/address/page";
 import { ChatsPage } from "./pages/me/chats/page";
 import { DepositMethodPage } from "./pages/me/deposit/method/page";
 import { DepositPage } from "./pages/me/deposit/page";
 import { NotificationsPage } from "./pages/me/notifications/page";
 import { ProfilePage } from "./pages/me/profile/page";
+import { PersonalInformationPage } from "./pages/me/profile/personal-information/page";
 import { MyProposalsPage } from "./pages/me/proposals/page";
 import { MyServicesPage } from "./pages/me/services/page";
 import { ServiceProposalsPage } from "./pages/me/services/proposals/page";
@@ -40,6 +41,10 @@ export const router = createBrowserRouter([
       { path: "/me/deposit/:method", element: <DepositMethodPage /> },
       { path: "/me/notifications", element: <NotificationsPage /> },
       { path: "/me/profile", element: <ProfilePage /> },
+      {
+        path: "/me/profile/personal-infomation",
+        element: <PersonalInformationPage />,
+      },
       { path: "/admin/categories", element: <AdminCategoryPage /> },
     ],
   },

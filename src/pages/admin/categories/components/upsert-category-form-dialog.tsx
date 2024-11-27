@@ -22,7 +22,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { createCategory } from "@/http/categories/create-category";
 import { updateCategory } from "@/http/categories/update-category";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -59,21 +59,27 @@ export const UpsertCategoryFormDialog = ({
 
   const isUpdate = Boolean(categoryId);
 
+  const queryClient = useQueryClient();
+
   const { mutateAsync: updateMutateAsync } = useMutation({
     mutationKey: ["edit-category", categoryId],
     mutationFn: async ({ category }: { category: Category }) =>
       updateCategory({ category }),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ["get-categories"] }),
   });
 
   const { mutateAsync: createMutateAsync } = useMutation({
     mutationKey: ["create-category"],
     mutationFn: async ({ category }: { category: Category }) =>
       createCategory({ category }),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ["get-categories"] }),
   });
 
   const onSubmit = async (data: FormSchema) => {
-    try {
-      if (categoryId) {
+    if (categoryId) {
+      try {
         await updateMutateAsync({
           category: {
             id: categoryId,
@@ -86,9 +92,15 @@ export const UpsertCategoryFormDialog = ({
         toast.success("Categoria atualizada com sucesso", {
           duration: 5000,
         });
+      } catch {
+        toast.error("Ocorreu um erro ao atualizar a categoria", {
+          duration: 5000,
+        });
       }
+    }
 
-      if (!categoryId) {
+    if (!isUpdate) {
+      try {
         await createMutateAsync({
           category: {
             id: "",
@@ -101,11 +113,11 @@ export const UpsertCategoryFormDialog = ({
         toast.success("Categoria Criada com sucesso", {
           duration: 5000,
         });
+      } catch {
+        toast.error("Ocorreu um erro ao criar a categoria", {
+          duration: 5000,
+        });
       }
-    } catch {
-      toast.error("Ocorreu um erro ao criar a categoria", {
-        duration: 5000,
-      });
     }
   };
 

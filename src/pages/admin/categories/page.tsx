@@ -29,8 +29,7 @@ export const AdminCategoryPage = () => {
         <AddCategoryButton />
       </div>
 
-      <div className="container mx-auto">
-        <h1 className="mb-5 text-2xl font-bold">Categorias de Serviços</h1>
+      <div className="flex h-full flex-col gap-6">
         <AdminCategoriesTable />
       </div>
     </div>

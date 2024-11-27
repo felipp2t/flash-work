@@ -8,11 +8,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { deleteCategory } from "@/http/categories/delete-category";
 import { getCategories } from "@/http/categories/get-categories";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import * as Icons from "lucide-react";
 import { Trash2 } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
+import { toast } from "sonner";
 import { EditCategoryButton } from "./edit-transaction-button";
 
 export const AdminCategoriesTable = () => {
@@ -28,6 +30,25 @@ export const AdminCategoriesTable = () => {
     queryFn: async () => await getCategories({ page, size: perPage }),
     staleTime: 1000 * 60 * 15,
   });
+
+  const queryClient = useQueryClient();
+
+  const { mutateAsync: deleteCategoryMutation } = useMutation({
+    mutationKey: ["delete-category"],
+    mutationFn: async ({ categoryId }: { categoryId: string }) =>
+      await deleteCategory({ categoryId }),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ["get-categories"] }),
+  });
+
+  const handleDeleteCategory = async (categoryId: string) => {
+    try {
+      await deleteCategoryMutation({ categoryId });
+      toast.success("Categoria deletada com sucesso");
+    } catch {
+      toast.error("Erro ao deletar categoria");
+    }
+  };
 
   if (!data) return;
 
@@ -62,7 +83,11 @@ export const AdminCategoriesTable = () => {
                 <TableCell>
                   <div className="flex space-x-2">
                     <EditCategoryButton category={category} />
-                    <Button variant="outline" size="icon">
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      onClick={() => handleDeleteCategory(category.id)}
+                    >
                       <Trash2 className="size-4" />
                     </Button>
                   </div>

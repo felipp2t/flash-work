@@ -22,6 +22,7 @@ import { PersonalInformationPage } from "./pages/me/profile/personal-information
 import { MyProposalsPage } from "./pages/me/proposals/page";
 import { MyServicesPage } from "./pages/me/services/page";
 import { ServiceProposalsPage } from "./pages/me/services/proposals/page";
+import { AdminUsersPage } from "./pages/admin/users/page";
 
 export const router = createBrowserRouter([
   {
@@ -48,6 +49,7 @@ export const router = createBrowserRouter([
       },
       { path: "/me/profile/contact-details", element: <ContactDetailsPage /> },
       { path: "/admin/categories", element: <AdminCategoryPage /> },
+      { path: "/admin/users", element: <AdminUsersPage /> },
     ],
   },
   { path: "/sign-in", element: <SignInPage /> },

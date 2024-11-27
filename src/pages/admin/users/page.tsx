@@ -3,11 +3,9 @@ import { PageTitle } from "@/components/page-title";
 import { getUserByToken } from "@/http/user/get-user-by-token";
 import UnauthorizedPage from "@/pages/unauthorized";
 import { useQuery } from "@tanstack/react-query";
+import { UsersTable } from "./components/users-table";
 
-import { AddCategoryButton } from "./components/add-category-button";
-import { AdminCategoriesTable } from "./components/categories-table";
-
-export const AdminCategoryPage = () => {
+export const AdminUsersPage = () => {
   const { data } = useQuery({
     queryKey: ["get-user-by-token"],
     queryFn: async () => await getUserByToken(),
@@ -23,15 +21,10 @@ export const AdminCategoryPage = () => {
 
   return (
     <div className="flex flex-1 flex-col gap-16 p-4">
-      <div className="flex w-full items-center justify-between">
-        <PageTitle title="Categorias" />
+      <PageTitle title="Usuários" />
 
-        <AddCategoryButton />
-      </div>
-
-      <div className="container mx-auto">
-        <h1 className="mb-5 text-2xl font-bold">Categorias de Serviços</h1>
-        <AdminCategoriesTable />
+      <div className="flex h-full flex-col gap-6">
+        <UsersTable />
       </div>
     </div>
   );

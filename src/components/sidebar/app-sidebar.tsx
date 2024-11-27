@@ -80,6 +80,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             title: "Categorias",
             url: "/admin/categories",
           },
+          {
+            title: "Usuários",
+            url: "/admin/users",
+          },
         ],
       },
     ],

@@ -26,7 +26,6 @@ export const UserChat = ({
   messages,
 }: UserChatProps) => {
   const chatId = chatSelected?.chatId;
-
   const [localMessages, setLocalMessages] = useState<Message[]>(messages);
 
   const { data } = useQuery({
@@ -40,18 +39,43 @@ export const UserChat = ({
     enabled: !!chatId,
   });
 
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
+    if (data?.chat && data.chat.chatId === chatId) {
+      setMessages(data.chat.messages);
+      setLocalMessages(data.chat.messages);
+    }
+  }, [data, chatId, setMessages]);
+
+  useEffect(() => {
+    let stompClient: Client | null = null;
+
     const connectToWebSocket = () => {
-      const stompClient = new Client({
+      if (!chatId) return;
+
+      stompClient = new Client({
         webSocketFactory: () => new SockJS("http://localhost:80/ws"),
         reconnectDelay: 5000,
         onConnect: () => {
-          stompClient.subscribe(
+          stompClient?.subscribe(
             `/topic/messages/${chatId}`,
             (messageOutput) => {
               const newMessage = JSON.parse(messageOutput.body);
-              setMessages((prevMessages) => [...prevMessages, newMessage]);
-              setLocalMessages((prevMessages) => [...prevMessages, newMessage]);
+
+              setMessages((prevMessages) => {
+                const exists = prevMessages.some(
+                  (msg) => msg.id === newMessage.id,
+                );
+                return exists ? prevMessages : [...prevMessages, newMessage];
+              });
+
+              setLocalMessages((prevMessages) => {
+                const exists = prevMessages.some(
+                  (msg) => msg.id === newMessage.id,
+                );
+                return exists ? prevMessages : [...prevMessages, newMessage];
+              });
             },
           );
         },
@@ -59,13 +83,17 @@ export const UserChat = ({
           console.error("STOMP error", frame);
         },
       });
+
       stompClient.activate();
       setStompClient(stompClient);
     };
-    connectToWebSocket();
-  }, [data, chatId, setMessages, setStompClient]);
 
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+    connectToWebSocket();
+
+    return () => {
+      stompClient?.deactivate();
+    };
+  }, [chatId, setMessages, setStompClient]);
 
   const scrollToBottom = () => {
     if (messagesEndRef.current) {
@@ -81,7 +109,9 @@ export const UserChat = ({
     if (chatSelected?.chatId) {
       const fetchMessages = async () => {
         try {
-          const response = await getChatByUser({ chatId: chatSelected.chatId });
+          const response = await getChatByUser({
+            chatId: chatSelected.chatId,
+          });
           if (response.chat) {
             setMessages(response.chat.messages);
             setLocalMessages(response.chat.messages);

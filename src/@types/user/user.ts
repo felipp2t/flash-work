@@ -1,3 +1,5 @@
+import { Wallet } from "../wallet";
+
 export interface User {
   id: string;
   email: string;
@@ -8,5 +10,6 @@ export interface User {
   description: string;
   profileImage: string;
   birthDate: Date;
+  wallet: Wallet;
   role: "ADMIN" | "CUSTOMER";
 }

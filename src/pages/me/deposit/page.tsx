@@ -1,13 +1,22 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { METHODS_PAYMENT } from "@/constants/payment";
+import { getUserByToken } from "@/http/user/get-user-by-token";
+import { useQuery } from "@tanstack/react-query";
 import { ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export const DepositPage = () => {
   const navigate = useNavigate();
+  const { data } = useQuery({
+    queryKey: ["get-user-by-token"],
+    queryFn: async () => await getUserByToken(),
+  });
+
   const handleChooseMethod = (method: string) =>
     navigate(`/me/deposit/${method}`);
+
+  if (!data) return;
 
   return (
     <div className="flex justify-between gap-6">
@@ -15,7 +24,7 @@ export const DepositPage = () => {
         {METHODS_PAYMENT.map((method) => (
           <Card
             key={method.method}
-            className="col-span-5 h-fit bg-white bg-opacity-5 p-4 transition-all hover:bg-opacity-10"
+            className="col-span-5 h-fit bg-white/5 p-4 transition-all hover:bg-opacity-10"
             onClick={() => handleChooseMethod(method.link)}
           >
             <CardContent className="flex items-center justify-between p-0">
@@ -51,7 +60,12 @@ export const DepositPage = () => {
         <CardContent className="flex flex-col items-center px-6 py-12">
           <div className="flex w-full items-center justify-between">
             <h2 className="text-xl font-bold">Saldo</h2>
-            <p className="text-lg font-bold text-primary">R$0,00</p>
+            <p className="text-lg font-bold text-primary">
+              {Intl.NumberFormat("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+              }).format(data.user.wallet.balance)}
+            </p>
           </div>
         </CardContent>
       </Card>

@@ -76,16 +76,16 @@ export const EducationsTable = () => {
         {data &&
           data.educations.content.map((education) => (
             <TableRow key={education.id}>
-              <TableCell>{education.course}</TableCell>
               <TableCell>{education.institution}</TableCell>
+              <TableCell>{education.course}</TableCell>
               <TableCell className="capitalize">
                 {DEGREE[education.degree]}
               </TableCell>
               <TableCell>
-                {format(education.yearOfCompletion, "dd'/'MM'/'yyyy")}
+                {format(education.yearOfInitiation, "dd'/'MM'/'yyyy")}
               </TableCell>
               <TableCell>
-                {format(education.yearOfInitiation, "dd'/'MM'/'yyyy")}
+                {format(education.yearOfCompletion, "dd'/'MM'/'yyyy")}
               </TableCell>
               <TableCell>
                 <div className="flex space-x-2">

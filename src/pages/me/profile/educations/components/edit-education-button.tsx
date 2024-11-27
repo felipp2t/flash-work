@@ -1,7 +1,8 @@
-import { Education } from "@/@types/education";
+import { Education } from "@/@types/education/education";
 import { Button } from "@/components/ui/button";
 import { Pen } from "lucide-react";
 import { useState } from "react";
+import { UpsertEducation } from "./upsert-education";
 // import { UpsertAddress } from "./upsert-address";
 
 interface EditEducationButtonProps {
@@ -24,12 +25,12 @@ export const EditEducationButton = ({
         <Pen className="size-4 group-hover:text-primary" />
       </Button>
 
-      {/* <UpsertAddress
+      <UpsertEducation
         isOpen={dialogIsOpen}
         setIsOpen={setDialogIsOpen}
-        addressId={address.id}
-        defaultValues={address}
-      /> */}
+        defaultValues={education}
+        educationId={education.id}
+      />
     </>
   );
 };

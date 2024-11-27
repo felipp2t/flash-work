@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-// import { UpsertAddress } from "./upsert-address";
+import { UpsertEducation } from "./upsert-education";
 
 export const AddEducationButton = () => {
   const [dialogIsOpen, setDialogIsOpen] = useState(false);
@@ -8,7 +8,7 @@ export const AddEducationButton = () => {
   return (
     <>
       <Button onClick={() => setDialogIsOpen(true)}>Adicionar Endereço</Button>
-      {/* <UpsertAddress isOpen={dialogIsOpen} setIsOpen={setDialogIsOpen} /> */}
+      <UpsertEducation isOpen={dialogIsOpen} setIsOpen={setDialogIsOpen} />
     </>
   );
 };

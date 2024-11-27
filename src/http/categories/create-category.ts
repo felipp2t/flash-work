@@ -1,15 +1,14 @@
 import { Category } from "@/@types/categories/category";
-import { env } from "@/env";
-import axios from "axios";
+import { api } from "@/lib/api";
 
 interface CreateCategoryRequest {
   category: Category;
 }
 
-export const createCategory = async (params: CreateCategoryRequest) => {
-  await axios.post(`${env.BACKEND_ENDPOINT}/categories`, {
-    name: params.category.name,
-    description: params.category.description,
-    iconName: params.category.iconName,
+export const createCategory = async ({ category }: CreateCategoryRequest) => {
+  await api.post("/categories", {
+    name: category.name,
+    description: category.description,
+    iconName: category.iconName,
   });
 };

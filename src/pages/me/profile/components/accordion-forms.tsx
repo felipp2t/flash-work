@@ -20,7 +20,7 @@ export const AccordionForms = ({ user }: AccordionFormsProps) => {
         phone: user.phone,
         cpf: user.cpf,
         email: user.email,
-        profilePicture: user.profilePicture,
+        profileImage: user.profileImage,
       },
     });
   }, [setFormData, user]);

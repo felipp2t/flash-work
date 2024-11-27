@@ -7,7 +7,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { CATEGORIES, ICONS_CATEGORIES } from "@/constants/categories";
 import { getCategories } from "@/http/categories/get-categories";
 import { useQuery } from "@tanstack/react-query";
 import { Package, Trash2 } from "lucide-react";
@@ -33,15 +32,15 @@ export const AdminCategoriesTable = () => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {data.categories.map((category) => {
-          const Icon = ICONS_CATEGORIES[category.iconName] || Package;
+        {data.categories.content.map((category) => {
+          const Icon = category.iconName || Package;
           return (
             <TableRow key={category.id}>
               <TableCell>
                 <Icon className="size-6" />
               </TableCell>
               <TableCell className="font-medium capitalize">
-                {CATEGORIES[category.name as keyof typeof CATEGORIES]}
+                {category.name}
               </TableCell>
               <TableCell>{category.description}</TableCell>
               <TableCell>

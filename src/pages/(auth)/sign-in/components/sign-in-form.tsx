@@ -113,9 +113,12 @@ export const SignInForm = () => {
                 description: "Verifique suas credenciais e tente novamente",
               })
             }
+            asChild
           >
-            <img src={GoogleIcon} alt="google icon" className="size-5" />
-            Entrar com o Google
+            <Link to={`$http://localhost:80/api/oauth2/authorization/google`}>
+              <img src={GoogleIcon} alt="google icon" className="size-5" />
+              Entrar com o Google
+            </Link>
           </Button>
         </div>
       </form>

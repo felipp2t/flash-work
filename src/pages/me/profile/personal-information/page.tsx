@@ -65,7 +65,7 @@ export const PersonalInformationPage = () => {
       updateUser({
         name: data.name,
         description: data.description,
-        profilePicture: data.photo ?? null,
+        profileImage: data.photo ?? null,
         phone: formData.phone,
       }),
     onSuccess: () =>

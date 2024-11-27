@@ -6,7 +6,7 @@ export interface User {
   phone: string;
   profession: string;
   description: string;
-  profilePicture: File;
+  profileImage: string;
   birthDate: Date;
   role: "ADMIN" | "CUSTOMER";
 }

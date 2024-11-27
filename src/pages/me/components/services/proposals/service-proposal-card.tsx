@@ -32,7 +32,7 @@ export const ServiceProposalCard = ({ proposal }: ServiceProposalCardProps) => {
       <CardHeader>
         <div className="flex items-center gap-4">
           <Avatar className="size-20">
-            <AvatarImage src={data.user.profilePicture} alt={data.user.name} />
+            <AvatarImage src={data.user.profileImage} alt={data.user.name} />
             <AvatarFallback>{data.user.name[0]}</AvatarFallback>
           </Avatar>
           <div className="flex flex-col">

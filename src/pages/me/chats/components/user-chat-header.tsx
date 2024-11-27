@@ -18,7 +18,7 @@ export const UserChatHeader = ({ userId }: UserChatProps) => {
   return (
     <div className="flex h-20 bg-[#181616] items-center border-b p-4">
       <Avatar className="size-10">
-        <AvatarImage src={data.user.profilePicture} alt={data.user.name} />
+        <AvatarImage src={data.user.profileImage} alt={data.user.name} />
         <AvatarFallback>{data.user.name[0]}</AvatarFallback>
       </Avatar>
 

@@ -49,7 +49,7 @@ export const ViewServiceDialog = ({ service }: ViewServiceDialogProps) => {
           <div className="flex items-center gap-4">
             <Avatar>
               <AvatarImage
-                src={service.client.profilePicture}
+                src={service.client.profileImage}
                 alt={service.client.name}
               />
               <AvatarFallback>

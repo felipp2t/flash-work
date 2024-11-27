@@ -4,14 +4,14 @@ interface UpdateUserRequest {
   name: string;
   description: string;
   phone: string;
-  profilePicture: File | null;
+  profileImage: File | null;
 }
 
 export const updateUser = async ({
   name,
   phone,
   description,
-  profilePicture
+  profileImage
 }: UpdateUserRequest) => {
   const token = localStorage.getItem("token");
   await api.put(
@@ -20,7 +20,7 @@ export const updateUser = async ({
       description,
       phone,
       name,
-      profilePicture
+      profileImage
     },
     {
       headers: {

@@ -6,7 +6,7 @@ interface signUpRequest {
   name: string;
   email: string;
   phone: string;
-  dateBirth: string;
+  birthDate: string;
   cpf: string;
   password: string;
   confirmPassword: string;
@@ -20,7 +20,7 @@ export const signUp = async (params: signUpRequest): Promise<void> => {
   formData.append("name", params.name);
   formData.append("email", params.email);
   formData.append("phone", params.phone);
-  formData.append("dateBirth", params.dateBirth);
+  formData.append("birthDate", params.birthDate);
   formData.append("cpf", params.cpf);
   formData.append("password", params.password);
   formData.append("confirmPassword", params.confirmPassword);
@@ -29,9 +29,16 @@ export const signUp = async (params: signUpRequest): Promise<void> => {
     formData.append("profilePhoto", params.profilePhoto);
   }
 
-  await axios.post(`${env.BACKEND_ENDPOINT}/auth/register`, formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
+  await axios.post(
+    `${env.BACKEND_ENDPOINT}/auth/register`,
+    {
+      ...params,
+      profileImage: params.profilePhoto,
     },
-  });
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    },
+  );
 };

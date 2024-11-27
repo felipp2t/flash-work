@@ -19,10 +19,10 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { z } from "zod";
+import { MaskInput } from "../../../../components/phone-input";
 import { CalendarInput } from "./calendar-input";
 import { ConfirmInputPassword } from "./confirm-password-input";
 import { InputPassword } from "./password-input";
-import { MaskInput } from "../../../../components/phone-input";
 
 const formSchema = z
   .object({
@@ -34,7 +34,7 @@ const formSchema = z
       .string({ required_error: "O e-mail é obrigatório" })
       .email({ message: "E-mail inválido" }),
     phone: z.string().length(15, { message: "Telefone inválido" }),
-    dateBirth: z.coerce.date(),
+    birthDate: z.coerce.date(),
     cpf: z
       .string({ required_error: "O cpf é obrigatório" })
       .length(14, { message: "CPF inválido" }),
@@ -59,7 +59,7 @@ export const SignUpForm = () => {
       name: "",
       email: "",
       phone: "",
-      dateBirth: new Date(),
+      birthDate: new Date(),
       password: "",
       confirmPassword: "",
     },
@@ -73,7 +73,7 @@ export const SignUpForm = () => {
     try {
       await signUp({
         ...data,
-        dateBirth: format(new Date(data.dateBirth), "yyyy-MM-dd"),
+        birthDate: format(new Date(data.birthDate), "yyyy-MM-dd"),
         profilePhoto,
       });
 
@@ -202,10 +202,10 @@ export const SignUpForm = () => {
 
             <FormField
               control={form.control}
-              name="dateBirth"
+              name="birthDate"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel htmlFor="dateBirth">
+                  <FormLabel htmlFor="birthDate">
                     Data de Aniversário <span className="text-red-800">*</span>
                   </FormLabel>
                   <FormControl>

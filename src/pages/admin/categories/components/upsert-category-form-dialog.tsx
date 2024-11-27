@@ -21,7 +21,6 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { createCategory } from "@/http/categories/create-category";
 import { updateCategory } from "@/http/categories/update-category";
-// import { ICONS_LUCIDE_REACT } from "@/constants/icons-lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";

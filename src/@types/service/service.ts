@@ -1,5 +1,5 @@
 import { Category } from "../categories/category";
-import { UserMin } from "../user-min";
+import { UserMin } from "../user/user-min";
 
 export interface Service {
   id: string;

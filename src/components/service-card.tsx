@@ -38,7 +38,7 @@ export const ServiceCard = ({ service }: ServiceCardProps) => {
               .filter((_, i) => i <= 1)
               .map((word) => word[0])}
           </AvatarFallback>
-          <AvatarImage src={service.client.profilePicture} />
+          <AvatarImage src={service.client.profileImage} />
         </Avatar>
 
         <div>

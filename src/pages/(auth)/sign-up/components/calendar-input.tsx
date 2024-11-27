@@ -14,7 +14,7 @@ import { ControllerRenderProps } from "react-hook-form";
 import { FormSchema } from "./sign-up-form";
 
 interface CalendarInputProps {
-  field: ControllerRenderProps<FormSchema, "dateBirth">;
+  field: ControllerRenderProps<FormSchema, "birthDate">;
 }
 
 export const CalendarInput = ({ field }: CalendarInputProps) => {

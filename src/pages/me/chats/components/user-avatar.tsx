@@ -18,7 +18,7 @@ export const UserAvatar = ({ userId }: UserAvatarProps) => {
   return (
     <>
       <Avatar className="size-10">
-        <AvatarImage src={data.user.profilePicture} alt={data.user.name} />
+        <AvatarImage src={data.user.profileImage} alt={data.user.name} />
         <AvatarFallback>{data.user.name.charAt(0)}</AvatarFallback>
       </Avatar>
       <div className="ml-4 flex-1 overflow-hidden">

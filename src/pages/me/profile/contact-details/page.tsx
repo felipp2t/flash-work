@@ -49,7 +49,7 @@ export const ContactDetailsPage = () => {
         phone: data.phone,
         description: formData.description,
         name: formData.name,
-        profilePicture: formData.profilePicture,
+        profileImage: formData.profileImage,
       }),
     onSuccess: () =>
       queryClient.invalidateQueries({ queryKey: ["get-user-by-token"] }),

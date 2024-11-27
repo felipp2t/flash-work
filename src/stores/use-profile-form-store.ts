@@ -6,7 +6,7 @@ interface ProfileFormState {
     phone: string;
     cpf: string;
     email: string;
-    profilePicture: File | null;
+    profileImage: File | null;
   };
 }
 
@@ -23,7 +23,7 @@ export const useProfileFormStore = create<ProfileFormStore>((set) => ({
     phone: "",
     cpf: "",
     email: "",
-    profilePicture: null,
+    profileImage: null,
     education: [],
   },
   setFormData: (data) =>
@@ -33,7 +33,7 @@ export const useProfileFormStore = create<ProfileFormStore>((set) => ({
         description: data.formData?.description || "",
         name: data.formData?.name || "",
         phone: data.formData?.phone || "",
-        profilePicture: data.formData?.profilePicture || null,
+        profileImage: data.formData?.profileImage || null,
         cpf: data.formData?.cpf || "",
         email: data.formData?.email || "",
       },

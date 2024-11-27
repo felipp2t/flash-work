@@ -1,6 +1,6 @@
 export interface UserMin {
   id: string;
   name: string;
-  profilePicture: string;
+  profileImage: string;
   description: string;
 }

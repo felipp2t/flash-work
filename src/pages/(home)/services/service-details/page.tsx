@@ -62,7 +62,7 @@ export const ServiceDetails = () => {
               <CardHeader className="flex-row items-center gap-8">
                 <Avatar className="size-24">
                   <AvatarImage
-                    src={data.service.client.profilePicture}
+                    src={data.service.client.profileImage}
                     alt={data.service.client.name}
                   />
                   <AvatarFallback>

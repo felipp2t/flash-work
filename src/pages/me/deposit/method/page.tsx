@@ -144,7 +144,7 @@ export const DepositMethodPage = () => {
               <div className="relative mb-4 flex items-center justify-center rounded-lg bg-white">
                 <img
                   src={`data:image/png;base64,${QRCode.qrCodeBase64}`}
-                  alt=""
+                  alt="QRCode"
                   className="size-52"
                 />
                 <TooltipProvider>

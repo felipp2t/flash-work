@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Table,
@@ -8,12 +9,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { DEGREE } from "@/constants/degree";
-import { deleteAddress } from "@/http/addresses/delete-address";
-import { getEducationsByUser } from "@/http/user/get-education-by-user";
+import { deleteEducation } from "@/http/education/delete-education";
+import { getEducationsByUser } from "@/http/education/get-education-by-user";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { format } from "date-fns";
-import { MapPin } from "lucide-react";
+import { MapPin, Trash2 } from "lucide-react";
 import { toast } from "sonner";
+import { EditEducationButton } from "./edit-education-button";
 
 export const EducationsTable = () => {
   const { data } = useQuery({
@@ -24,18 +26,18 @@ export const EducationsTable = () => {
 
   const queryClient = useQueryClient();
 
-  const { mutateAsync: deleteAddressMutate } = useMutation({
-    mutationKey: ["delete-address"],
-    mutationFn: async ({ addressId }: { addressId: string }) =>
-      deleteAddress({ addressId }),
+  const { mutateAsync: deleteEducationMutate } = useMutation({
+    mutationKey: ["delete-education"],
+    mutationFn: async ({ educationId }: { educationId: string }) =>
+      deleteEducation({ educationId }),
     onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: ["get-addresses-by-user"] }),
+      queryClient.invalidateQueries({ queryKey: ["get-educations-by-user"] }),
   });
 
-  const handleDeleteAddress = async (addressId: string) => {
+  const handleDeleteEducation = async (educationId: string) => {
     try {
-      await deleteAddressMutate({ addressId });
-      toast.success("Endereço deletado com sucesso");
+      await deleteEducationMutate({ educationId });
+      toast.success("Educação deletado com sucesso");
     } catch {
       toast.error("Erro ao deletar endereço");
     }
@@ -67,6 +69,7 @@ export const EducationsTable = () => {
           <TableHead>Graduação</TableHead>
           <TableHead>Ano de Inicialização</TableHead>
           <TableHead>Ano de Conclusão</TableHead>
+          <TableHead>Ações</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -75,12 +78,27 @@ export const EducationsTable = () => {
             <TableRow key={education.id}>
               <TableCell>{education.course}</TableCell>
               <TableCell>{education.institution}</TableCell>
-              <TableCell className="capitalize">{DEGREE[education.degree]}</TableCell>
+              <TableCell className="capitalize">
+                {DEGREE[education.degree]}
+              </TableCell>
               <TableCell>
                 {format(education.yearOfCompletion, "dd'/'MM'/'yyyy")}
               </TableCell>
               <TableCell>
                 {format(education.yearOfInitiation, "dd'/'MM'/'yyyy")}
+              </TableCell>
+              <TableCell>
+                <div className="flex space-x-2">
+                  <EditEducationButton education={education} />
+                  <Button
+                    variant="secondary"
+                    size="icon"
+                    className="group"
+                    onClick={() => handleDeleteEducation(education.id)}
+                  >
+                    <Trash2 className="size-4 group-hover:text-red-600" />
+                  </Button>
+                </div>
               </TableCell>
             </TableRow>
           ))}

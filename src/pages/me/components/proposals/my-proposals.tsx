@@ -4,7 +4,7 @@ import { SkeletonCardService } from "@/components/skeleton-card-service";
 import { getProposalsByUser } from "@/http/proposals/get-proposals-by-user";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "react-router-dom";
-import { ProposalCard } from "../cards/proposal-card";
+import { MyServiceProposalCard } from "../cards/service-proposal-card";
 
 export const MyProposals = () => {
   const [searchParams] = useSearchParams();
@@ -32,7 +32,7 @@ export const MyProposals = () => {
         <>
           <ServiceList>
             {data.proposals.content.map((proposal) => (
-              <ProposalCard key={proposal.id} proposal={proposal} />
+              <MyServiceProposalCard key={proposal.id} proposal={proposal} />
             ))}
           </ServiceList>
 

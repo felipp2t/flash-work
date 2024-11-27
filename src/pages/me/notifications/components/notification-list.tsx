@@ -1,5 +1,5 @@
 import { Pagination } from "@/components/pagination";
-import { NotificationSkeleton } from "@/components/skeletons/notification-skeleton";
+import { SkeletonNotification } from "@/components/skeletons/notification-skeleton";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { getNotifications } from "@/http/notifications/get-notification";
@@ -45,7 +45,7 @@ export const NotificationList = () => {
       {!data ? (
         <div className="space-y-4">
           {Array.from({ length: 10 }).map((_, i) => (
-            <NotificationSkeleton key={i} />
+            <SkeletonNotification key={i} />
           ))}
         </div>
       ) : data.notifications.empty ? (

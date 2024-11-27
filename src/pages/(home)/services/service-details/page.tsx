@@ -14,15 +14,16 @@ import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { pt } from "date-fns/locale";
 import { motion } from "framer-motion";
-import { Calendar, Clock, MapPin } from "lucide-react";
+import { Calendar, Clock, MapPin, Undo2 } from "lucide-react";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { CreateChatButton } from "./components/create-chat-button";
-import { ProposalForm } from "./components/proposal-form";
 import { LocationBadge } from "./components/location-badge";
+import { ProposalForm } from "./components/proposal-form";
 
 export const ServiceDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [isFlipped, setIsFlipped] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -48,8 +49,15 @@ export const ServiceDetails = () => {
   };
 
   return (
-    <div className="flex h-full items-center justify-center">
-      <div className="flip-card h-[500px] w-1/2">
+    <div className="flex h-full flex-col items-center justify-center">
+      <div className="flip-card h-[500px] w-1/3">
+        <div
+          onClick={() => navigate(-1)}
+          className="ml-2 flex items-center gap-2"
+        >
+          <Undo2 className="size-6" />
+          <p className="text-muted-foreground">Voltar</p>
+        </div>
         <motion.div
           className="flip-card-inner mx-auto flex size-full max-w-[500px] items-center justify-center"
           initial={false}
@@ -58,7 +66,7 @@ export const ServiceDetails = () => {
           onAnimationComplete={() => setIsAnimating(false)}
         >
           <div className="flip-card-front">
-            <Card className="bg-white bg-opacity-5">
+            <Card className="bg-white/5">
               <CardHeader className="flex-row items-center gap-8">
                 <Avatar className="size-24">
                   <AvatarImage
@@ -105,7 +113,7 @@ export const ServiceDetails = () => {
                   </Badge>
                   <Badge variant="outline" className="text-sm">
                     <MapPin className="mr-1 size-4" />
-                   <LocationBadge addressId={data.service.addressId} />
+                    <LocationBadge addressId={data.service.addressId} />
                   </Badge>
                 </div>
 
@@ -119,7 +127,7 @@ export const ServiceDetails = () => {
                     Postado em: {transformDate(data.service.createdAt)}
                   </div>
                 </div>
-                
+
                 <div className="space-y-2">
                   <h2 className="text-2xl font-bold text-primary">
                     {data.service.title}

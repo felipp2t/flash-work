@@ -16,7 +16,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { CATEGORIES, ICONS_CATEGORIES } from "@/constants/categories";
 import { getCategories } from "@/http/categories/get-categories";
 import { cn } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
@@ -33,7 +32,7 @@ interface ChangeCategoryModalProps {
 export const ChangeCategoryModal = ({ field }: ChangeCategoryModalProps) => {
   const { data, isLoading } = useQuery({
     queryKey: ["get-categories"],
-    queryFn: async () => await getCategories(),
+    queryFn: async () => await getCategories({ page: 1, size: 500 }),
   });
 
   if (!data) return;
@@ -70,14 +69,14 @@ export const ChangeCategoryModal = ({ field }: ChangeCategoryModalProps) => {
     <Dialog>
       <div className="grid grid-cols-2 gap-2">
         {field.value.map((category) => {
-          const IconComponent = ICONS_CATEGORIES[category.iconName];
+          const IconComponent = category.iconName;
           return (
             <div
               key={category.id}
               className="flex h-10 w-full items-center justify-center gap-2 rounded-md border bg-card px-2 text-sm font-medium capitalize text-muted-foreground"
             >
-              <IconComponent className="mr-1 size-4" />
-              {CATEGORIES[category.name as keyof typeof CATEGORIES]}
+              <IconComponent />
+              {category.name}
             </div>
           );
         })}
@@ -116,8 +115,7 @@ export const ChangeCategoryModal = ({ field }: ChangeCategoryModalProps) => {
                       <CarouselItem key={slideIndex}>
                         <div className="grid grid-cols-2 gap-4 p-2">
                           {slide.map((category) => {
-                            const IconComponent =
-                              ICONS_CATEGORIES[category.iconName];
+                            const IconComponent = category.iconName;
                             const isSelected = field.value.some(
                               (c) => c.id === category.id,
                             );
@@ -134,9 +132,9 @@ export const ChangeCategoryModal = ({ field }: ChangeCategoryModalProps) => {
                               >
                                 <CardContent className="flex w-full items-center justify-between p-4">
                                   <div className="flex items-center space-x-2">
-                                    <IconComponent className="size-5" />
+                                    <IconComponent />
                                     <p className="capitalize">
-                                      {CATEGORIES[category.name as keyof typeof CATEGORIES]}
+                                      {category.name}
                                     </p>
                                   </div>
                                   {isSelected && (

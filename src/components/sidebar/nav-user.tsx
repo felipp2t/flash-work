@@ -2,6 +2,7 @@ import {
   BadgeCheck,
   Bell,
   ChevronsUpDown,
+  GraduationCap,
   Locate,
   LogIn,
   LogOut,
@@ -108,6 +109,11 @@ export function NavUser({
               <DropdownMenuItem onClick={() => navigate("/me/addresses")}>
                 <Locate />
                 Endereços
+              </DropdownMenuItem>
+
+              <DropdownMenuItem onClick={() => navigate("/me/educations")}>
+                <GraduationCap />
+                Educações
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />

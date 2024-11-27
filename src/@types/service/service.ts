@@ -1,5 +1,6 @@
 import { Category } from "../categories/category";
 import { UserMin } from "../user/user-min";
+import { ServiceStatus } from "./status";
 
 export interface Service {
   id: string;
@@ -11,6 +12,7 @@ export interface Service {
   addressId: string;
   createdAt: Date;
   client: UserMin;
+  status: ServiceStatus;
   categories: Category[];
   proposalQuantity: number;
 }

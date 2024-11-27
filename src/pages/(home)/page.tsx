@@ -8,7 +8,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { CATEGORIES } from "@/constants/categories";
 import { getCategories } from "@/http/categories/get-categories";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
@@ -21,7 +20,7 @@ export const ServicesPage = () => {
 
   const { data } = useQuery({
     queryKey: ["get-categories"],
-    queryFn: async () => await getCategories(),
+    queryFn: async () => await getCategories({ page: 1, size: 500 }),
     staleTime: 1000 * 60 * 15,
   });
 
@@ -76,7 +75,7 @@ export const ServicesPage = () => {
               {data.categories.content.map((category) => {
                 return (
                   <SelectItem key={category.id} value={category.name}>
-                    {CATEGORIES[category.name as keyof typeof CATEGORIES]}
+                    {category.name}
                   </SelectItem>
                 );
               })}

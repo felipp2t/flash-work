@@ -5,7 +5,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { CATEGORIES, ICONS_CATEGORIES } from "@/constants/categories";
 import { getCategories } from "@/http/categories/get-categories";
 import { useQuery } from "@tanstack/react-query";
 import { ControllerRenderProps } from "react-hook-form";
@@ -44,7 +43,7 @@ export const CategoriesDialog = ({ field }: CategoriesDialogProps) => {
     <div className="flex flex-wrap items-center justify-center gap-x-2.5 gap-y-2">
       {data &&
         data.categories.content.map((category) => {
-          const IconComponent = ICONS_CATEGORIES[category.iconName];
+          const IconComponent = category.iconName
           return (
             <TooltipProvider>
               <Tooltip>
@@ -60,7 +59,7 @@ export const CategoriesDialog = ({ field }: CategoriesDialogProps) => {
                     onClick={() => handleSelectCategory(category.id)}
                   >
                     <IconComponent />
-                    {CATEGORIES[category.name as keyof typeof CATEGORIES]}
+                    {category.name}
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent className="max-w-96">

@@ -38,7 +38,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { CATEGORIES, ICONS_CATEGORIES } from "@/constants/categories";
 import { getAddressesByUser } from "@/http/addresses/get-addresses-by-user";
 import { createService } from "@/http/services/create-service";
 import { cn } from "@/lib/utils";
@@ -394,19 +393,14 @@ export const CreateServiceForm = () => {
                     {field.value &&
                       field.value.length > 0 &&
                       field.value.map((category) => {
-                        const IconComponent =
-                          ICONS_CATEGORIES[category.iconName];
+                        const IconComponent = category.iconName;
                         return (
                           <div
                             key={category.id}
                             className="flex h-10 w-full items-center justify-center gap-2 rounded-md border bg-card px-2 text-sm font-medium capitalize text-muted-foreground"
                           >
-                            <IconComponent className="mr-1 size-4" />
-                            {
-                              CATEGORIES[
-                                category.name as keyof typeof CATEGORIES
-                              ]
-                            }
+                            <IconComponent />
+                            {category.name}
                           </div>
                         );
                       })}

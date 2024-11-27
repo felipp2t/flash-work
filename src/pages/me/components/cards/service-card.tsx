@@ -9,7 +9,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { CATEGORIES } from "@/constants/categories";
 import { getAddressById } from "@/http/addresses/get-address-by-id";
 import { hanldeSplitBudget } from "@/utils/split-budget";
 import { useQuery } from "@tanstack/react-query";
@@ -52,7 +51,7 @@ export const ServiceCard = ({ service }: ServiceCardProps) => {
         <div className="space-x-2">
           {service.categories.map((category) => (
             <Badge key={category.id} variant="outline">
-              {CATEGORIES[category.name as keyof typeof CATEGORIES]}
+              {category.name}
             </Badge>
           ))}
         </div>

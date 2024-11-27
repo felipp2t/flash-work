@@ -10,7 +10,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { deleteProposal } from "@/http/proposals/delete-proposal";
+import { acceptProposal } from "@/http/proposals/delete-proposal";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
@@ -18,15 +18,15 @@ interface DeletionAlertDialogProps {
   proposalId: string;
 }
 
-export const DeletionAlertDialog = ({
+export const AcceptProposalAlertDialog = ({
   proposalId,
 }: DeletionAlertDialogProps) => {
   const queryClient = useQueryClient();
 
   const { mutateAsync } = useMutation({
-    mutationKey: ["delete-proposal", proposalId],
+    mutationKey: ["accept-proposal", proposalId],
     mutationFn: async ({ proposalId }: { proposalId: string }) =>
-      await deleteProposal({ proposalId }),
+      await acceptProposal({ proposalId }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["get-proposals-by-user"] });
       toast.success("Proposta deletada com sucesso!");
@@ -44,9 +44,7 @@ export const DeletionAlertDialog = ({
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="destructive" className="w-full">
-          Excluir
-        </Button>
+        <Button className="w-full">Aceitar</Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

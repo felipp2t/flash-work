@@ -24,8 +24,9 @@ interface ViewServiceDialogProps {
 export const ViewServiceDialog = ({ service }: ViewServiceDialogProps) => {
   const { data, isLoading } = useQuery({
     queryKey: ["get-address-by-id"],
-    queryFn: async () => await getAddressById({ addressId: service.id }),
+    queryFn: async () => await getAddressById({ addressId: service.addressId }),
     staleTime: 1000 * 60 * 15,
+    enabled: !!service.addressId,
   });
 
   return (

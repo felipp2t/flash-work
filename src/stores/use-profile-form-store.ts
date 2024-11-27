@@ -6,7 +6,7 @@ interface ProfileFormState {
     phone: string;
     cpf: string;
     email: string;
-    profileImage: File | null;
+    profileImage: string | null;
   };
 }
 

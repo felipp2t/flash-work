@@ -10,6 +10,7 @@ import { RegionsServicePage } from "./pages/(home)/services/regions/page";
 import { RemotesServicePage } from "./pages/(home)/services/remotes/page";
 import { ServiceDetails } from "./pages/(home)/services/service-details/page";
 import { AdminCategoryPage } from "./pages/admin/categories/page";
+import { AdminUsersPage } from "./pages/admin/users/page";
 import { RootLayout } from "./pages/layout";
 import { AddressPage } from "./pages/me/address/page";
 import { ChatsPage } from "./pages/me/chats/page";
@@ -17,12 +18,12 @@ import { DepositMethodPage } from "./pages/me/deposit/method/page";
 import { DepositPage } from "./pages/me/deposit/page";
 import { NotificationsPage } from "./pages/me/notifications/page";
 import { ContactDetailsPage } from "./pages/me/profile/contact-details/page";
+import { ProfileEducationsPage } from "./pages/me/profile/educations/page";
 import { ProfilePage } from "./pages/me/profile/page";
 import { PersonalInformationPage } from "./pages/me/profile/personal-information/page";
 import { MyProposalsPage } from "./pages/me/proposals/page";
 import { MyServicesPage } from "./pages/me/services/page";
 import { ServiceProposalsPage } from "./pages/me/services/proposals/page";
-import { AdminUsersPage } from "./pages/admin/users/page";
 
 export const router = createBrowserRouter([
   {
@@ -48,6 +49,7 @@ export const router = createBrowserRouter([
         element: <PersonalInformationPage />,
       },
       { path: "/me/profile/contact-details", element: <ContactDetailsPage /> },
+      { path: "/me/profile/educations", element: <ProfileEducationsPage /> },
       { path: "/admin/categories", element: <AdminCategoryPage /> },
       { path: "/admin/users", element: <AdminUsersPage /> },
     ],

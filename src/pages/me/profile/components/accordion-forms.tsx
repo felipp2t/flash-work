@@ -55,11 +55,14 @@ export const AccordionForms = ({ user }: AccordionFormsProps) => {
 
       <Separator />
 
-      <div className="flex cursor-pointer items-center py-6">
+      <div
+        className="flex cursor-pointer items-center py-6"
+        onClick={() => navigate("/me/profile/educations")}
+      >
         <div className="flex flex-1 flex-col">
           <h3 className="text-xl">Suas Educações</h3>
           <p className="tex-sm text-muted-foreground">
-            Instituição, Curos e Ano de conclusão
+            Instituição, Curos e Ano de conclusão etc.
           </p>
         </div>
         <ChevronRight className="text-primary" />

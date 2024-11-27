@@ -12,15 +12,8 @@ interface GetAddressByIdResponse {
 export const getAddressById = async ({
   addressId,
 }: GetAddressByIdRequest): Promise<GetAddressByIdResponse> => {
-  const token = localStorage.getItem("token");
-
   const { data: address }: { data: Address } = await api.get(
     `/address/${addressId}`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    },
   );
 
   return { address };

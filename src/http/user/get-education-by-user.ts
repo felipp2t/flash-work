@@ -1,15 +1,15 @@
-import { Education } from "@/@types/education";
+import { EducationResponse } from "@/@types/education/education-response";
 import { api } from "@/lib/api";
 
 interface GetEducationByUserResponse {
-  educations: Education[];
+  educations: EducationResponse;
 }
 
 export const getEducationsByUser =
   async (): Promise<GetEducationByUserResponse> => {
     const token = localStorage.getItem("token");
 
-    const { data: educations }: { data: Education[] } = await api.get(
+    const { data: educations }: { data: EducationResponse } = await api.get(
       "/educations",
       {
         headers: {

@@ -14,7 +14,7 @@ import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { pt } from "date-fns/locale";
 import { Clock, DollarSign } from "lucide-react";
-import { DeletionAlertDialog } from "../proposals/deletion-alert-dialog";
+import { AcceptProposalAlertDialog } from "../proposals/accept-alert-dialog";
 import { ViewServiceDialog } from "../proposals/view-service-dialog";
 
 interface ProposalCardProps {
@@ -75,7 +75,7 @@ export const ProposalCard = ({ proposal }: ProposalCardProps) => {
       <CardFooter className="mt-auto flex gap-2">
         <ViewServiceDialog service={data.service} />
 
-        <DeletionAlertDialog proposalId={proposal.id} />
+        <AcceptProposalAlertDialog proposalId={proposal.id} />
       </CardFooter>
     </Card>
   );

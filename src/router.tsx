@@ -11,6 +11,7 @@ import { RemotesServicePage } from "./pages/(home)/services/remotes/page";
 import { ServiceDetails } from "./pages/(home)/services/service-details/page";
 import { AdminCategoryPage } from "./pages/admin/categories/page";
 import { AdminUsersPage } from "./pages/admin/users/page";
+import { ContractSigningPage } from "./pages/contract/sign/page";
 import { RootLayout } from "./pages/layout";
 import { AddressPage } from "./pages/me/address/page";
 import { ChatsPage } from "./pages/me/chats/page";
@@ -24,6 +25,7 @@ import { PersonalInformationPage } from "./pages/me/profile/personal-information
 import { MyProposalsPage } from "./pages/me/proposals/page";
 import { MyServicesPage } from "./pages/me/services/page";
 import { ServiceProposalsPage } from "./pages/me/services/proposals/page";
+import WithdrawalForm from "./pages/me/withdraw/page";
 
 export const router = createBrowserRouter([
   {
@@ -35,6 +37,7 @@ export const router = createBrowserRouter([
       { path: "/services/region", element: <RegionsServicePage /> },
       { path: "/services/remotes", element: <RemotesServicePage /> },
       { path: "/services/on-site", element: <OnSiteServicesPage /> },
+      { path: "/contracts/sign/:id", element: <ContractSigningPage /> },
       { path: "/me/addresses", element: <AddressPage /> },
       { path: "/me/chats", element: <ChatsPage /> },
       { path: "/me/services", element: <MyServicesPage /> },
@@ -42,6 +45,7 @@ export const router = createBrowserRouter([
       { path: "/me/proposals", element: <MyProposalsPage /> },
       { path: "/me/deposit", element: <DepositPage /> },
       { path: "/me/deposit/:method", element: <DepositMethodPage /> },
+      { path: "/me/withdraw", element: <WithdrawalForm /> },
       { path: "/me/notifications", element: <NotificationsPage /> },
       { path: "/me/profile", element: <ProfilePage /> },
       {

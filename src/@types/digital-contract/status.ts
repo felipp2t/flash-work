@@ -1,0 +1,5 @@
+export type Status =
+  | "PENDING_SIGNATURES"
+  | "SIGNED_BY_CLIENT"
+  | "SIGNED_BY_FREELANCER"
+  | "FULLY_SIGNED";

@@ -12,6 +12,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { acceptProposal } from "@/http/services/proposal.ts/accept-proposal";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Loader2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 interface DeletionAlertDialogProps {
@@ -21,9 +23,10 @@ interface DeletionAlertDialogProps {
 export const AcceptProposalAlertDialog = ({
   proposalId,
 }: DeletionAlertDialogProps) => {
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  const { mutateAsync } = useMutation({
+  const { mutateAsync: acceptProposalMutate, isPending } = useMutation({
     mutationKey: ["accept-proposal", proposalId],
     mutationFn: async ({ proposalId }: { proposalId: string }) =>
       await acceptProposal({ proposalId }),
@@ -35,7 +38,11 @@ export const AcceptProposalAlertDialog = ({
 
   const handleAcceptProposal = async (proposalId: string) => {
     try {
-      await mutateAsync({ proposalId });
+      const { digitalContract } = await acceptProposalMutate({ proposalId });
+
+      console.log({ digitalContract });
+      toast.success("Proposta aceita com sucesso!");
+      navigate(`/contracts/sign/${digitalContract.id}`);
     } catch {
       toast.error("Erro ao deletar proposta.");
     }
@@ -44,7 +51,17 @@ export const AcceptProposalAlertDialog = ({
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button className="w-full">Aceitar</Button>
+        <Button className="w-full" disabled={isPending}>
+          {" "}
+          {isPending ? (
+            <>
+              <Loader2 className="animate-spin" />
+              Aguarde
+            </>
+          ) : (
+            "Aceitar"
+          )}
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

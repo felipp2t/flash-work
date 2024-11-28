@@ -15,4 +15,5 @@ export interface Service {
   status: ServiceStatus;
   categories: Category[];
   proposalQuantity: number;
+  contractId: string | null
 }

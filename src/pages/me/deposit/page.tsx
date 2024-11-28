@@ -56,19 +56,24 @@ export const DepositPage = () => {
         ))}
       </div>
 
-      <Card className="col-span-3 h-fit w-[500px] bg-white bg-opacity-5">
-        <CardContent className="flex flex-col items-center px-6 py-12">
-          <div className="flex w-full items-center justify-between">
-            <h2 className="text-xl font-bold">Saldo</h2>
-            <p className="text-lg font-bold text-primary">
-              {Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(data.user.wallet.balance)}
-            </p>
-          </div>
-        </CardContent>
-      </Card>
+      <div className="flex flex-col items-center gap-6">
+        <Card className="col-span-3 h-fit w-[500px] bg-white bg-opacity-5">
+          <CardContent className="flex flex-col items-center px-6 py-12">
+            <div className="flex w-full items-center justify-between">
+              <h2 className="text-xl font-bold">Saldo</h2>
+              <p className="text-lg font-bold text-primary">
+                {Intl.NumberFormat("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                }).format(data.user.wallet.balance)}
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+        <Button className="w-1/2" onClick={() => navigate("/me/withdraw")}>
+          Sacar
+        </Button>
+      </div>
     </div>
   );
 };

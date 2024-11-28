@@ -8,6 +8,7 @@ interface GetProposalsByUserResponse {
 export const getProposalsByUser =
   async (): Promise<GetProposalsByUserResponse> => {
     const token = localStorage.getItem("token");
+
     const { data: proposals }: { data: ProposalResponse } = await api.get(
       `/proposals/user`,
       {

@@ -8,7 +8,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { getAddressesByUser } from "@/http/addresses/get-addresses-by-user";
-import { getServicesByUser } from "@/http/services/get-services-by-user";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -16,11 +15,6 @@ import { CreateServiceForm } from "./create-service-form";
 
 export const CreateServiceButton = () => {
   const [dialogIsOpen, setDialogIsOpen] = useState(false);
-  const { data: serviceResponse } = useQuery({
-    queryKey: ["get-services-by-user"],
-    queryFn: async () => await getServicesByUser(),
-    staleTime: 1000 * 60 * 15,
-  });
 
   const { data: addressResponse } = useQuery({
     queryKey: ["get-addresses-by-user"],
@@ -29,11 +23,6 @@ export const CreateServiceButton = () => {
   });
 
   const handleVerifyServiceQuantity = () => {
-    if (serviceResponse!.services.totalElements >= 5) {
-      toast.error("Você atingiu o limite de serviços cadastrados.");
-      return false;
-    }
-
     if (addressResponse!.addresses.totalElements === 0) {
       toast.error(
         <div>

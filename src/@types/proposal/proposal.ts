@@ -1,10 +1,10 @@
-type STATUS = "PENDING" | "ACCEPTED" | "REJECTED";
+type Status = "PENDING" | "ACCEPTED" | "IN_PROGRESS" |"REJECTED";
 
 export interface Proposal {
   id: string;
   serviceId: string;
   freelancerId: string;
-  status: STATUS;
+  status: Status;
   message: string;
   offerAmount: number;
   estimatedCompletionTime: Date;

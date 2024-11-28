@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { PROPOSAL_STATUS } from "@/constants/proposal-status";
+import { STATUS_PROPOSAL } from "@/constants/status-proposal";
 import { getServiceById } from "@/http/services/get-service-by-id";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
@@ -38,7 +38,9 @@ export const MyServiceProposalCard = ({
           <CardTitle className="line-clamp-2 text-xl font-bold">
             {data.service.title}
           </CardTitle>
-          <Badge>{PROPOSAL_STATUS[proposal.status]}</Badge>
+          <Badge className="uppercase">
+            {STATUS_PROPOSAL[proposal.status]}
+          </Badge>
         </div>
         <CardDescription>Detalhes da proposta enviada</CardDescription>
       </CardHeader>
@@ -64,7 +66,7 @@ export const MyServiceProposalCard = ({
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <Clock className="mr-2 size-5 text-blue-600" />
-            <span className="font-semibold">Tempo Estimado</span>
+            <span className="font-semibold">Data de Entrega estimada</span>
           </div>
           <span>
             {format(proposal.estimatedCompletionTime, "dd 'de' MMMM", {

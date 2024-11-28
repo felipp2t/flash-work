@@ -51,6 +51,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 import { AddressDialogContent } from "../../components/services/address-dialog-content";
 import { CategoriesDialog } from "./categories-dialog";
+import * as Icons from "lucide-react"
 
 const formSchema = z
   .object({
@@ -150,6 +151,11 @@ export const CreateServiceForm = () => {
       queryClient.invalidateQueries({ queryKey: ["get-services-by-user"] });
     },
   });
+
+  const getIconComponent = (iconName: string) => {
+    const icons = Icons as unknown as Record<string, React.ElementType>;
+    return icons[iconName] || Icons.Package;
+  };
 
   const onSubmit = async (data: FormSchema) => {
     try {
@@ -393,13 +399,13 @@ export const CreateServiceForm = () => {
                     {field.value &&
                       field.value.length > 0 &&
                       field.value.map((category) => {
-                        const IconComponent = category.iconName;
+                        const Icon = getIconComponent(category.iconName);
                         return (
                           <div
                             key={category.id}
                             className="flex h-10 w-full items-center justify-center gap-2 rounded-md border bg-card px-2 text-sm font-medium capitalize text-muted-foreground"
                           >
-                            <IconComponent />
+                            <Icon />
                             {category.name}
                           </div>
                         );

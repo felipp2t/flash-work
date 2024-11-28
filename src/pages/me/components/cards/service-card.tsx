@@ -14,7 +14,7 @@ import { hanldeSplitBudget } from "@/utils/split-budget";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { pt } from "date-fns/locale";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { DeletionAlertDialog } from "../services/deletion-alert-dialog";
 import { EditServiceModal } from "../services/edit-service-modal";
@@ -93,16 +93,24 @@ export const ServiceCard = ({ service }: ServiceCardProps) => {
       </CardContent>
 
       <CardFooter className="mt-auto flex flex-col gap-2 p-0">
-        <div className="flex w-full gap-2">
-          <EditServiceModal service={service} />
-          <DeletionAlertDialog serviceId={service.id} />
-        </div>
-        <Button className="w-full" onClick={handleVerifyIfExistProposal}>
-          {service.proposalQuantity === 0
-            ? 0
-            : String(service.proposalQuantity).padStart(2, "0")}{" "}
-          propostas enviadas
-        </Button>
+        {service.status === "OPEN" ? (
+          <>
+            <div className="flex w-full gap-2">
+              <EditServiceModal service={service} />
+              <DeletionAlertDialog serviceId={service.id} />
+            </div>
+            <Button className="w-full" onClick={handleVerifyIfExistProposal}>
+              {service.proposalQuantity === 0
+                ? 0
+                : String(service.proposalQuantity).padStart(2, "0")}{" "}
+              propostas enviadas
+            </Button>
+          </>
+        ) : (
+          <Button className="w-full" asChild>
+            <Link to={`/contracts/sign/${service.contractId}`}>Ver Contrato</Link>
+          </Button>
+        )}
       </CardFooter>
     </Card>
   );

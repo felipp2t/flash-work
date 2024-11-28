@@ -22,6 +22,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Check, Loader2 } from "lucide-react";
 import { ControllerRenderProps } from "react-hook-form";
 import { FormSchema } from "./edit-service-modal";
+import * as Icons from "lucide-react";
 
 type Value = FormSchema;
 
@@ -65,17 +66,22 @@ export const ChangeCategoryModal = ({ field }: ChangeCategoryModalProps) => {
     }
   };
 
+  const getIconComponent = (iconName: string) => {
+    const icons = Icons as unknown as Record<string, React.ElementType>;
+    return icons[iconName] || Icons.Package;
+  };
+
   return (
     <Dialog>
       <div className="grid grid-cols-2 gap-2">
         {field.value.map((category) => {
-          const IconComponent = category.iconName;
+          const Icon = getIconComponent(category.iconName);
           return (
             <div
               key={category.id}
               className="flex h-10 w-full items-center justify-center gap-2 rounded-md border bg-card px-2 text-sm font-medium capitalize text-muted-foreground"
             >
-              <IconComponent />
+              <Icon />
               {category.name}
             </div>
           );
@@ -115,7 +121,7 @@ export const ChangeCategoryModal = ({ field }: ChangeCategoryModalProps) => {
                       <CarouselItem key={slideIndex}>
                         <div className="grid grid-cols-2 gap-4 p-2">
                           {slide.map((category) => {
-                            const IconComponent = category.iconName;
+                            const Icon = getIconComponent(category.iconName);
                             const isSelected = field.value.some(
                               (c) => c.id === category.id,
                             );
@@ -132,7 +138,7 @@ export const ChangeCategoryModal = ({ field }: ChangeCategoryModalProps) => {
                               >
                                 <CardContent className="flex w-full items-center justify-between p-4">
                                   <div className="flex items-center space-x-2">
-                                    <IconComponent />
+                                    <Icon />
                                     <p className="capitalize">
                                       {category.name}
                                     </p>

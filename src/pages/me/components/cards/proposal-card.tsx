@@ -8,7 +8,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { PROPOSAL_STATUS } from "@/constants/proposal-status";
 import { getServiceById } from "@/http/services/get-service-by-id";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
@@ -16,6 +15,7 @@ import { pt } from "date-fns/locale";
 import { Clock, DollarSign } from "lucide-react";
 import { AcceptProposalAlertDialog } from "../proposals/accept-alert-dialog";
 import { ViewServiceDialog } from "../proposals/view-service-dialog";
+import { STATUS_PROPOSAL } from "@/constants/status-proposal";
 
 interface ProposalCardProps {
   proposal: Proposal;
@@ -37,7 +37,7 @@ export const ProposalCard = ({ proposal }: ProposalCardProps) => {
           <CardTitle className="line-clamp-2 text-xl font-bold">
             {data.service.title}
           </CardTitle>
-          <Badge>{PROPOSAL_STATUS[proposal.status]}</Badge>
+          <Badge>{STATUS_PROPOSAL[proposal.status]}</Badge>
         </div>
         <CardDescription>Detalhes da proposta enviada</CardDescription>
       </CardHeader>
